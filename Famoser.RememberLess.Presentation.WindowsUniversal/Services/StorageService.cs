@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Famoser.FrameworkEssentials.Logging;
 using Famoser.RememberLess.Data.Services;
 
 namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
@@ -22,7 +23,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                //LogHelper.Instance.Log(LogLevel.Error, this, "ReadCache failed", ex);
+                LogHelper.Instance.Log(LogLevel.Error, this, "ReadCache failed", ex);
             }
             return null;
         }
@@ -39,7 +40,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                //LogHelper.Instance.Log(LogLevel.Error, this, "ReadSettings failed", ex);
+                LogHelper.Instance.Log(LogLevel.Error, this, "ReadSettings failed", ex);
             }
             return null;
         }
@@ -57,7 +58,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                //LogHelper.Instance.Log(LogLevel.Error, this, "SaveToCache failed", ex);
+                LogHelper.Instance.Log(LogLevel.Error, this, "SaveToCache failed", ex);
             }
             return false;
         }
@@ -75,7 +76,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                //LogHelper.Instance.Log(LogLevel.Error, this, "SaveToSettings failed", ex);
+                LogHelper.Instance.Log(LogLevel.Error, this, "SaveToSettings failed", ex);
             }
             return false;
         }
@@ -120,7 +121,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                //LogHelper.Instance.LogException(ex, this);
+                LogHelper.Instance.LogException(ex, this);
             }
             return false;
         }
