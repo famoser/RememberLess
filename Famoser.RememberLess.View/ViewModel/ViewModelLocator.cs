@@ -12,6 +12,10 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using Famoser.RememberLess.Business.Repositories;
+using Famoser.RememberLess.Business.Repositories.Interfaces;
+using Famoser.RememberLess.Data.Services;
+using Famoser.RememberLess.View.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
@@ -22,14 +26,17 @@ namespace Famoser.RememberLess.View.ViewModel
     /// This class contains static references to all the view models in the
     /// application and provides an entry point for the bindings.
     /// </summary>
-    public class ViewModelLocator
+    public class BaseViewModelLocator
     {
         /// <summary>
         /// Initializes a new instance of the ViewModelLocator class.
         /// </summary>
-        public ViewModelLocator()
+        public BaseViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            SimpleIoc.Default.Register<IDataService, DataService>();
+            SimpleIoc.Default.Register<IProgressService, ProgressService>();
+            SimpleIoc.Default.Register<INoteRepository, NoteRepository>();
 
             ////if (ViewModelBase.IsInDesignModeStatic)
             ////{
@@ -45,7 +52,7 @@ namespace Famoser.RememberLess.View.ViewModel
             SimpleIoc.Default.Register<MainViewModel>();
         }
 
-        public MainViewModel Main
+        public MainViewModel MainViewModel
         {
             get
             {

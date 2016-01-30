@@ -3,6 +3,41 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Famoser.RememberLess.Presentation.WindowsUniversal"
+    xmlns:viewModels="using:Famoser.RememberLess.Presentation.WindowsUniversal.ViewModels"
     RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <!--<ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="TextForegroundThemeBrush" Color="#FEF4F4F4" />
+                    <SolidColorBrush x:Key="TextBackgroundThemeBrush" Color="#000000" />
+                    <SolidColorBrush x:Key="ForegroundThemeBrush" Color="#ffffff" />
+                    <SolidColorBrush x:Key="BackgroundThemeBrush" Color="#000000" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="TextForegroundThemeBrush" Color="#434343" />
+                    <SolidColorBrush x:Key="TextBackgroundThemeBrush" Color="#ffffff" />
+                    <SolidColorBrush x:Key="ForegroundThemeBrush" Color="#000000" />
+                    <SolidColorBrush x:Key="BackgroundThemeBrush" Color="#ffffff" />
+                    <SolidColorBrush x:Key="AkzentBackgroundThemeBrush" Color="#2f8841" />
+                    <SolidColorBrush x:Key="AkzentLightBackgroundThemeBrush" Color="#662F8841" />
+                    <SolidColorBrush x:Key="AkzentForegroundThemeBrush" Color="#ffffff" />
+                </ResourceDictionary>-->
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="TextForegroundThemeBrush" Color="#434343" />
+                    <SolidColorBrush x:Key="TextBackgroundThemeBrush" Color="#ffffff" />
+                    <SolidColorBrush x:Key="TextPalettonForeground" Color="#ffffff" />
+                    <SolidColorBrush x:Key="AkzentBackgroundThemeBrush" Color="#f1bc00" />
+                    <SolidColorBrush x:Key="ApprooveGreen" Color="#4CAF50" />
+                    <SolidColorBrush x:Key="DisApprooveRed" Color="#F44336" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <SolidColorBrush x:Key="PivotHeaderForegroundSelectedBrush" Color="#FFFFFF" />
+            <SolidColorBrush x:Key="PivotHeaderForegroundUnselectedBrush" Color="#CDFFFFFF" />
+
+            <viewModels:ViewModelLocator x:Key="Locator" />
+
+        </ResourceDictionary>
+    </Application.Resources>
 
 </Application>

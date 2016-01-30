@@ -1,0 +1,59 @@
+AddHandler application/x-httpd-php56 .php
+
+RewriteEngine On
+RewriteBase /
+# Handles /
+
+# leitet alles hier um:
+
+# All those web app paths that don't match the filesystem, like /main
+RewriteCond %{REQUEST_URI} !\.css$
+RewriteCond %{REQUEST_URI} !\.js$
+RewriteCond %{REQUEST_URI} !\.pdf$
+RewriteCond %{REQUEST_URI} !\.ico$
+RewriteCond %{REQUEST_URI} !images/(.*)\.
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+AddDefaultCharset UTF-8
+
+ErrorDocument 404   /index.php
+ErrorDocument 403   /index.php
+
+Addtype font/opentype .otf
+Addtype font/truetype .ttf
+Addtype font/webtype .woff
+
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE font/opentype
+AddOutputFilterByType DEFLATE font/truetype
+AddOutputFilterByType DEFLATE font/webtype
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+AddOutputFilterByType DEFLATE application/json
+
+## EXPIRES CACHING ##
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresByType image/jpg "access 1 year"
+ExpiresByType image/jpeg "access 1 year"
+ExpiresByType image/gif "access 1 year"
+ExpiresByType image/png "access 1 year"
+ExpiresByType text/css "access 1 week"
+ExpiresByType text/html "access 1 month"
+ExpiresByType application/pdf "access 1 month"
+ExpiresByType text/x-javascript "access 1 week"
+ExpiresByType application/x-shockwave-flash "access 1 month"
+ExpiresByType image/x-icon "access 1 year"
+ExpiresDefault "access 1 month"
+</IfModule>
+
+#@__HCP_END__@#
+# Anything after the comment above is left alone

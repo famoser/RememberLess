@@ -38,12 +38,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Enums\PageKeys.cs" />
+    <Compile Include="Enums\ProgressKeys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IProgressService.cs" />
+    <Compile Include="Services\ProgressService.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ProgressViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Famoser.FrameworkEssentials, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Famoser.FrameworkEssentials.1.1.0\lib\Famoser.FrameworkEssentials.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.2.0.37222, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.2.0.0\lib\portable-net45+wp8+wpa81+netcore45+monoandroid1+xamarin.ios10\GalaSoft.MvvmLight.dll</HintPath>
       <Private>True</Private>
@@ -56,6 +64,16 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Famoser.RememberLess.Business\Famoser.RememberLess.Business.csproj">
+      <Project>{caa9b052-1b68-40b5-8c7c-efd03d3af39a}</Project>
+      <Name>Famoser.RememberLess.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Famoser.RememberLess.Data\Famoser.RememberLess.Data.csproj">
+      <Project>{63ada5bb-62c6-4f9c-a1b6-322d2afa4fa4}</Project>
+      <Name>Famoser.RememberLess.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -103,6 +103,11 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CustomNavigationService.cs" />
+    <Compile Include="Services\Mocks\MockNavigationService.cs" />
+    <Compile Include="Services\NavigationHelper.cs" />
+    <Compile Include="Services\StorageService.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -129,6 +134,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Famoser.RememberLess.Business\Famoser.RememberLess.Business.csproj">
+      <Project>{caa9b052-1b68-40b5-8c7c-efd03d3af39a}</Project>
+      <Name>Famoser.RememberLess.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Famoser.RememberLess.Data\Famoser.RememberLess.Data.csproj">
+      <Project>{63ada5bb-62c6-4f9c-a1b6-322d2afa4fa4}</Project>
+      <Name>Famoser.RememberLess.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Famoser.RememberLess.View\Famoser.RememberLess.View.csproj">
+      <Project>{28bee899-8812-49d4-a678-3fd877ba77b4}</Project>
+      <Name>Famoser.RememberLess.View</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
