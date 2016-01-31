@@ -23,7 +23,7 @@ namespace Famoser.RememberLess.Business.Converters
                 Guid = note.Guid,
                 Content = note.Content,
                 CreateTime = note.CreateTime,
-                IsCompleted = note.IsCompleted
+                IsCompleted = note.IsCompletedBool
             };
         }
     }

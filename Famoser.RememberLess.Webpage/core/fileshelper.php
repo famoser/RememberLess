@@ -5,7 +5,7 @@
  * Date: 09.01.2016
  * Time: 14:42
  */
-namespace famoser\beercompanion\webpage\core\fileshelper;
+namespace famoser\rememberless\webpage\core\fileshelper;
 
 function include_all_files_in_dir($path, $fileending)
 {

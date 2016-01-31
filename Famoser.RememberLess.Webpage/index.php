@@ -6,13 +6,13 @@
  * Time: 14:43
  */
 
-use famoser\beercompanion\webpage\core\interfaces\iController;
-use famoser\beercompanion\webpage\core\logging\logger;
-use function famoser\beercompanion\webpage\core\phpcore\bye_framework;
-use function famoser\beercompanion\webpage\core\phpcore\formatParams;
-use function famoser\beercompanion\webpage\core\phpcore\get_controller;
-use function famoser\beercompanion\webpage\core\phpcore\hi_framework;
-use function famoser\beercompanion\webpage\core\phpcore\RemoveFirstEntryInArray;
+use famoser\rememberless\webpage\core\interfaces\iController;
+use famoser\rememberless\webpage\core\logging\logger;
+use function famoser\rememberless\webpage\core\phpcore\bye_framework;
+use function famoser\rememberless\webpage\core\phpcore\formatParams;
+use function famoser\rememberless\webpage\core\phpcore\get_controller;
+use function famoser\rememberless\webpage\core\phpcore\hi_framework;
+use function famoser\rememberless\webpage\core\phpcore\RemoveFirstEntryInArray;
 
 define("SOURCE_DIR", __DIR__);
 

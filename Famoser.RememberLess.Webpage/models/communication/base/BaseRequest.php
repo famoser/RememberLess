@@ -6,7 +6,7 @@
  * Time: 12:11
  */
 
-namespace famoser\beercompanion\webpage\models\communication\base;
+namespace famoser\rememberless\webpage\models\communication\base;
 
 
 class BaseRequest

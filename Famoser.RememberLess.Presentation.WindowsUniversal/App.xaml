@@ -24,11 +24,8 @@
                     <SolidColorBrush x:Key="AkzentForegroundThemeBrush" Color="#ffffff" />
                 </ResourceDictionary>-->
                 <ResourceDictionary x:Key="Default">
-                    <SolidColorBrush x:Key="TextForegroundThemeBrush" Color="#434343" />
-                    <SolidColorBrush x:Key="TextBackgroundThemeBrush" Color="#ffffff" />
-                    <SolidColorBrush x:Key="TextPalettonForeground" Color="#ffffff" />
-                    <SolidColorBrush x:Key="AkzentBackgroundThemeBrush" Color="#f1bc00" />
                     <SolidColorBrush x:Key="ApprooveGreen" Color="#4CAF50" />
+                    <SolidColorBrush x:Key="SomeApprooveOrange" Color="#f1bc00" />
                     <SolidColorBrush x:Key="DisApprooveRed" Color="#F44336" />
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>

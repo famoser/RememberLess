@@ -6,19 +6,20 @@
  * Time: 15:16
  */
 
-namespace famoser\beercompanion\webpage\controllers;
+namespace famoser\rememberless\webpage\controllers;
 
 
-use famoser\beercompanion\webpage\core\interfaces\iController;
-use function famoser\beercompanion\webpage\core\responsehelper\ReturnBoolean;
-use function famoser\beercompanion\webpage\core\responsehelper\ReturnError;
-use function famoser\beercompanion\webpage\core\responsehelper\ReturnNotFound;
-use function famoser\beercompanion\webpage\core\validationhelper\ConvertToDatabaseDateTime;
-use function famoser\beercompanion\webpage\core\validationhelper\ValidateGuid;
-use famoser\beercompanion\webpage\models\communication\base\BaseRequest;
-use famoser\beercompanion\webpage\models\entities\NoteEntity;
-use famoser\beercompanion\webpage\models\Note;
-use famoser\beercompanion\webpage\models\communication\NoteResponse;
+use famoser\rememberless\webpage\core\interfaces\iController;
+use function famoser\rememberless\webpage\core\responsehelper\ReturnBoolean;
+use function famoser\rememberless\webpage\core\responsehelper\ReturnError;
+use function famoser\rememberless\webpage\core\responsehelper\ReturnJson;
+use function famoser\rememberless\webpage\core\responsehelper\ReturnNotFound;
+use function famoser\rememberless\webpage\core\validationhelper\ConvertToDatabaseDateTime;
+use function famoser\rememberless\webpage\core\validationhelper\ValidateGuid;
+use famoser\rememberless\webpage\models\communication\base\BaseRequest;
+use famoser\rememberless\webpage\models\entities\NoteEntity;
+use famoser\rememberless\webpage\models\Note;
+use famoser\rememberless\webpage\models\communication\NoteResponse;
 use PDO;
 
 class NotesController implements iController
@@ -44,7 +45,7 @@ class NotesController implements iController
                             $newnote = new Note();
                             $newnote->Guid = $note->Guid;
                             $newnote->Content = $note->Content;
-                            $newnote->CreateTime = ConvertToDatabaseDateTime($note->DrinkTime);
+                            $newnote->CreateTime = ConvertToDatabaseDateTime($note->CreateTime);
                             $newnote->IsCompleted = $note->IsCompleted;
                             $newnote->UserGuid = $obj->Guid;
                             $newNotes[] = $newnote;
@@ -60,13 +61,13 @@ class NotesController implements iController
                             $newnote = new Note();
                             $newnote->Guid = $note->Guid;
                             $newnote->Content = $note->Content;
-                            $newnote->CreateTime = ConvertToDatabaseDateTime($note->DrinkTime);
+                            $newnote->CreateTime = ConvertToDatabaseDateTime($note->CreateTime);
                             $newnote->IsCompleted = $note->IsCompleted;
                             $newnote->UserGuid = $obj->Guid;
                             $newNotes[] = $newnote;
                         } else {
                             $existingNote->Content = $note->Content;
-                            $existingNote->CreateTime = ConvertToDatabaseDateTime($note->DrinkTime);
+                            $existingNote->CreateTime = ConvertToDatabaseDateTime($note->CreateTime);
                             $existingNote->IsCompleted = $note->IsCompleted;
                             $existingNote->UserGuid = $obj->Guid;
                             $updateNotes[] = $existingNote;
@@ -94,7 +95,7 @@ class NotesController implements iController
                 foreach ($notes as $note) {
                     $resp->Notes[] = new NoteEntity($note);
                 }
-                return json_encode($resp);
+                return ReturnJson($resp);
             }
         }
         return ReturnError(LINK_INVALID);

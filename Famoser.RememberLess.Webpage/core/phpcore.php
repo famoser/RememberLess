@@ -6,14 +6,12 @@
  * Time: 14:41
  */
 
-namespace famoser\beercompanion\webpage\core\phpcore;
+namespace famoser\rememberless\webpage\core\phpcore;
 
-use famoser\beercompanion\webpage\controllers\ApiController;
-use famoser\beercompanion\webpage\controllers\BeerController;
-use famoser\beercompanion\webpage\controllers\CycleController;
-use famoser\beercompanion\webpage\controllers\DrinkerController;
-use function famoser\beercompanion\webpage\core\fileshelper\include_all_files_in_dir;
-use famoser\beercompanion\webpage\core\logging\logger;
+use famoser\rememberless\webpage\controllers\ApiController;
+use famoser\rememberless\webpage\controllers\NotesController;
+use function famoser\rememberless\webpage\core\fileshelper\include_all_files_in_dir;
+use famoser\rememberless\webpage\core\logging\logger;
 
 function hi_framework()
 {
@@ -59,12 +57,8 @@ function get_controller($params)
 {
     if (count($params) > 0)
     {
-        if ($params[0] == "cycles")
-            return new CycleController();
-        else if ($params[0] == "beers")
-            return new BeerController();
-        else if ($params[0] == "drinkers")
-            return new DrinkerController();
+        if ($params[0] == "notes")
+            return new NotesController();
         else if ($params[0] == "api")
             return new ApiController();
     }
@@ -89,7 +83,7 @@ function configure_autoloader()
 spl_autoload_register(function ($class) {
 
     // project-specific namespace prefix
-    $prefix = 'famoser\\beercompanion\\webpage\\';
+    $prefix = 'famoser\\rememberless\\webpage\\';
     $basedir = null;
     $relative_class = null;
 
@@ -111,6 +105,6 @@ spl_autoload_register(function ($class) {
     if (file_exists($file)) {
         require $file;
     } else {
-        logger::getInstance()->doLog(LOG_LEVEL_FATAL, "class not found! class: " . $class . " | path: " . $file);
+        logger::getInstance()->doLog(logger::LOG_LEVEL_FATAL, "class not found! class: " . $class . " | path: " . $file);
     }
 });

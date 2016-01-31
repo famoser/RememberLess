@@ -15,6 +15,6 @@ namespace Famoser.RememberLess.Business.Repositories.Interfaces
         Task<List<NoteModel>> SyncNotes(List<NoteModel> notes);
         List<NoteModel> GetExampleNotes();
 
-        Task<bool> SaveNote(NoteModel nm);
+        Task<bool> Save(NoteModel nm, List<NoteModel> notes);
     }
 }

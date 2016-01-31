@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Famoser.RememberLess.Presentation.WindowsUniversal", "Famoser.RememberLess.Presentation.WindowsUniversal\Famoser.RememberLess.Presentation.WindowsUniversal.csproj", "{2F414B19-7B81-4B1E-BB8B-314098F128B6}"
 EndProject
@@ -32,6 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2F414B19-7B81-4B1E-BB8B-314098F128B6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{2F414B19-7B81-4B1E-BB8B-314098F128B6}.Debug|Any CPU.Build.0 = Debug|x86
+		{2F414B19-7B81-4B1E-BB8B-314098F128B6}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{2F414B19-7B81-4B1E-BB8B-314098F128B6}.Debug|ARM.ActiveCfg = Debug|ARM
 		{2F414B19-7B81-4B1E-BB8B-314098F128B6}.Debug|ARM.Build.0 = Debug|ARM
 		{2F414B19-7B81-4B1E-BB8B-314098F128B6}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -100,6 +102,8 @@ Global
 		{63ADA5BB-62C6-4F9C-A1B6-322D2AFA4FA4}.Release|x86.ActiveCfg = Release|Any CPU
 		{63ADA5BB-62C6-4F9C-A1B6-322D2AFA4FA4}.Release|x86.Build.0 = Release|Any CPU
 		{BCBEC48E-7367-415A-9B70-42491BECA2E9}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{BCBEC48E-7367-415A-9B70-42491BECA2E9}.Debug|Any CPU.Build.0 = Debug|x86
+		{BCBEC48E-7367-415A-9B70-42491BECA2E9}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{BCBEC48E-7367-415A-9B70-42491BECA2E9}.Debug|ARM.ActiveCfg = Debug|ARM
 		{BCBEC48E-7367-415A-9B70-42491BECA2E9}.Debug|ARM.Build.0 = Debug|ARM
 		{BCBEC48E-7367-415A-9B70-42491BECA2E9}.Debug|ARM.Deploy.0 = Debug|ARM

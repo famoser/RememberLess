@@ -18,12 +18,12 @@ namespace Famoser.RememberLess.Data.Services
         public Task<BooleanResponse> PostNote(NoteRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
-            return Post(new Uri(ApiUrl + "beers/act"), json);
+            return Post(new Uri(ApiUrl + "notes/act"), json);
         }
 
         public async Task<NoteResponse> GetNotes(Guid guid)
         {
-            var resp = await DownloadString(new Uri(ApiUrl + "drinkers/" + guid));
+            var resp = await DownloadString(new Uri(ApiUrl + "notes/" + guid));
             if (resp.IsSuccessfull)
             {
                 try

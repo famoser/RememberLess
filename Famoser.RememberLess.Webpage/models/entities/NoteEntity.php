@@ -6,10 +6,10 @@
  * Time: 12:42
  */
 
-namespace famoser\beercompanion\webpage\models\entities;
+namespace famoser\rememberless\webpage\models\entities;
 
 
-use famoser\beercompanion\webpage\models\Note;
+use famoser\rememberless\webpage\models\Note;
 
 class NoteEntity extends Note
 {

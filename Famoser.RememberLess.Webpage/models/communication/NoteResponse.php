@@ -6,7 +6,7 @@
  * Time: 15:03
  */
 
-namespace famoser\beercompanion\webpage\models\communication;
+namespace famoser\rememberless\webpage\models\communication;
 
 
 class NoteResponse

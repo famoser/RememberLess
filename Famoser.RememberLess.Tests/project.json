@@ -1,6 +1,8 @@
 ﻿{
   "dependencies": {
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0"
+    "Famoser.FrameworkEssentials": "1.2.1",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.0.0",
+    "MvvmLight": "5.2.0"
   },
   "frameworks": {
     "uap10.0": {}

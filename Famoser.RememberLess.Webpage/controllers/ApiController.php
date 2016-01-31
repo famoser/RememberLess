@@ -6,10 +6,10 @@
  * Time: 20:17
  */
 
-namespace famoser\beercompanion\webpage\controllers;
+namespace famoser\rememberless\webpage\controllers;
 
 
-use famoser\beercompanion\webpage\core\interfaces\iController;
+use famoser\rememberless\webpage\core\interfaces\iController;
 use PDO;
 
 class ApiController implements iController
@@ -54,7 +54,7 @@ IsCompleted bool)");
             $pdo = $db->prepare("select COUNT(*) from sqlite_master");
             $pdo->execute();
 
-            if ($pdo->fetch(PDO::FETCH_NUM)[0] === 1) {
+            if ($pdo->fetch(PDO::FETCH_NUM)[0] === 2) {
                 return "Table created!";
             } else
                 return "Table creation failed";

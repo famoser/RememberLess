@@ -51,6 +51,7 @@ namespace Famoser.RememberLess.View.ViewModel
             if (IsInDesignMode)
             {
                 Notes = noteRepository.GetExampleNotes();
+                NotesModified(null, NoteAction.Unknown);
             }
             else
             {
@@ -67,6 +68,7 @@ namespace Famoser.RememberLess.View.ViewModel
             _refreshCommand.RaiseCanExecuteChanged();
 
             Notes = await _noteRepository.GetNotes();
+            NotesModified(null, NoteAction.Unknown);
 
             await SyncNotes();
 
@@ -84,7 +86,10 @@ namespace Famoser.RememberLess.View.ViewModel
 
             var notes = await _noteRepository.SyncNotes(_notes);
             if (notes != null)
+            {
                 Notes = notes;
+                NotesModified(null, NoteAction.Unknown);
+            }
 
             _isSyncing = false;
             _refreshCommand.RaiseCanExecuteChanged();
@@ -105,7 +110,11 @@ namespace Famoser.RememberLess.View.ViewModel
         public string NewNote
         {
             get { return _newNote; }
-            set { Set(ref _newNote, value); }
+            set
+            {
+                if (Set(ref _newNote, value))
+                    _addNoteCommand.RaiseCanExecuteChanged();
+            }
         }
 
         private readonly RelayCommand _addNoteCommand;
@@ -122,10 +131,10 @@ namespace Famoser.RememberLess.View.ViewModel
                 CreateTime = DateTime.Now
             };
             Notes.Add(newNote);
-            RaisePropertyChanged(() => CompletedNotes);
-            RaisePropertyChanged(() => NewNote);
+            NotesModified(newNote, NoteAction.Add);
+            NewNote = "";
 
-            await _noteRepository.SaveNote(newNote);
+            await _noteRepository.Save(newNote, Notes);
         }
 
         private readonly RelayCommand<NoteModel> _toggleCompleted;
@@ -134,10 +143,9 @@ namespace Famoser.RememberLess.View.ViewModel
         private async void ToggleCompleted(NoteModel note)
         {
             note.IsCompleted = !note.IsCompleted;
-            RaisePropertyChanged(() => CompletedNotes);
-            RaisePropertyChanged(() => NewNote);
+            NotesModified(note, note.IsCompleted ? NoteAction.ToCompleted : NoteAction.ToNotCompleted);
 
-            await _noteRepository.SaveNote(note);
+            await _noteRepository.Save(note, Notes);
         }
 
         private readonly RelayCommand<NoteModel> _removeNote;
@@ -146,36 +154,71 @@ namespace Famoser.RememberLess.View.ViewModel
         private async void RemoveNote(NoteModel note)
         {
             Notes.Remove(note);
-            RaisePropertyChanged(() => CompletedNotes);
-            RaisePropertyChanged(() => NewNote);
+            NotesModified(note, NoteAction.Remove);
 
             note.DeletePending = true;
-            await _noteRepository.SaveNote(note);
+            await _noteRepository.Save(note, Notes);
         }
 
+        private void NotesModified(NoteModel note, NoteAction action)
+        {
+            if (action == NoteAction.Add)
+                _newNotes.Add(note);
+            else if (action == NoteAction.Remove)
+            {
+                if (_newNotes.Contains(note))
+                    _newNotes.Remove(note);
+                else if (_completedNotes.Contains(note))
+                    _completedNotes.Remove(note);
+            }
+            else if (action == NoteAction.ToCompleted)
+            {
+                if (_newNotes.Contains(note))
+                    _newNotes.Remove(note);
+                _completedNotes.Add(note);
+            }
+            else if (action == NoteAction.ToNotCompleted)
+            {
+                if (_completedNotes.Contains(note))
+                    _completedNotes.Remove(note);
+                _newNotes.Add(note);
+            }
+            else
+            {
+                _completedNotes = null;
+                _newNotes = null;
+                RaisePropertyChanged(() => CompletedNotes);
+                RaisePropertyChanged(() => NewNotes);
+            }
+        }
 
         private List<NoteModel> _notes;
         private List<NoteModel> Notes
         {
             get { return _notes; }
-            set
-            {
-                if (Set(ref _notes, value))
-                {
-                    RaisePropertyChanged(() => CompletedNotes);
-                    RaisePropertyChanged(() => NewNotes);
-                }
-            }
+            set { Set(ref _notes, value); }
         }
-        
+
+        private ObservableCollection<NoteModel> _completedNotes;
         public ObservableCollection<NoteModel> CompletedNotes
         {
-            get { return new ObservableCollection<NoteModel>(_notes.Where(n => n.IsCompleted).OrderByDescending(n => n.CreateTime)); }
+            get
+            {
+                if (_completedNotes == null)
+                    _completedNotes = new ObservableCollection<NoteModel>(_notes.Where(n => n.IsCompleted).OrderByDescending(n => n.CreateTime));
+                return _completedNotes;
+            }
         }
-        
+
+        private ObservableCollection<NoteModel> _newNotes;
         public ObservableCollection<NoteModel> NewNotes
         {
-            get { return new ObservableCollection<NoteModel>(_notes.Where(n => !n.IsCompleted).OrderByDescending(n => n.CreateTime)); }
+            get
+            {
+                if (_newNotes == null)
+                    _newNotes = new ObservableCollection<NoteModel>(_notes.Where(n => !n.IsCompleted).OrderByDescending(n => n.CreateTime));
+                return _newNotes;
+            }
         }
     }
 }

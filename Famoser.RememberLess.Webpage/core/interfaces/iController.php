@@ -6,7 +6,7 @@
  * Time: 14:45
  */
 
-namespace famoser\beercompanion\webpage\core\interfaces;
+namespace famoser\rememberless\webpage\core\interfaces;
 
 
 interface iController

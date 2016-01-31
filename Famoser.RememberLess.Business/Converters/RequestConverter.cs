@@ -13,7 +13,7 @@ namespace Famoser.RememberLess.Business.Converters
 {
     public class RequestConverter : SingletonBase<RequestConverter>
     {
-        internal NoteRequest ConvertToNoteRequest(Guid guid, PossibleActions action, List<NoteModel> notes, int count = -1)
+        public NoteRequest ConvertToNoteRequest(Guid guid, PossibleActions action, List<NoteModel> notes, int count = -1)
         {
             return new NoteRequest(action,guid)
             {
@@ -22,19 +22,19 @@ namespace Famoser.RememberLess.Business.Converters
             };
         }
 
-        internal List<NoteEntity> ConvertAllToNoteEntity(List<NoteModel> notes)
+        public List<NoteEntity> ConvertAllToNoteEntity(List<NoteModel> notes)
         {
             return notes.Select(ConvertToNoteEntity).ToList();
         }
 
-        internal NoteEntity ConvertToNoteEntity(NoteModel noteModel)
+        public NoteEntity ConvertToNoteEntity(NoteModel noteModel)
         {
             return new NoteEntity()
             {
                  Guid = noteModel.Guid,
                  Content = noteModel.Content,
                  CreateTime = noteModel.CreateTime,
-                 IsCompleted = noteModel.IsCompleted
+                 IsCompletedBool = noteModel.IsCompleted
             };
         }
     }

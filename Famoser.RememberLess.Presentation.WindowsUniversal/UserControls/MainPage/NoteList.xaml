@@ -1,0 +1,52 @@
+﻿<UserControl
+    x:Class="Famoser.RememberLess.Presentation.WindowsUniversal.UserControls.MainPage.NoteList"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Famoser.RememberLess.Presentation.WindowsUniversal.UserControls.MainPage"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mainPage="using:Famoser.RememberLess.Presentation.WindowsUniversal.Converters.MainPage"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400"
+    d:DataContext="{Binding MainViewModel.CompletedNotes, Source={StaticResource Locator}}">
+    
+    <UserControl.Resources>
+        <mainPage:SymbolConverter x:Key="SymbolConverter" />
+        <mainPage:ColorConverter x:Key="ColorConverter" />
+        <DataTemplate x:Name="NoteTemplate">
+            <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="5" TextWrapping="Wrap" Text="{Binding Content}" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+
+                <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="1" Background="Transparent" Foreground="{Binding Converter={StaticResource ColorConverter}}" Command="{Binding MainViewModel.ToggleCompletedCommand, Source={StaticResource Locator}}" CommandParameter="{Binding }" >
+                    <Button.Content>
+                        <SymbolIcon Symbol="{Binding Converter={StaticResource SymbolConverter}}" />
+                    </Button.Content>
+                </Button>
+                <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="2" Background="Transparent" Foreground="{ThemeResource DisApprooveRed}" Command="{Binding MainViewModel.RemoveNoteCommand, Source={StaticResource Locator}}" CommandParameter="{Binding }" >
+                    <Button.Content>
+                        <SymbolIcon Symbol="Clear" />
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <ListView Margin="0,-2" SelectionMode="None" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Margin" Value="0,2" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+    </Grid>
+</UserControl>

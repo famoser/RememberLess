@@ -6,16 +6,16 @@
  * Time: 12:53
  */
 
-namespace famoser\beercompanion\webpage\core\validationhelper;
+namespace famoser\rememberless\webpage\core\validationhelper;
 
-use famoser\beercompanion\webpage\core\logging\logger;
+use famoser\rememberless\webpage\core\logging\logger;
 
 function ValidateGuid($input)
 {
     if (preg_match('/^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/', $input)) {
         return true;
     } else {
-        logger::getInstance()->doLog(LOG_LEVEL_ASSERT, "Guid not correct: " . $input);
+        logger::getInstance()->doLog(logger::LOG_LEVEL_ASSERT, "Guid not correct: " . $input);
         return false;
     }
 }
@@ -34,5 +34,5 @@ function ConvertToDatabaseDateTime($input)
 {
     if ($input == null || $input == "")
         return null;
-    return date(DATETIME_FORMAT_DATABASE, strtotime($input));
+    return date("Y-m-d H:i:s", strtotime($input));
 }

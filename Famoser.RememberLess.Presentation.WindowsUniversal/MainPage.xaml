@@ -5,10 +5,54 @@
     xmlns:local="using:Famoser.RememberLess.Presentation.WindowsUniversal"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mainPage="using:Famoser.RememberLess.Presentation.WindowsUniversal.UserControls.MainPage"
+    xmlns:mainPage1="using:Famoser.RememberLess.Presentation.WindowsUniversal.Converters.MainPage"
     mc:Ignorable="d"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
+<Page.Resources>
+        <mainPage1:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+</Page.Resources>
+
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="remember" Style="{ThemeResource HeaderTextBlockStyle}" />
+                <mainPage:NoteList Grid.Row="1" DataContext="{Binding NewNotes}" />
+                <TextBlock Grid.Row="2" Text="remembered" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <mainPage:NoteList Grid.Row="3" DataContext="{Binding CompletedNotes}" />
+            </Grid>
+        </ScrollViewer>
 
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.PrimaryCommands>
+                <AppBarButton Icon="Add" IsCompact="True" >
+                    <AppBarButton.Flyout>
+                        <Flyout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" />
+                                <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="1" Background="Transparent" Command="{Binding AddNoteCommand}" >
+                                    <Button.Content>
+                                        <SymbolIcon Symbol="Add" />
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                    </AppBarButton>
+            </CommandBar.PrimaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

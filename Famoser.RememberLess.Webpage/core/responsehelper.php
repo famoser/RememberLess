@@ -6,9 +6,9 @@
  * Time: 12:45
  */
 
-namespace famoser\beercompanion\webpage\core\responsehelper;
+namespace famoser\rememberless\webpage\core\responsehelper;
 
-use famoser\beercompanion\webpage\core\logging\logger;
+use famoser\rememberless\webpage\core\logging\logger;
 
 function ReturnError($error)
 {
@@ -32,6 +32,12 @@ function RelationNotFound($identifier1, $itentifier2, $class)
 {
     header("HTTP/1.0 500 Internal Server Error");
     return "The relation with identifiers " . $identifier1 . " and " .$itentifier2 . " to retreieve class  ".$class . " cannot be found". appendLogs();
+}
+
+function ReturnJson($object)
+{
+    $json = json_encode($object);
+    return preg_replace('/,\s*"[^"]+":null|"[^"]+":null,?/', '', $json);
 }
 
 function ReturnBoolean($bool)

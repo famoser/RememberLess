@@ -6,7 +6,7 @@
  * Time: 14:56
  */
 
-namespace famoser\beercompanion\webpage\models;
+namespace famoser\rememberless\webpage\models;
 
 
 class Note

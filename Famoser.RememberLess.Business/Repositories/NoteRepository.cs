@@ -164,17 +164,19 @@ namespace Famoser.RememberLess.Business.Repositories
             };
         }
 
-        public async Task<bool> SaveNote(NoteModel nm)
+        public async Task<bool> Save(NoteModel nm, List<NoteModel> notes)
         {
             try
             {
+                var successfull = true;
                 if (nm.DeletePending)
                 {
                     if (nm.IsPosted)
                     {
                         var obj = RequestConverter.Instance.ConvertToNoteRequest(_usrInfo.Guid, PossibleActions.Remove,
                             new List<NoteModel>() { nm });
-                        return (await _dataService.PostNote(obj)).IsSuccessfull;
+                        successfull = (await _dataService.PostNote(obj)).IsSuccessfull;
+                        nm.IsPosted = true;
                     }
                 }
                 else
@@ -182,8 +184,14 @@ namespace Famoser.RememberLess.Business.Repositories
 
                     var obj = RequestConverter.Instance.ConvertToNoteRequest(_usrInfo.Guid, PossibleActions.AddOrUpdate,
                         new List<NoteModel>() { nm });
-                    return (await _dataService.PostNote(obj)).IsSuccessfull;
+                    successfull = (await _dataService.PostNote(obj)).IsSuccessfull;
+                    nm.IsPosted = true;
                 }
+
+
+                var notesJson = JsonConvert.SerializeObject(notes);
+                successfull &= await _storageService.SetCachedData(notesJson);
+                return successfull;
             }
             catch (Exception ex)
             {

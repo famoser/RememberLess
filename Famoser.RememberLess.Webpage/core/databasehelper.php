@@ -129,7 +129,7 @@ function Update($table, $arr)
 
 function GetModelByTable($table)
 {
-    return "famoser\\beercompanion\\webpage\\models\\" .substr($table, 0, -1);
+    return "famoser\\rememberless\\webpage\\models\\" .substr($table, 0, -1);
 }
 
 function GetTabelByModel($obj)

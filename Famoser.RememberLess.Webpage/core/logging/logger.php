@@ -6,7 +6,7 @@
  * Time: 15:14
  */
 
-namespace famoser\beercompanion\webpage\core\logging;
+namespace famoser\rememberless\webpage\core\logging;
 
 
 class logger
@@ -14,6 +14,11 @@ class logger
     private $logs = array();
 
     private static $instance = null;
+
+
+    const LOG_LEVEL_ASSERT = 2;
+    const LOG_LEVEL_ERROR = 3;
+    const LOG_LEVEL_FATAL = 4;
 
     public static function getInstance()
     {
@@ -32,7 +37,7 @@ class logger
 
     public function logException($ex)
     {
-        $log = new logitem(LOG_LEVEL_ERROR, $ex);
+        $log = new logitem(logger::LOG_LEVEL_ERROR, $ex);
         $this->logs[] = $log;
     }
 

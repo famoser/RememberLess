@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{bcbec48e-7367-415a-9b70-42491beca2e9}</ProjectGuid>
+    <ProjectGuid>{BCBEC48E-7367-415A-9B70-42491BECA2E9}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Famoser.RememberLess.Tests</RootNamespace>
@@ -16,10 +16,8 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    
     <PackageCertificateKeyFile>Famoser.RememberLess.Tests_TemporaryKey.pfx</PackageCertificateKeyFile>
-    
-    <UnitTestPlatformVersion  Condition="'$(UnitTestPlatformVersion)' == ''">14.0</UnitTestPlatformVersion>
+    <UnitTestPlatformVersion Condition="'$(UnitTestPlatformVersion)' == ''">14.0</UnitTestPlatformVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
@@ -98,11 +96,13 @@
     <SDKReference Include="TestPlatform.Universal, Version=$(UnitTestPlatformVersion)" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ApiAssertHelper.cs" />
+    <Compile Include="Api\ApiTestHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnitTestApp.xaml.cs">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UnitTest.cs" />
+    <Compile Include="Api\TestApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml">
@@ -114,9 +114,7 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    
     <None Include="Famoser.RememberLess.Tests_TemporaryKey.pfx" />
-    
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\UnitTestApp.rd.xml" />
@@ -127,6 +125,23 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Famoser.RememberLess.Business\Famoser.RememberLess.Business.csproj">
+      <Project>{caa9b052-1b68-40b5-8c7c-efd03d3af39a}</Project>
+      <Name>Famoser.RememberLess.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Famoser.RememberLess.Data\Famoser.RememberLess.Data.csproj">
+      <Project>{63ada5bb-62c6-4f9c-a1b6-322d2afa4fa4}</Project>
+      <Name>Famoser.RememberLess.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Famoser.RememberLess.View\Famoser.RememberLess.View.csproj">
+      <Project>{28bee899-8812-49d4-a678-3fd877ba77b4}</Project>
+      <Name>Famoser.RememberLess.View</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

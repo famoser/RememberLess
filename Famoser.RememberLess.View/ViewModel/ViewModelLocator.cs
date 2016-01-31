@@ -50,6 +50,7 @@ namespace Famoser.RememberLess.View.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ProgressViewModel>();
         }
 
         public MainViewModel MainViewModel
@@ -59,7 +60,15 @@ namespace Famoser.RememberLess.View.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public ProgressViewModel ProgressViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ProgressViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels
