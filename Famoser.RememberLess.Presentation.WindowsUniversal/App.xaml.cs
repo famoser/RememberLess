@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Famoser.RememberLess.Presentation.WindowsUniversal.Services;
 
 namespace Famoser.RememberLess.Presentation.WindowsUniversal
 {
@@ -77,6 +78,8 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal
                 // parameter
                 rootFrame.Navigate(typeof(MainPage), e.Arguments);
             }
+            var service = new TilesService();
+
             // Ensure the current window is active
             Window.Current.Activate();
         }

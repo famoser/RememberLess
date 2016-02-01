@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Windows.UI.Notifications;
 using Famoser.RememberLess.View.Enums;
 using Famoser.RememberLess.View.ViewModel;
@@ -16,7 +17,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
     {
         public TilesService()
         {
-            Messenger.Default.Register<Messages>(this, Messages.NotesChanged, EvaluateMessages);
+            Messenger.Default.Register<Messages>(this, EvaluateMessages);
         }
 
         private void EvaluateMessages(Messages obj)
@@ -24,86 +25,70 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             if (obj == Messages.NotesChanged)
             {
                 var vm = SimpleIoc.Default.GetInstance<MainViewModel>();
-                
-                //var adap2 = new TileBindingContentAdaptive()
-                //{
-                //    Children =
-                //    {
-                //        new TileText()
-                //        {
-                //            Style = TileTextStyle.Title,
-                //            Text = vm.NewNotes.Count + " things to remember"
-                //        },
-                //        // For spacing
-                //        new TileText()
-                //    }
-                //};
 
-                //foreach (var noteModel in vm.NewNotes)
-                //{
-                //    adap2.Children.Add(new TileText()
-                //    {
-                //        Style = TileTextStyle.Body,
-                //        Text = noteModel.Content
-                //    });
-                //}
-                
-
-                //var tile = new TileBinding()
-                //{
-                //    Branding = TileBranding.NameAndLogo,
-                //    Content = adap2
-                //};
-
-                //var notif = new TileNotification(tile);
-
-                //var tileTitle = string.Format("Local Notification {0}", i);
-                //var tilesSubtitle = DateTime.UtcNow.AddHours(i);
-                //var myTile = Generator.Generate(tileTitle, tilesSubtitle);
-
-                //var notification = new TileNotification(myTile.ToXmlDoc()) { ExpirationTime = tilesSubtitle.AddMinutes(15), Tag = i.ToString() };
-
-                //TileUpdateManager.CreateTileUpdaterForApplication().Update(notification);
-
-                //var updater = Windows.UI.Notifications.TileUpdateManager.CreateTileUpdaterForApplication();
-                //updater.Update(tile.);
-            }
-        }
-
-
-
-
-        private static TileGroup CreateGroup(string from, string subject, string body)
-        {
-            return new TileGroup()
-            {
-                Children =
+                var adap2 = new TileBindingContentAdaptive()
                 {
-                    new TileSubgroup()
+                    Children =
+                    {
+                        new TileText()
+                        {
+                            Style = TileTextStyle.Title,
+                            Text = vm.NewNotes.Count + " pending"
+                        },
+                        // For spacing
+                        new TileText()
+                    }
+                };
+
+                foreach (var noteModel in vm.NewNotes)
+                {
+                    adap2.Children.Add(new TileText()
+                    {
+                        Style = TileTextStyle.BodySubtle,
+                        Text = noteModel.Content
+                    });
+                }
+
+                var tileLarge = new TileBinding()
+                {
+                    Branding = TileBranding.None,
+                    Content = adap2
+                };
+
+                var tileSmall = new TileBinding()
+                {
+                    Branding = TileBranding.None,
+                    Content = new TileBindingContentAdaptive()
                     {
                         Children =
                         {
                             new TileText()
                             {
-                                Text = from,
-                                Style = TileTextStyle.Subtitle
-                            },
-
-                            new TileText()
-                            {
-                                Text = subject,
-                                Style = TileTextStyle.CaptionSubtle
-                            },
-
-                            new TileText()
-                            {
-                                Text = body,
-                                Style = TileTextStyle.CaptionSubtle
+                                Style = TileTextStyle.Header,
+                                Text = vm.NewNotes.Count.ToString("00")
                             }
                         }
                     }
-                }
-            };
+                };
+
+                var tileVisual = new TileVisual()
+                {
+                    TileLarge = tileLarge,
+                    TileMedium = tileLarge,
+                    TileWide = tileLarge,
+                    TileSmall= tileSmall,
+                };
+                
+                var tileContent = new TileContent()
+                {
+                    Visual = tileVisual
+                };
+                
+                var notif = new TileNotification(tileContent.GetXml());
+                var updater = TileUpdateManager.CreateTileUpdaterForApplication();
+                updater.Update(notif);
+
+            }
         }
     }
 }
