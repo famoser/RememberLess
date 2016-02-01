@@ -12,6 +12,7 @@ using Famoser.RememberLess.View.Enums;
 using Famoser.RememberLess.View.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.RememberLess.View.ViewModel
@@ -101,9 +102,9 @@ namespace Famoser.RememberLess.View.ViewModel
 
         public bool CanRefresh { get { return !_isInitializing && !_isSyncing; } }
 
-        private void Refresh()
+        private async void Refresh()
         {
-            Initialize();
+            await SyncNotes();
         }
 
         private string _newNote;
@@ -190,6 +191,7 @@ namespace Famoser.RememberLess.View.ViewModel
                 RaisePropertyChanged(() => CompletedNotes);
                 RaisePropertyChanged(() => NewNotes);
             }
+            Messenger.Default.Send(Messages.NotesChanged);
         }
 
         private List<NoteModel> _notes;

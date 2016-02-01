@@ -38,6 +38,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\Messages.cs" />
     <Compile Include="Enums\NoteAction.cs" />
     <Compile Include="Enums\PageKeys.cs" />
     <Compile Include="Enums\ProgressKeys.cs" />

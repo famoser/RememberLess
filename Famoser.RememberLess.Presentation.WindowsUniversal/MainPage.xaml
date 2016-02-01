@@ -6,15 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mainPage="using:Famoser.RememberLess.Presentation.WindowsUniversal.UserControls.MainPage"
-    xmlns:mainPage1="using:Famoser.RememberLess.Presentation.WindowsUniversal.Converters.MainPage"
     mc:Ignorable="d"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
-<Page.Resources>
-        <mainPage1:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
-</Page.Resources>
 
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Padding="10" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ScrollViewer>
             <Grid>
                 <Grid.RowDefinitions>
@@ -32,8 +28,34 @@
 
     </Grid>
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar >
             <CommandBar.PrimaryCommands>
+                <!--<AppBarButton Icon="Link">
+                    <AppBarButton.Flyout>
+                        <Flyout>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="Du kannst dich mit weiteren Geräten verknüpfen. Die Notizen werden dann synchronisiert." TextWrapping="Wrap" />
+                                <TextBox Grid.Row="1" MinWidth="250" PlaceholderText="e195eae2-f3a3" Margin="0,4" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" >
+                                </TextBox>
+
+                                <Button Grid.Row="1" Margin="10,0,10,0" Padding="5,10" Grid.Column="1" Background="Transparent" Command="{Binding AddNoteCommand}" >
+                                    <Button.Content>
+                                        <SymbolIcon Symbol="Add" />
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>-->
+                <AppBarButton Command="{Binding RefreshCommand}" Icon="Refresh" />
                 <AppBarButton Icon="Add" IsCompact="True" >
                     <AppBarButton.Flyout>
                         <Flyout>
@@ -42,7 +64,9 @@
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <TextBox Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" />
+                                <TextBox MinWidth="250" Margin="0,4" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" >
+                                </TextBox>
+
                                 <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="1" Background="Transparent" Command="{Binding AddNoteCommand}" >
                                     <Button.Content>
                                         <SymbolIcon Symbol="Add" />
@@ -51,7 +75,7 @@
                             </Grid>
                         </Flyout>
                     </AppBarButton.Flyout>
-                    </AppBarButton>
+                </AppBarButton>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
