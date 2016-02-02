@@ -9,11 +9,8 @@
 namespace famoser\rememberless\webpage\models;
 
 
-class Note
+class Note extends BaseModel
 {
-    public $Id;
-    public $UserGuid;
-    public $Guid;
     public $Content;
     public $CreateTime;
     public $IsCompleted;

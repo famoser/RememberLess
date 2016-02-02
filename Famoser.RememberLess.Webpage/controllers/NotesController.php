@@ -52,7 +52,7 @@ class NotesController implements iController
                         }
                     }
                     return ReturnBoolean(InsertAll($newNotes));
-                }else if ($obj->Action == "addorupdate") {
+                } else if ($obj->Action == "addorupdate") {
                     $newNotes = array();
                     $updateNotes = array();
                     foreach ($obj->Notes as $note) {
@@ -89,16 +89,7 @@ class NotesController implements iController
                 } else {
                     return ReturnError(LINK_INVALID);
                 }
-            }
-            else if ($param[0] == "checkguid" && isset($param[1])) {
-                if (count($param[1]) > 5) {
-                    $notecount = $this->countNotesFor($param[1]);
-                    if ($notecount == 0)
-                        return ReturnBoolean(true);
-                }
-                return ReturnBoolean(false);
-            }
-            else if (ValidateGuid($param[0])) {
+            } else if (ValidateGuid($param[0])) {
                 $notes = GetAllByCondition("Notes", array("UserGuid" => $param[0]), "CreateTime DESC");
                 $resp = new NoteResponse();
                 foreach ($notes as $note) {
@@ -110,21 +101,11 @@ class NotesController implements iController
         return ReturnError(LINK_INVALID);
     }
 
-    private function countExistingNotes(BaseRequest $req)
+    private function countExistingNotes($req)
     {
         $db = GetDatabaseConnection();
-        $pdo = $db->prepare("SELECT COUNT(*) FROM Notes WHERE UserGuid=:Id GROUP BY UserGuid");
+        $pdo = $db->prepare("SELECT COUNT(*) FROM Notes WHERE UserGuid=:Id");
         $pdo->bindParam(":Id", $req->Guid);
-        $pdo->execute();
-
-        return $pdo->fetch(PDO::FETCH_NUM)[0];
-    }
-
-    private function countNotesFor($guid)
-    {
-        $db = GetDatabaseConnection();
-        $pdo = $db->prepare("SELECT COUNT(*) FROM Notes WHERE UserGuid LIKE :guid");
-        $pdo->bindValue(":guid", $guid . "%");
         $pdo->execute();
 
         return $pdo->fetch(PDO::FETCH_NUM)[0];
