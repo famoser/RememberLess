@@ -14,7 +14,8 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
         {
             var navigationService = new CustomNavigationService();
 
-            navigationService.Implementation.Configure(PageKeys.MainPage.ToString(), typeof(MainPage));
+            navigationService.Implementation.Configure(PageKeys.MainPage.ToString(), typeof(Pages.MainPage));
+            navigationService.Implementation.Configure(PageKeys.ConnectPage.ToString(), typeof(Pages.ConnectPage));
 
             return navigationService;
         }

@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -15,6 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Famoser.RememberLess.Presentation.WindowsUniversal.Services;
+using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.RememberLess.Presentation.WindowsUniversal
 {
@@ -76,12 +79,28 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                rootFrame.Navigate(typeof(Pages.MainPage), e.Arguments);
             }
             var service = new TilesService();
 
             // Ensure the current window is active
             Window.Current.Activate();
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) =>
+            {
+                Frame frame = Window.Current.Content as Frame;
+
+                if (frame != null && frame.CanGoBack)
+                {
+                    var ns = SimpleIoc.Default.GetInstance<INavigationService>();
+                    ns.GoBack();
+                    ev.Handled = true;
+                }
+                else
+                {
+                    Current.Exit();
+                }
+            };
         }
 
         /// <summary>

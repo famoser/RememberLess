@@ -8,6 +8,7 @@ namespace Famoser.RememberLess.View.Enums
 {
     public enum Messages
     {
-        NotesChanged
+        NotesChanged,
+        QrCodeScanned
     }
 }

@@ -12,6 +12,7 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using System.Runtime.InteropServices;
 using Famoser.RememberLess.Business.Repositories;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.Data.Services;
@@ -50,6 +51,7 @@ namespace Famoser.RememberLess.View.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ConnectViewModel>(); 
             SimpleIoc.Default.Register<ProgressViewModel>();
         }
 
@@ -58,6 +60,14 @@ namespace Famoser.RememberLess.View.ViewModel
             get
             {
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
+            }
+        }
+
+        public ConnectViewModel ConnectViewModel
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ConnectViewModel>();
             }
         }
 

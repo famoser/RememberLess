@@ -48,6 +48,7 @@ namespace Famoser.RememberLess.View.ViewModel
             _addNoteCommand = new RelayCommand(AddNote, () => CanAddNote);
             _removeNote = new RelayCommand<NoteModel>(RemoveNote);
             _toggleCompleted = new RelayCommand<NoteModel>(ToggleCompleted);
+            _connectCommand = new RelayCommand(Connect);
 
             if (IsInDesignMode)
             {
@@ -147,6 +148,14 @@ namespace Famoser.RememberLess.View.ViewModel
             NotesModified(note, note.IsCompleted ? NoteAction.ToCompleted : NoteAction.ToNotCompleted);
 
             await _noteRepository.Save(note, Notes);
+        }
+
+        private readonly RelayCommand _connectCommand;
+        public ICommand ConnectCommand { get { return _connectCommand; } }
+
+        private void Connect()
+        {
+            _navigationService.NavigateTo(PageKeys.ConnectPage.ToString());
         }
 
         private readonly RelayCommand<NoteModel> _removeNote;
