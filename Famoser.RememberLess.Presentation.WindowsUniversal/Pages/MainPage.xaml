@@ -18,11 +18,24 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Text="remember" Style="{ThemeResource HeaderTextBlockStyle}" />
-                <mainPage:NoteList Grid.Row="1" DataContext="{Binding NewNotes}" />
-                <TextBlock Grid.Row="2" Text="remembered" Style="{ThemeResource HeaderTextBlockStyle}"/>
-                <mainPage:NoteList Grid.Row="3" DataContext="{Binding CompletedNotes}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox IsTabStop="False" VerticalAlignment="Center" Margin="0,5" Padding="6" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0"  />
+                    <Button Margin="10,0,10,0" Padding="5,5" Grid.Column="1" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" Command="{Binding AddNoteCommand}" >
+                        <Button.Content>
+                            <SymbolIcon Symbol="Add" />
+                        </Button.Content>
+                    </Button>
+                </Grid>
+                <TextBlock Grid.Row="1" Text="remember" Style="{ThemeResource HeaderTextBlockStyle}" />
+                <mainPage:NoteList Grid.Row="2" DataContext="{Binding NewNotes}" />
+                <TextBlock Grid.Row="3" Text="remembered" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                <mainPage:NoteList Grid.Row="4" DataContext="{Binding CompletedNotes}" />
             </Grid>
         </ScrollViewer>
 
@@ -32,25 +45,6 @@
             <CommandBar.PrimaryCommands>
                 <AppBarButton Icon="Link" Command="{Binding ConnectCommand}" />
                 <AppBarButton Command="{Binding RefreshCommand}" Icon="Refresh" />
-                <AppBarButton Icon="Add" IsCompact="True" >
-                    <AppBarButton.Flyout>
-                        <Flyout x:Name="AddFlyout">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox MinWidth="250" Margin="0,4" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0"  />
-
-                                <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="1" Background="Transparent" Command="{Binding AddNoteCommand}" Tapped="Button_Tapped" >
-                                    <Button.Content>
-                                        <SymbolIcon Symbol="Add" />
-                                    </Button.Content>
-                                </Button>
-                            </Grid>
-                        </Flyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

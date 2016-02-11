@@ -1,4 +1,7 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System;
+using Windows.Foundation.Metadata;
+using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Controls;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -12,11 +15,6 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
         public MainPage()
         {
             this.InitializeComponent();
-        }
-
-        private void Button_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            AddFlyout.Hide();
         }
     }
 }

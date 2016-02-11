@@ -7,7 +7,9 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Foundation.Metadata;
 using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -85,6 +87,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal
 
             // Ensure the current window is active
             Window.Current.Activate();
+            InitView();
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) =>
             {
@@ -103,12 +106,22 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal
             };
         }
 
+        private async void InitView()
+        {
+            if (ApiInformation.IsApiContractPresent("Windows.Phone.PhoneContract", 1, 0))
+            {
+                var statusBar = StatusBar.GetForCurrentView();
+                await statusBar.HideAsync();
+            }
+        }
+
+
         /// <summary>
-        /// Invoked when Navigation to a certain page fails
-        /// </summary>
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+    /// Invoked when Navigation to a certain page fails
+    /// </summary>
+    /// <param name="sender">The Frame which failed navigation</param>
+    /// <param name="e">Details about the navigation failure</param>
+    void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
