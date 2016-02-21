@@ -76,8 +76,9 @@ class NotesController implements iController
                     return ReturnBoolean(InsertAll($newNotes) && UpdateAll($updateNotes));
                 } else if ($obj->Action == "sync") {
                     $notecount = $this->countExistingNotes($obj);
-                    if ($notecount !== $obj->ExpectedCount)
+                    if ($notecount != $obj->ExpectedCount)
                         return ReturnBoolean(false);
+                        //return \famoser\rememberless\webpage\core\responsehelper\ReturnNotAuthenticated("expected count".$obj->ExpectedCount." read count ".$notecount);
 
                     $notes = GetAllByCondition("Notes", array("UserGuid" => $obj->Guid), "CreateTime DESC", " LIMIT " . count($obj->Notes));
                     for ($i = 0; $i < count($notes); $i++) {

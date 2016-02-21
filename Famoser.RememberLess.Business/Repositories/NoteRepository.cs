@@ -84,7 +84,7 @@ namespace Famoser.RememberLess.Business.Repositories
                 var add = notes.Where(b => !b.IsPosted).ToList();
                 if (add.Any())
                 {
-                    var obj = RequestConverter.Instance.ConvertToNoteRequest(_usrInfo.Guid, PossibleActions.Add, add);
+                    var obj = RequestConverter.Instance.ConvertToNoteRequest(_usrInfo.Guid, PossibleActions.AddOrUpdate, add);
                     if ((await _dataService.PostNote(obj)).IsSuccessfull)
                     {
                         foreach (var beer in notes)
@@ -102,7 +102,7 @@ namespace Famoser.RememberLess.Business.Repositories
                     if (!newbeers.Response)
                     {
                         var allnotes = await _dataService.GetNotes(_usrInfo.Guid);
-                        if (newbeers.IsSuccessfull)
+                        if (allnotes.IsSuccessfull)
                         {
                             var syncNotes = new List<NoteModel>(ResponseConverter.Instance.Convert(allnotes.Notes));
                             foreach (var newbeer in syncNotes)
@@ -175,8 +175,7 @@ namespace Famoser.RememberLess.Business.Repositories
                     {
                         var obj = RequestConverter.Instance.ConvertToNoteRequest(_usrInfo.Guid, PossibleActions.Remove,
                             new List<NoteModel>() { nm });
-                        successfull = (await _dataService.PostNote(obj)).IsSuccessfull;
-                        nm.IsPosted = true;
+                        nm.IsPosted = (await _dataService.PostNote(obj)).IsSuccessfull;
                     }
                 }
                 else
@@ -184,8 +183,7 @@ namespace Famoser.RememberLess.Business.Repositories
 
                     var obj = RequestConverter.Instance.ConvertToNoteRequest(_usrInfo.Guid, PossibleActions.AddOrUpdate,
                         new List<NoteModel>() { nm });
-                    successfull = (await _dataService.PostNote(obj)).IsSuccessfull;
-                    nm.IsPosted = true;
+                    nm.IsPosted = (await _dataService.PostNote(obj)).IsSuccessfull; ;
                 }
 
 

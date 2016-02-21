@@ -5,7 +5,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mainPage="using:Famoser.RememberLess.Presentation.WindowsUniversal.UserControls.MainPage"
-    xmlns:windowsUniversal="using:Famoser.RememberLess.Presentation.WindowsUniversal"
     mc:Ignorable="d"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
 
@@ -25,7 +24,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBox IsTabStop="False" VerticalAlignment="Center" Margin="0,5" Padding="6" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0"  />
+                    <TextBox VerticalAlignment="Center" Margin="0,5" Padding="6" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0"  />
                     <Button Margin="10,0,10,0" Padding="5,5" Grid.Column="1" Background="{ThemeResource SystemControlBackgroundAccentBrush}" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" Command="{Binding AddNoteCommand}" >
                         <Button.Content>
                             <SymbolIcon Symbol="Add" />

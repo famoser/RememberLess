@@ -24,7 +24,7 @@ namespace Famoser.RememberLess.Data.Entities
         {
             set
             {
-                if (value == "1" || value == "true")
+                if (value == "1" || value == "true" || value == "True")
                     IsCompletedBool = true;
             }
             get { return IsCompletedBool.ToString(); }
