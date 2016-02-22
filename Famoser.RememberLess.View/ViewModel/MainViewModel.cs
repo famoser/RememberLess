@@ -59,6 +59,14 @@ namespace Famoser.RememberLess.View.ViewModel
             {
                 Initialize();
             }
+
+            Messenger.Default.Register<Messages>(this, EvaluateMessages);
+        }
+
+        private async void EvaluateMessages(Messages obj)
+        {
+            if (obj == Messages.SyncNotes)
+                await SyncNotes();
         }
 
         //enable for debug purposes
@@ -72,7 +80,7 @@ namespace Famoser.RememberLess.View.ViewModel
             Notes = await _noteRepository.GetNotes();
             NotesModified(null, NoteAction.Unknown);
 
-            await SyncNotes();
+            
 
             _isInitializing = false;
             _refreshCommand.RaiseCanExecuteChanged();
@@ -173,7 +181,7 @@ namespace Famoser.RememberLess.View.ViewModel
         private void NotesModified(NoteModel note, NoteAction action)
         {
             if (action == NoteAction.Add)
-                _newNotes.Add(note);
+                _newNotes.Insert(0, note);
             else if (action == NoteAction.Remove)
             {
                 if (_newNotes.Contains(note))
@@ -185,13 +193,13 @@ namespace Famoser.RememberLess.View.ViewModel
             {
                 if (_newNotes.Contains(note))
                     _newNotes.Remove(note);
-                _completedNotes.Add(note);
+                InsertInOrder(note, _completedNotes);
             }
             else if (action == NoteAction.ToNotCompleted)
             {
                 if (_completedNotes.Contains(note))
                     _completedNotes.Remove(note);
-                _newNotes.Add(note);
+                InsertInOrder(note, _newNotes);
             }
             else
             {
@@ -201,6 +209,23 @@ namespace Famoser.RememberLess.View.ViewModel
                 RaisePropertyChanged(() => NewNotes);
             }
             Messenger.Default.Send(Messages.NotesChanged);
+        }
+
+        private void InsertInOrder(NoteModel note, ObservableCollection<NoteModel> list)
+        {
+
+            var found = false;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].CreateTime < note.CreateTime)
+                {
+                    list.Insert(i, note);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+                list.Add(note);
         }
 
         private List<NoteModel> _notes;

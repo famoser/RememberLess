@@ -10,7 +10,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400"
     d:DataContext="{Binding MainViewModel.CompletedNotes, Source={StaticResource Locator}}">
-    
+
     <UserControl.Resources>
         <mainPage:SymbolConverter x:Key="SymbolConverter" />
         <mainPage:ColorConverter x:Key="ColorConverter" />
@@ -21,32 +21,39 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" VerticalAlignment="Center" Margin="5" TextWrapping="Wrap" Text="{Binding Content}" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+                <TextBlock Grid.Column="0" Style="{StaticResource NoteTexBlock}" Text="{Binding Content}" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
 
                 <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="1" Background="Transparent" Foreground="{Binding Converter={StaticResource ColorConverter}}" Command="{Binding MainViewModel.ToggleCompletedCommand, Source={StaticResource Locator}}" CommandParameter="{Binding }" >
+                <Button Style="{StaticResource EditNoteButton}" Grid.Column="1" Foreground="{Binding Converter={StaticResource ColorConverter}}" Command="{Binding MainViewModel.ToggleCompletedCommand, Source={StaticResource Locator}}" CommandParameter="{Binding }" >
                     <Button.Content>
                         <SymbolIcon Symbol="{Binding Converter={StaticResource SymbolConverter}}" />
                     </Button.Content>
                 </Button>
-                <Button Margin="10,0,10,0" Padding="5,10" Grid.Column="2" Background="Transparent" Foreground="{ThemeResource DisApprooveRed}" Command="{Binding MainViewModel.RemoveNoteCommand, Source={StaticResource Locator}}" CommandParameter="{Binding }" >
+                <Button Style="{StaticResource EditNoteButton}" Grid.Column="2" Foreground="{ThemeResource DisApprooveRed}" Command="{Binding MainViewModel.RemoveNoteCommand, Source={StaticResource Locator}}" CommandParameter="{Binding }" >
                     <Button.Content>
                         <SymbolIcon Symbol="Clear" />
                     </Button.Content>
                 </Button>
             </Grid>
         </DataTemplate>
+        
+        
+        <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="Margin" Value="0,2" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <!--<ContentPresenter />-->
+                        <ListViewItemPresenter CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="Inline" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" SelectedBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
 
     <Grid>
-        <ListView Margin="0,-2" SelectionMode="None" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" >
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="0,2" />
-                </Style>
-            </ListView.ItemContainerStyle>
-        </ListView>
+        <ListView SelectionMode="None" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" ItemContainerStyle="{StaticResource ListViewItemStyle1}"  />
     </Grid>
 </UserControl>

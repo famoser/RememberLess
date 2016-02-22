@@ -33,6 +33,47 @@
             <SolidColorBrush x:Key="PivotHeaderForegroundUnselectedBrush" Color="#CDFFFFFF" />
 
             <viewModels:ViewModelLocator x:Key="Locator" />
+            
+            <Style x:Key="AddNewNoteTextBox" TargetType="TextBox">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="BorderThickness" Value="0,1,0,1" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+            
+            <Style x:Key="AddNewNoteButton" TargetType="Button">
+                <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
+                <Setter Property="Foreground" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Padding" Value="12" />
+            </Style>
+
+
+            <Style x:Key="NoteTexBlock" TargetType="TextBlock">
+                <Setter Property="Margin" Value="0" />
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="TextWrapping" Value="Wrap" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+
+
+            <Style x:Key="EditNoteButton" TargetType="Button">
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="Background" Value="Transparent" />
+            </Style>
+
+            <Style x:Key="HeaderTextBlock" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="40" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="Padding" Value="10" />
+
+            </Style>
+            
 
         </ResourceDictionary>
     </Application.Resources>

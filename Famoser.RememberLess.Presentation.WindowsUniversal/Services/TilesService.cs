@@ -65,7 +65,8 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
                             new TileText()
                             {
                                 Style = TileTextStyle.Header,
-                                Text = vm.NewNotes.Count.ToString("00")
+                                Text = vm.NewNotes.Count.ToString("00"),
+                                Align = TileTextAlign.Center
                             }
                         }
                     }
@@ -76,14 +77,14 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
                     TileLarge = tileLarge,
                     TileMedium = tileLarge,
                     TileWide = tileLarge,
-                    TileSmall= tileSmall,
+                    TileSmall = tileSmall,
                 };
-                
+
                 var tileContent = new TileContent()
                 {
                     Visual = tileVisual
                 };
-                
+
                 var notif = new TileNotification(tileContent.GetXml());
                 var updater = TileUpdateManager.CreateTileUpdaterForApplication();
                 updater.Update(notif);
