@@ -34,9 +34,8 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal
         /// </summary>
         public App()
         {
-            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
-                Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
-                Microsoft.ApplicationInsights.WindowsCollectors.Session);
+            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync();
+
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }

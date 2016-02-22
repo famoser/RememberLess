@@ -14,28 +14,28 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-            <StackPanel>
-                <Grid>
-                    <TextBox Style="{StaticResource AddNewNoteTextBox}" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0"  />
-                    <Button Style="{StaticResource AddNewNoteButton}" Command="{Binding AddNoteCommand}" >
-                        <Button.Content>
-                            <SymbolIcon Symbol="Add" />
-                        </Button.Content>
-                    </Button>
-                </Grid>
+            <StackPanel Margin="0,50,0,0">
                 <TextBlock Text="remember" Style="{ThemeResource HeaderTextBlock}" />
                 <mainPage:NoteList DataContext="{Binding NewNotes}" />
                 <TextBlock Text="remembered" Style="{ThemeResource HeaderTextBlock}"/>
                 <mainPage:NoteList DataContext="{Binding CompletedNotes}" />
             </StackPanel>
         </ScrollViewer>
+        <Grid Height="50" VerticalAlignment="Top">
+            <TextBox Style="{StaticResource AddNewNoteTextBox}" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" TabIndex="-1" />
+            <Button Style="{StaticResource AddNewNoteButton}" Command="{Binding AddNoteCommand}" >
+                <Button.Content>
+                    <SymbolIcon Symbol="Add" />
+                </Button.Content>
+            </Button>
+        </Grid>
 
     </Grid>
     <Page.BottomAppBar>
         <CommandBar >
             <CommandBar.PrimaryCommands>
-                <AppBarButton Icon="Link" Command="{Binding ConnectCommand}" />
-                <AppBarButton Command="{Binding RefreshCommand}" Icon="Refresh" />
+                <!--<AppBarButton Icon="Link" Command="{Binding ConnectCommand}" Content="Connect" />-->
+                <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="Refresh" Label="Refresh" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

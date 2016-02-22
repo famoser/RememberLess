@@ -54,6 +54,6 @@
     </UserControl.Resources>
 
     <Grid>
-        <ListView SelectionMode="None" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" ItemContainerStyle="{StaticResource ListViewItemStyle1}"  />
+        <ListView SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" ItemContainerStyle="{StaticResource ListViewItemStyle1}"  />
     </Grid>
 </UserControl>
