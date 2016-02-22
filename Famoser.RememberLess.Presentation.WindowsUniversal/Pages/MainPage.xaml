@@ -22,8 +22,8 @@
             </StackPanel>
         </ScrollViewer>
         <Grid Height="50" VerticalAlignment="Top">
-            <TextBox Style="{StaticResource AddNewNoteTextBox}" Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" TabIndex="-1" />
-            <Button Style="{StaticResource AddNewNoteButton}" Command="{Binding AddNoteCommand}" >
+            <TextBox Style="{StaticResource AddNewNoteTextBox}"  Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" TabIndex="-1" KeyDown="TextBox_KeyDown" />
+            <Button x:Name="AddNewNoteButton" Style="{StaticResource AddNewNoteButton}" Command="{Binding AddNoteCommand}" >
                 <Button.Content>
                     <SymbolIcon Symbol="Add" />
                 </Button.Content>
