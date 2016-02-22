@@ -3,7 +3,7 @@
   <Identity Name="c125c3f9-46af-4f5f-ac5f-c93f5f8e3f29" Publisher="CN=Florian Moser" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="c125c3f9-46af-4f5f-ac5f-c93f5f8e3f29" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>Famoser.RememberLess.Presentation.WindowsUniversal</DisplayName>
+    <DisplayName>Remember Less</DisplayName>
     <PublisherDisplayName>Florian Moser</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Famoser.RememberLess.Presentation.WindowsUniversal.App">
-      <uap:VisualElements DisplayName="Famoser.RememberLess.Presentation.WindowsUniversal" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Famoser.RememberLess.Presentation.WindowsUniversal" BackgroundColor="transparent">
+      <uap:VisualElements DisplayName="Famoser.RememberLess.Presentation.WindowsUniversal" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Remember Less kepps track of your to do's" BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\Square310x310Logo.png">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
