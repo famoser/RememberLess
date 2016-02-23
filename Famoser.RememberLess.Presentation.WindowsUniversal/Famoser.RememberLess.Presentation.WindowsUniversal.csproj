@@ -105,6 +105,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\MainPage\ColorConverter.cs" />
     <Compile Include="Converters\MainPage\CountToVisibilityConverter.cs" />
     <Compile Include="Converters\MainPage\SymbolConverter.cs" />
@@ -129,6 +130,9 @@
     </Compile>
     <Compile Include="UserControls\ConnectPage\TakeImage.xaml.cs">
       <DependentUpon>TakeImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ProgressUserControl.xaml.cs">
+      <DependentUpon>ProgressUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
@@ -170,6 +174,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ConnectPage\TakeImage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\ProgressUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

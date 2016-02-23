@@ -93,26 +93,19 @@ namespace Famoser.RememberLess.Business.Repositories
                         }
                     }
                 }
-
-                var orderedBeers = notes.OrderByDescending(b => b.CreateTime);
-                var sync = RequestConverter.Instance.ConvertToNoteRequest(_usrInfo.Guid, PossibleActions.Sync, orderedBeers.Take(20).ToList(), orderedBeers.Count());
-                var newbeers = await _dataService.PostNote(sync);
-                if (newbeers.IsSuccessfull)
+                
+                var allnotes = await _dataService.GetNotes(_usrInfo.Guid);
+                if (allnotes.IsSuccessfull)
                 {
-                    if (!newbeers.Response)
+                    var syncNotes = new List<NoteModel>(ResponseConverter.Instance.Convert(allnotes.Notes));
+                    foreach (var newbeer in syncNotes)
                     {
-                        var allnotes = await _dataService.GetNotes(_usrInfo.Guid);
-                        if (allnotes.IsSuccessfull)
-                        {
-                            var syncNotes = new List<NoteModel>(ResponseConverter.Instance.Convert(allnotes.Notes));
-                            foreach (var newbeer in syncNotes)
-                            {
-                                newbeer.IsPosted = true;
-                            }
-                            return syncNotes;
-                        }
+                        newbeer.IsPosted = true;
                     }
+                    await SaveToStorage(syncNotes);
+                    return syncNotes;
                 }
+                await SaveToStorage(notes);
                 return new List<NoteModel>(notes);
             }
             catch (Exception ex)
@@ -168,7 +161,6 @@ namespace Famoser.RememberLess.Business.Repositories
         {
             try
             {
-                var successfull = true;
                 if (nm.DeletePending)
                 {
                     if (nm.IsPosted)
@@ -180,16 +172,25 @@ namespace Famoser.RememberLess.Business.Repositories
                 }
                 else
                 {
-
                     var obj = RequestConverter.Instance.ConvertToNoteRequest(_usrInfo.Guid, PossibleActions.AddOrUpdate,
                         new List<NoteModel>() { nm });
                     nm.IsPosted = (await _dataService.PostNote(obj)).IsSuccessfull; ;
                 }
 
-
+                return await SaveToStorage(notes);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Instance.LogException(ex, this);
+            }
+            return false;
+        }
+        private async Task<bool> SaveToStorage(List<NoteModel> notes)
+        {
+            try
+            {
                 var notesJson = JsonConvert.SerializeObject(notes);
-                successfull &= await _storageService.SetCachedData(notesJson);
-                return successfull;
+                return await _storageService.SetCachedData(notesJson);
             }
             catch (Exception ex)
             {
@@ -198,4 +199,5 @@ namespace Famoser.RememberLess.Business.Repositories
             return false;
         }
     }
+
 }
