@@ -17,5 +17,8 @@ namespace Famoser.RememberLess.Business.Repositories.Interfaces
 
         Task<bool> Save(NoteModel nm);
         Task<bool> Delete(NoteModel nm);
+
+        Task<bool> Save(NoteCollectionModel nm);
+        Task<bool> Delete(NoteCollectionModel nm);
     }
 }

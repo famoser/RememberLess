@@ -41,7 +41,7 @@
         </Style>
     </UserControl.Resources>
 
-    <StackPanel Height="{Binding ElementName=ListView, Path=ActualHeight}" >
+    <StackPanel Padding="0,2" Height="{Binding ElementName=ListView, Path=ActualHeight}" >
         <ListView x:Name="ListView" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" ItemContainerStyle="{StaticResource ListViewItemStyle1}" Tapped="ListView_Tapped"  />
     </StackPanel>
 </UserControl>

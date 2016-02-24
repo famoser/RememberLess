@@ -3,6 +3,7 @@ using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Famoser.RememberLess.View.Enums;
 using Famoser.RememberLess.View.ViewModel;
 using GalaSoft.MvvmLight.Messaging;
@@ -21,9 +22,12 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
             this.InitializeComponent();
         }
 
+        private MainViewModel ViewModel => DataContext as MainViewModel;
+
         private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Messenger.Default.Send(Messages.SyncNotes);
+            if (ViewModel.RefreshCommand.CanExecute(null))
+                ViewModel.RefreshCommand.Execute(null);
         }
 
         private void TextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -34,6 +38,18 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
                 if (vm?.AddNoteCommand.CanExecute(null) == true)
                     vm.AddNoteCommand.Execute(null);
             }
+        }
+
+        private void Flyout_Closed(object sender, object e)
+        {
+            if (ViewModel.SaveNoteCollectionCommand.CanExecute(ViewModel.ActiveCollection))
+                ViewModel.SaveNoteCollectionCommand.Execute(ViewModel.ActiveCollection);
+        }
+
+        private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            RemoveNoteCollectionFlyout.Hide();
+            AddNoteCollectionFlyout.Hide();
         }
     }
 }

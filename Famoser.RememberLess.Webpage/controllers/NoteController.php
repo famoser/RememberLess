@@ -34,7 +34,7 @@ class NoteController implements iController
                         foreach ($obj->Notes as $note) {
                             $guids[] = $note->Guid;
                         }
-                        return $this->deleteNotes($obj->NoteTakerGuid, $obj->NoteCollectionGuid, $guids);
+                        return ReturnBoolean($this->deleteNotes($obj->NoteTakerGuid, $obj->NoteCollectionGuid, $guids));
                     } else if ($obj->Action == "addorupdate") {
                         $newNotes = array();
                         $updateNotes = array();
@@ -90,11 +90,11 @@ class NoteController implements iController
             $noteGuids = array_values($noteGuids);
             $prepareArr = array();
             $keys = array();
-            for ($i = 0; count($noteGuids) < $i; $i++) {
-                $prepareArr["guid" . $i] = $noteGuids[$i];
-                $keys[] = "guid" . $i;
+            for ($i = 0;  $i < count($noteGuids); $i++) {
+                $prepareArr[":guid" . $i] = $noteGuids[$i];
+                $keys[] = ":guid" . $i;
             }
-            $prepareArr["NoteCollectionId"] = $listId;
+            $prepareArr[":NoteCollectionId"] = $listId;
 
             $pdo = $db->prepare("DELETE FROM Notes WHERE Guid IN (" . implode(",", $keys) . ") AND NoteCollectionId = :NoteCollectionId");
             return $pdo->execute($prepareArr);

@@ -59,20 +59,16 @@ namespace Famoser.RememberLess.View.ViewModel
             {
                 Initialize();
             }
+            _removeNoteCollection = new RelayCommand<NoteCollectionModel>(RemoveNoteCollection, CanRemoveNoteCollection);
+            _saveNoteCollection = new RelayCommand<NoteCollectionModel>(SaveNoteCollection, CanSaveNoteCollection);
+            _addNoteCollectionCommand = new RelayCommand(AddNoteCollection, () => CanAddNoteCollection);
 
-            Messenger.Default.Register<Messages>(this, EvaluateMessages);
             Messenger.Default.Register<NoteCollectionModel>(this, Messages.Select, EvaluateSelectMessage);
         }
 
         private void EvaluateSelectMessage(NoteCollectionModel obj)
         {
             ActiveCollection = obj;
-        }
-
-        private async void EvaluateMessages(Messages obj)
-        {
-            if (obj == Messages.SyncNotes)
-                await SyncNotes();
         }
 
         //enable for debug purposes
@@ -126,6 +122,17 @@ namespace Famoser.RememberLess.View.ViewModel
             }
         }
 
+        private string _newNoteCollection;
+        public string NewNoteCollection
+        {
+            get { return _newNoteCollection; }
+            set
+            {
+                if (Set(ref _newNoteCollection, value))
+                    _addNoteCollectionCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         private readonly RelayCommand _addNoteCommand;
         public ICommand AddNoteCommand => _addNoteCommand;
 
@@ -144,6 +151,23 @@ namespace Famoser.RememberLess.View.ViewModel
             await _noteRepository.Save(newNote);
         }
 
+        private readonly RelayCommand _addNoteCollectionCommand;
+        public ICommand AddNoteCollectionCommand => _addNoteCollectionCommand;
+
+        public bool CanAddNoteCollection => !string.IsNullOrEmpty(NewNoteCollection);
+
+        private async void AddNoteCollection()
+        {
+            var newNoteCollection = new NoteCollectionModel()
+            {
+                Guid = Guid.NewGuid(),
+                Name = NewNoteCollection,
+                CreateTime = DateTime.Now
+            };
+            NewNoteCollection = "";
+            await _noteRepository.Save(newNoteCollection);
+        }
+
         private readonly RelayCommand<NoteModel> _toggleCompleted;
         public ICommand ToggleCompletedCommand { get { return _toggleCompleted; } }
 
@@ -159,6 +183,40 @@ namespace Famoser.RememberLess.View.ViewModel
         private void Connect()
         {
             _navigationService.NavigateTo(PageKeys.ConnectPage.ToString());
+        }
+
+        private readonly RelayCommand<NoteCollectionModel> _removeNoteCollection;
+        public ICommand RemoveNoteCollectionCommand => _removeNoteCollection;
+
+        public bool CanRemoveNoteCollection(NoteCollectionModel model)
+        {
+            return NoteCollections.Count > 1;
+        }
+
+        private async void RemoveNoteCollection(NoteCollectionModel model)
+        {
+            if (model == ActiveCollection)
+            {
+                var index = NoteCollections.IndexOf(ActiveCollection);
+                if (index == 0)
+                    ActiveCollection = NoteCollections[1];
+                else
+                    ActiveCollection = NoteCollections[0];
+            }
+            await _noteRepository.Delete(model);
+        }
+
+        private readonly RelayCommand<NoteCollectionModel> _saveNoteCollection;
+        public ICommand SaveNoteCollectionCommand => _saveNoteCollection;
+
+        public bool CanSaveNoteCollection(NoteCollectionModel model)
+        {
+            return !string.IsNullOrEmpty(model.Name);
+        }
+
+        private async void SaveNoteCollection(NoteCollectionModel model)
+        {
+            await _noteRepository.Save(model);
         }
 
         private readonly RelayCommand<NoteModel> _removeNote;

@@ -432,8 +432,8 @@ namespace Famoser.RememberLess.Business.Repositories
             {
                 var obj = RequestConverter.Instance.ConvertToNoteRequest(_userInformations.Guid, nm.NoteCollection.Guid, PossibleActions.Delete,
                     new List<NoteModel>() { nm });
-                var res = (await _dataService.PostNote(obj)).IsSuccessfull;
-                nm.PendingAction = !res ? PendingAction.Remove : PendingAction.None;
+                var res = await _dataService.PostNote(obj);
+                nm.PendingAction = !res.IsSuccessfull ? PendingAction.Remove : PendingAction.None;
 
                 if (nm.NoteCollection.CompletedNotes.Contains(nm))
                     nm.NoteCollection.CompletedNotes.Remove(nm);
@@ -445,7 +445,52 @@ namespace Famoser.RememberLess.Business.Repositories
                 if (nm.PendingAction != PendingAction.None)
                     nm.NoteCollection.DeletedNotes.Add(nm);
 
-                return res && await SaveNoteCollectionsToStorage();
+                return res.IsSuccessfull && await SaveNoteCollectionsToStorage();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Instance.LogException(ex, this);
+            }
+            return false;
+        }
+
+        public async Task<bool> Save(NoteCollectionModel nm)
+        {
+            try
+            {
+                var obj = RequestConverter.Instance.ConvertToNoteCollectionRequest(_userInformations.Guid, PossibleActions.AddOrUpdate,
+                    new List<NoteCollectionModel>() { nm });
+                var res = await _dataService.PostNoteCollection(obj);
+                nm.PendingAction = !res.IsSuccessfull ? PendingAction.AddOrUpdate : PendingAction.None;
+
+                if (!_dataModel.Collections.Contains(nm))
+                    _dataModel.Collections.Add(nm);
+                
+                return res.IsSuccessfull && await SaveNoteCollectionsToStorage();
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Instance.LogException(ex, this);
+            }
+            return false;
+        }
+
+        public async Task<bool> Delete(NoteCollectionModel nm)
+        {
+            try
+            {
+                var obj = RequestConverter.Instance.ConvertToNoteCollectionRequest(_userInformations.Guid, PossibleActions.Delete,
+                    new List<NoteCollectionModel>() { nm });
+                var res = await _dataService.PostNoteCollection(obj);
+                nm.PendingAction = !res.IsSuccessfull ? PendingAction.Remove : PendingAction.None;
+
+                if (_dataModel.Collections.Contains(nm))
+                    _dataModel.Collections.Remove(nm);
+
+                if (nm.PendingAction != PendingAction.None)
+                    _dataModel.DeletedCollections.Add(nm);
+
+                return res.IsSuccessfull && await SaveNoteCollectionsToStorage();
             }
             catch (Exception ex)
             {

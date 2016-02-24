@@ -9,9 +9,78 @@
     xmlns:helpers="using:Famoser.RememberLess.Presentation.WindowsUniversal.Helpers"
     mc:Ignorable="d"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}" Loaded="Page_Loaded">
-    
+
     <Page.Resources>
         <helpers:ResolutionHelper x:Key="ResolutionHelper" />
+
+        <DataTemplate x:Name="NoteTemplate">
+            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Style="{StaticResource NoteTexBlock}" Text="{Binding Name}" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
+
+                <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <TextBlock Grid.Column="1" Style="{StaticResource CounterTextBlock}" Text="{Binding NewNotes.Count}" Foreground="{ThemeResource DisApprooveRed}" />
+                <TextBlock Grid.Column="2" Style="{StaticResource CounterTextBlock}" Text="{Binding CompletedNotes.Count}" Foreground="{ThemeResource SomeApprooveOrange}" />
+            </Grid>
+        </DataTemplate>
+        <ControlTemplate x:Key="EditNoteButtonTemplate" TargetType="Button">
+            <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <Storyboard>
+                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="PointerOver">
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        							Storyboard.TargetProperty="BorderBrush">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseMediumLowBrush}" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        							Storyboard.TargetProperty="Foreground">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <PointerUpThemeAnimation Storyboard.TargetName="RootGrid" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid"
+        							Storyboard.TargetProperty="Background">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        							Storyboard.TargetProperty="BorderBrush">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+        							Storyboard.TargetProperty="Foreground">
+                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightBaseHighBrush}" />
+                                </ObjectAnimationUsingKeyFrames>
+                                <PointerDownThemeAnimation Storyboard.TargetName="RootGrid" />
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Disabled" />
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <ContentPresenter x:Name="ContentPresenter"
+        			BorderBrush="{TemplateBinding BorderBrush}"
+        			BorderThickness="{TemplateBinding BorderThickness}"
+        			Content="{TemplateBinding Content}"
+        			ContentTransitions="{TemplateBinding ContentTransitions}"
+        			ContentTemplate="{TemplateBinding ContentTemplate}"
+        			Padding="{TemplateBinding Padding}"
+        			HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+        			VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+        			AutomationProperties.AccessibilityView="Raw"/>
+            </Grid>
+        </ControlTemplate>
     </Page.Resources>
 
 
@@ -20,8 +89,41 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <ScrollViewer VerticalScrollMode="Enabled" Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+
             <StackPanel Margin="0,50,0,0">
-                <TextBlock Text="{Binding ActiveCollection.Name}" Style="{ThemeResource HeaderTextBlock}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding ActiveCollection.Name}" Style="{ThemeResource HeaderTextBlock}" />
+                    <Button Grid.Column="1" Style="{StaticResource EditNoteCollectionButton}" Template="{StaticResource EditNoteButtonTemplate}" >
+                        <Button.Content>
+                            <SymbolIcon Symbol="Edit" />
+                        </Button.Content>
+                        <Button.Flyout >
+                            <Flyout Placement="Bottom" Closed="Flyout_Closed">
+                                <StackPanel>
+                                    <TextBox MinWidth="300" BorderThickness="1" Text="{Binding ActiveCollection.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AddNewNoteTextBox}" />
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                    <Button Grid.Column="2" Style="{StaticResource EditNoteCollectionButton}" Template="{StaticResource EditNoteButtonTemplate}" >
+                        <Button.Content>
+                            <SymbolIcon Symbol="Delete" />
+                        </Button.Content>
+                        <Button.Flyout >
+                            <Flyout Placement="Bottom" x:Name="RemoveNoteCollectionFlyout">
+                                <StackPanel>
+                                    <TextBlock Text="Wirklich die ganze Liste löschen?" Style="{ThemeResource NoteTexBlock}" />
+                                    <Button Content="Löschen" Style="{ThemeResource TextButton}" Command="{Binding RemoveNoteCollectionCommand}" CommandParameter="{Binding ActiveCollection}" Tapped="UIElement_OnTapped" />
+                                </StackPanel>
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Grid>
                 <mainPage:NoteList DataContext="{Binding ActiveCollection.NewNotes}" />
                 <TextBlock Text="on hold" Style="{ThemeResource HeaderTextBlock}"/>
                 <mainPage:NoteList DataContext="{Binding ActiveCollection.CompletedNotes}" />
@@ -36,19 +138,33 @@
             </Button>
         </Grid>
         <userControls:ProgressUserControl VerticalAlignment="Top" />
-        <Grid VerticalAlignment="Bottom" MaxHeight="{Binding HeightOfDevice, Source={StaticResource ResolutionHelper}}" Margin="0,50,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="1">
+        <!--<Grid VerticalAlignment="Bottom" MaxHeight="{Binding HeightOfDevice, Source={StaticResource ResolutionHelper}}" Margin="0,50,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="1">
             <ScrollViewer Background="{ThemeResource SystemControlBackgroundAccentBrush}" x:Name="NoteCollectionScrollViewer" Height="{Binding ElementName=NoteCollectionList, Path=ActualHeight}" VerticalAlignment="Bottom">
                 <mainPage:NoteCollectionList Background="{ThemeResource SystemControlBackgroundAccentBrush}" x:Name="NoteCollectionList" DataContext="{Binding NoteCollections}" />
             </ScrollViewer>
-        </Grid>
+        </Grid>-->
 
     </Grid>
     <Page.BottomAppBar>
         <CommandBar >
             <CommandBar.PrimaryCommands>
                 <!--<AppBarButton Icon="Link" Command="{Binding ConnectCommand}" Content="Connect" />-->
+                <AppBarButton IsCompact="True" Icon="Add" Label="Add List" >
+                    <AppBarButton.Flyout>
+                        <Flyout x:Name="AddNoteCollectionFlyout" Placement="Bottom">
+                            <StackPanel>
+                                <TextBox MinWidth="300" BorderThickness="1" Text="{Binding NewNoteCollection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AddNewNoteTextBox}" />
+                                <Button Content="Speichern" Style="{ThemeResource TextButton}" Command="{Binding AddNoteCollectionCommand}" Tapped="UIElement_OnTapped" />
+                            </StackPanel>
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+                <AppBarButton IsCompact="True" Icon="List" Label="Lists" >
+                    <AppBarButton.Flyout>
+                        <ListPickerFlyout ItemsSource="{Binding NoteCollections}" SelectedItem="{Binding ActiveCollection, Mode=TwoWay}" ItemTemplate="{StaticResource NoteTemplate}" />
+                    </AppBarButton.Flyout>
+                </AppBarButton>
                 <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="Refresh" Label="Refresh" />
-                <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="List" Label="Lists" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

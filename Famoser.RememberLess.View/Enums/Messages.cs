@@ -10,7 +10,6 @@ namespace Famoser.RememberLess.View.Enums
     {
         NotesChanged,
         QrCodeScanned,
-        SyncNotes,
         Select
     }
 }
