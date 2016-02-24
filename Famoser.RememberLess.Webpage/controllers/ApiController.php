@@ -17,10 +17,10 @@ class ApiController implements iController
     function execute($param, $post)
     {
         if (count($param) > 0 && $param[0] == "stats") {
-            return $this->countNotes();
+            return "Notes:".$this->countNotes()."<br>NoteTakers:".$this->countNoteTakers();
         }
         if (count($param) > 0 && $param[0] == "prepare") {
-            return $this->prepareTable();
+            return "Funktion not implemented yet";//$this->prepareTable();
         }
         return "Online";
     }
@@ -28,12 +28,22 @@ class ApiController implements iController
     private function countNotes()
     {
         $db = GetDatabaseConnection();
-        $pdo = $db->prepare("SELECT COUNT(*) FROM Notes");
+        $pdo = $db->prepare("SELECT COUNT(*) FROM Note");
         $pdo->execute();
 
         return $pdo->fetch(PDO::FETCH_NUM)[0];
     }
 
+    private function countNoteTakers()
+    {
+        $db = GetDatabaseConnection();
+        $pdo = $db->prepare("SELECT COUNT(*) FROM NoteTaker");
+        $pdo->execute();
+
+        return $pdo->fetch(PDO::FETCH_NUM)[0];
+    }
+
+    /*
     private function prepareTable()
     {
         $db = GetDatabaseConnection();
@@ -60,5 +70,5 @@ IsCompleted bool)");
                 return "Table creation failed";
         }
         return "Table already ready";
-    }
+    }*/
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 using Famoser.FrameworkEssentials.Logging;
 using Famoser.RememberLess.Data.Services;
 
@@ -83,7 +84,14 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
 
         public Task<string> GetCachedData()
         {
-            return ReadCache("data.json");
+            return ReadCache("data2.json");
+        }
+
+        public async Task<string> GetOldCachedData(int version)
+        {
+            if (version == 0)
+                return await ReadCache("data.json");
+            return "";
         }
 
         public Task<string> GetUserInformations()
@@ -93,7 +101,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
 
         public Task<bool> SetCachedData(string data)
         {
-            return SaveToCache("data.json", data);
+            return SaveToCache("data2.json", data);
         }
 
         public Task<bool> SetUserInformations(string info)

@@ -9,7 +9,9 @@ namespace Famoser.RememberLess.Data.Services
 {
     public interface IDataService
     {
-        Task<BooleanResponse> PostNote(NoteRequest obj);
-        Task<NoteResponse> GetNotes(Guid guid);
+        Task<BooleanResponse> PostNote(NoteRequest request);
+        Task<BooleanResponse> PostNoteCollection(NoteCollectionRequest request);
+        Task<NoteResponse> GetNotes(NoteRequest request);
+        Task<NoteCollectionResponse> GetNoteCollections(NoteCollectionRequest request);
     }
 }

@@ -16,6 +16,6 @@ namespace Famoser.RememberLess.Data.Entities.Communication
         public List<NoteEntity> Notes { get; set; }
 
         [DataMember]
-        public int ExpectedCount { get; set; }
+        public Guid NoteCollectionGuid { get; set; }
     }
 }

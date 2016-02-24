@@ -68,7 +68,10 @@ function Insert($table, $obj)
     $excludedArray[] = "Id";
     $params = PrepareGenericArray($obj);
     $stmt = $db->prepare('INSERT INTO ' . $table . ' ' . ConstructMiddleSQL("insert", $params, $excludedArray));
-    return $stmt->execute($params);
+    $successful = $stmt->execute($params);
+    if ($successful)
+        $obj->Id = $db->lastInsertId();
+    return $successful;
 }
 
 function InsertAll(array $obj)
@@ -129,13 +132,13 @@ function Update($table, $arr)
 
 function GetModelByTable($table)
 {
-    return "famoser\\rememberless\\webpage\\models\\" .substr($table, 0, -1);
+    return "famoser\\rememberless\\webpage\\models\\" . substr($table, 0, -1);
 }
 
 function GetTabelByModel($obj)
 {
     $clas = get_class($obj);
-    $arr = explode("\\",$clas);
+    $arr = explode("\\", $clas);
     $clas = $arr[count($arr) - 1];
     return $clas . "s";
 }

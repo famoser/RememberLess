@@ -14,5 +14,6 @@ namespace Famoser.RememberLess.Business.Models
         }
 
         public Guid Guid { get; set; }
+        public int SaveDataVersion { get; set; }
     }
 }

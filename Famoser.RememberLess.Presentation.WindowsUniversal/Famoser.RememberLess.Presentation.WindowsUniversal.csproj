@@ -108,8 +108,10 @@
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\MainPage\ColorConverter.cs" />
     <Compile Include="Converters\MainPage\CountToVisibilityConverter.cs" />
+    <Compile Include="Converters\MainPage\ListToCountConverter.cs" />
     <Compile Include="Converters\MainPage\SymbolConverter.cs" />
     <Compile Include="Enums\LocalMessages.cs" />
+    <Compile Include="Helpers\ResolutionHelper.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -124,6 +126,9 @@
     <Compile Include="Services\TilesService.cs" />
     <Compile Include="UserControls\ConnectPage\CreateQrCode.xaml.cs">
       <DependentUpon>CreateQrCode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MainPage\NoteCollectionList.xaml.cs">
+      <DependentUpon>NoteCollectionList.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\MainPage\NoteList.xaml.cs">
       <DependentUpon>NoteList.xaml</DependentUpon>
@@ -166,6 +171,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\ConnectPage\CreateQrCode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\MainPage\NoteCollectionList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

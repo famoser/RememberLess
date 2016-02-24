@@ -13,21 +13,21 @@ namespace Famoser.RememberLess.Business.Converters
 {
     public class RequestConverter : SingletonBase<RequestConverter>
     {
-        public NoteRequest ConvertToNoteRequest(Guid guid, PossibleActions action, List<NoteModel> notes, int count = -1)
+        public NoteRequest ConvertToNoteRequest(Guid userGuid, Guid collectionGuid, PossibleActions action, IEnumerable<NoteModel> notes)
         {
-            return new NoteRequest(action,guid)
+            return new NoteRequest(action,userGuid)
             {
                 Notes = ConvertAllToNoteEntity(notes),
-                ExpectedCount = count
+                NoteCollectionGuid = collectionGuid
             };
         }
 
-        public List<NoteEntity> ConvertAllToNoteEntity(List<NoteModel> notes)
+        private List<NoteEntity> ConvertAllToNoteEntity(IEnumerable<NoteModel> notes)
         {
             return notes.Select(ConvertToNoteEntity).ToList();
         }
 
-        public NoteEntity ConvertToNoteEntity(NoteModel noteModel)
+        private NoteEntity ConvertToNoteEntity(NoteModel noteModel)
         {
             return new NoteEntity()
             {
@@ -35,6 +35,29 @@ namespace Famoser.RememberLess.Business.Converters
                  Content = noteModel.Content,
                  CreateTime = noteModel.CreateTime,
                  IsCompletedBool = noteModel.IsCompleted
+            };
+        }
+
+        public NoteCollectionRequest ConvertToNoteCollectionRequest(Guid userGuid, PossibleActions action, IEnumerable<NoteCollectionModel> collections)
+        {
+            return new NoteCollectionRequest(action, userGuid)
+            {
+                NoteCollections = ConvertAllToNoteCollectionEntity(collections)
+            };
+        }
+
+        private List<NoteCollectionEntity> ConvertAllToNoteCollectionEntity(IEnumerable<NoteCollectionModel> collections)
+        {
+            return collections.Select(ConvertToNoteCollectionEntity).ToList();
+        }
+
+        private NoteCollectionEntity ConvertToNoteCollectionEntity(NoteCollectionModel collection)
+        {
+            return new NoteCollectionEntity()
+            {
+                Guid = collection.Guid,
+                Name = collection.Name,
+                CreateTime = collection.CreateTime
             };
         }
     }

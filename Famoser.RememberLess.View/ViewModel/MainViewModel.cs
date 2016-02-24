@@ -52,8 +52,8 @@ namespace Famoser.RememberLess.View.ViewModel
 
             if (IsInDesignMode)
             {
-                Notes = noteRepository.GetExampleNotes();
-                NotesModified(null, NoteAction.Unknown);
+                NoteCollections = noteRepository.GetExampleCollections();
+                ActiveCollection = NoteCollections[0];
             }
             else
             {
@@ -61,6 +61,12 @@ namespace Famoser.RememberLess.View.ViewModel
             }
 
             Messenger.Default.Register<Messages>(this, EvaluateMessages);
+            Messenger.Default.Register<NoteCollectionModel>(this, Messages.Select, EvaluateSelectMessage);
+        }
+
+        private void EvaluateSelectMessage(NoteCollectionModel obj)
+        {
+            ActiveCollection = obj;
         }
 
         private async void EvaluateMessages(Messages obj)
@@ -77,10 +83,8 @@ namespace Famoser.RememberLess.View.ViewModel
             _isInitializing = true;
             _refreshCommand.RaiseCanExecuteChanged();
 
-            Notes = await _noteRepository.GetNotes();
-            NotesModified(null, NoteAction.Unknown);
-
-            
+            NoteCollections = await _noteRepository.GetCollections();
+            ActiveCollection = NoteCollections[0];
 
             _isInitializing = false;
             _refreshCommand.RaiseCanExecuteChanged();
@@ -94,12 +98,7 @@ namespace Famoser.RememberLess.View.ViewModel
             _isSyncing = true;
             _refreshCommand.RaiseCanExecuteChanged();
 
-            var notes = await _noteRepository.SyncNotes(_notes);
-            if (notes != null)
-            {
-                Notes = notes;
-                NotesModified(null, NoteAction.Unknown);
-            }
+            await _noteRepository.SyncNotes();
 
             _isSyncing = false;
             _refreshCommand.RaiseCanExecuteChanged();
@@ -107,9 +106,9 @@ namespace Famoser.RememberLess.View.ViewModel
         }
 
         private readonly RelayCommand _refreshCommand;
-        public ICommand RefreshCommand { get { return _refreshCommand; } }
+        public ICommand RefreshCommand => _refreshCommand;
 
-        public bool CanRefresh { get { return !_isInitializing && !_isSyncing; } }
+        public bool CanRefresh => !_isInitializing && !_isSyncing;
 
         private async void Refresh()
         {
@@ -128,9 +127,9 @@ namespace Famoser.RememberLess.View.ViewModel
         }
 
         private readonly RelayCommand _addNoteCommand;
-        public ICommand AddNoteCommand { get { return _addNoteCommand; } }
+        public ICommand AddNoteCommand => _addNoteCommand;
 
-        public bool CanAddNote { get { return !string.IsNullOrEmpty(_newNote); } }
+        public bool CanAddNote => !string.IsNullOrEmpty(_newNote);
 
         private async void AddNote()
         {
@@ -138,13 +137,11 @@ namespace Famoser.RememberLess.View.ViewModel
             {
                 Content = NewNote,
                 Guid = Guid.NewGuid(),
-                CreateTime = DateTime.Now
+                CreateTime = DateTime.Now,
+                NoteCollection = ActiveCollection
             };
-            Notes.Add(newNote);
-            NotesModified(newNote, NoteAction.Add);
             NewNote = "";
-
-            await _noteRepository.Save(newNote, Notes);
+            await _noteRepository.Save(newNote);
         }
 
         private readonly RelayCommand<NoteModel> _toggleCompleted;
@@ -153,13 +150,11 @@ namespace Famoser.RememberLess.View.ViewModel
         private async void ToggleCompleted(NoteModel note)
         {
             note.IsCompleted = !note.IsCompleted;
-            NotesModified(note, note.IsCompleted ? NoteAction.ToCompleted : NoteAction.ToNotCompleted);
-
-            await _noteRepository.Save(note, Notes);
+            await _noteRepository.Save(note);
         }
 
         private readonly RelayCommand _connectCommand;
-        public ICommand ConnectCommand { get { return _connectCommand; } }
+        public ICommand ConnectCommand => _connectCommand;
 
         private void Connect()
         {
@@ -167,94 +162,25 @@ namespace Famoser.RememberLess.View.ViewModel
         }
 
         private readonly RelayCommand<NoteModel> _removeNote;
-        public ICommand RemoveNoteCommand { get { return _removeNote; } }
+        public ICommand RemoveNoteCommand => _removeNote;
 
         private async void RemoveNote(NoteModel note)
         {
-            Notes.Remove(note);
-            NotesModified(note, NoteAction.Remove);
-
-            note.DeletePending = true;
-            await _noteRepository.Save(note, Notes);
+            await _noteRepository.Delete(note);
         }
 
-        private void NotesModified(NoteModel note, NoteAction action)
+        private ObservableCollection<NoteCollectionModel> _noteCollections;
+        public ObservableCollection<NoteCollectionModel> NoteCollections
         {
-            if (action == NoteAction.Add)
-                _newNotes.Insert(0, note);
-            else if (action == NoteAction.Remove)
-            {
-                if (_newNotes.Contains(note))
-                    _newNotes.Remove(note);
-                else if (_completedNotes.Contains(note))
-                    _completedNotes.Remove(note);
-            }
-            else if (action == NoteAction.ToCompleted)
-            {
-                if (_newNotes.Contains(note))
-                    _newNotes.Remove(note);
-                InsertInOrder(note, _completedNotes);
-            }
-            else if (action == NoteAction.ToNotCompleted)
-            {
-                if (_completedNotes.Contains(note))
-                    _completedNotes.Remove(note);
-                InsertInOrder(note, _newNotes);
-            }
-            else
-            {
-                _completedNotes = null;
-                _newNotes = null;
-                RaisePropertyChanged(() => CompletedNotes);
-                RaisePropertyChanged(() => NewNotes);
-            }
-            Messenger.Default.Send(Messages.NotesChanged);
+            get { return _noteCollections; }
+            set { Set(ref _noteCollections, value); }
         }
 
-        private void InsertInOrder(NoteModel note, ObservableCollection<NoteModel> list)
+        private NoteCollectionModel _activeCollection;
+        public NoteCollectionModel ActiveCollection
         {
-
-            var found = false;
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].CreateTime < note.CreateTime)
-                {
-                    list.Insert(i, note);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-                list.Add(note);
-        }
-
-        private List<NoteModel> _notes;
-        private List<NoteModel> Notes
-        {
-            get { return _notes; }
-            set { Set(ref _notes, value); }
-        }
-
-        private ObservableCollection<NoteModel> _completedNotes;
-        public ObservableCollection<NoteModel> CompletedNotes
-        {
-            get
-            {
-                if (_completedNotes == null)
-                    _completedNotes = new ObservableCollection<NoteModel>(_notes.Where(n => n.IsCompleted).OrderByDescending(n => n.CreateTime));
-                return _completedNotes;
-            }
-        }
-
-        private ObservableCollection<NoteModel> _newNotes;
-        public ObservableCollection<NoteModel> NewNotes
-        {
-            get
-            {
-                if (_newNotes == null)
-                    _newNotes = new ObservableCollection<NoteModel>(_notes.Where(n => !n.IsCompleted).OrderByDescending(n => n.CreateTime));
-                return _newNotes;
-            }
+            get { return _activeCollection; }
+            set { Set(ref _activeCollection, value); }
         }
     }
 }

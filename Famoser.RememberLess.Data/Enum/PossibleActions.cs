@@ -8,9 +8,8 @@ namespace Famoser.RememberLess.Data.Enum
 {
     public enum PossibleActions
     {
-        Add,
         AddOrUpdate,
-        Remove,
-        Sync
+        Delete,
+        Get
     }
 }

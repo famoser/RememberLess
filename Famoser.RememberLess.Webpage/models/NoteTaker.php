@@ -9,9 +9,7 @@
 namespace famoser\rememberless\webpage\models;
 
 
-class UserConnection extends BaseModel
+class NoteTaker extends BaseGuidModel
 {
-    public $Name;
-    public $Color;
-    public $ConnectedUserGuid;
+
 }

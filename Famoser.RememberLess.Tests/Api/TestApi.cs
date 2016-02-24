@@ -19,6 +19,7 @@ namespace Famoser.RememberLess.Tests.Api
         {
             Task.Run(async () =>
             {
+                /*
                 var note1 = new NoteModel()
                 {
                     IsCompleted = false,
@@ -45,9 +46,9 @@ namespace Famoser.RememberLess.Tests.Api
                 var addRequest = RequestConverter.Instance.ConvertToNoteRequest(ApiTestHelper.TestUserGuid,
                     PossibleActions.Add, new List<NoteModel>() { note1, note2, note3 });
                 var remove1 = RequestConverter.Instance.ConvertToNoteRequest(ApiTestHelper.TestUserGuid,
-                    PossibleActions.Remove, new List<NoteModel>() { note1 });
+                    PossibleActions.Delete, new List<NoteModel>() { note1 });
                 var remove2 = RequestConverter.Instance.ConvertToNoteRequest(ApiTestHelper.TestUserGuid,
-                    PossibleActions.Remove, new List<NoteModel>() { note2, note3 });
+                    PossibleActions.Delete, new List<NoteModel>() { note2, note3 });
 
                 //act
                 //check if 0 Notes
@@ -85,7 +86,7 @@ namespace Famoser.RememberLess.Tests.Api
                 notes = await ds.GetNotes(ApiTestHelper.TestUserGuid);
                 ApiAssertHelper.CheckBaseResponse(notes);
                 Assert.IsTrue(notes.Notes == null || !notes.Notes.Any());
-                
+                */
 
             }).GetAwaiter().GetResult();
         }

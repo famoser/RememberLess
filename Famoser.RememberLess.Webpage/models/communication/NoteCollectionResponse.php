@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: famoser
- * Date: 02.02.2016
- * Time: 16:25
+ * Date: 24.02.2016
+ * Time: 17:08
  */
 
 namespace famoser\rememberless\webpage\models\communication;
 
 
-class UserConnectionResponse
+class NoteCollectionResponse
 {
-    public $UserConnections = array();
+    public $NoteCollections;
 }

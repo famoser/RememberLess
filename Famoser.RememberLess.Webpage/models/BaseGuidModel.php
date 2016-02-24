@@ -9,7 +9,7 @@
 namespace famoser\rememberless\webpage\models;
 
 
-class BaseModel
+class BaseGuidModel extends BaseModel
 {
-    public $Id;
+    public $Guid;
 }

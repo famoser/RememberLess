@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Famoser.RememberLess.Business.Enums;
 using GalaSoft.MvvmLight;
+using Newtonsoft.Json;
 
 namespace Famoser.RememberLess.Business.Models
 {
-    public class NoteModel : ObservableObject
+    public class NoteModel : SyncModel
     {
-        private Guid _guid;
-        public Guid Guid
-        {
-            get { return _guid; }
-            set { Set(ref _guid, value); }
-        }
-
         private string _content;
         public string Content
         {
@@ -36,8 +31,8 @@ namespace Famoser.RememberLess.Business.Models
             get { return _createTime; }
             set { Set(ref _createTime, value); }
         }
-        
-        public bool DeletePending;
-        public bool IsPosted;
+
+        [JsonIgnore]
+        public NoteCollectionModel NoteCollection { get; set; }
     }
 }

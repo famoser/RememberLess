@@ -8,30 +8,28 @@ namespace Famoser.RememberLess.Data.Entities.Communication.Base
     [DataContract]
     public class BaseRequest
     {
-        public BaseRequest(PossibleActions action, Guid guid)
+        public BaseRequest(PossibleActions action, Guid noteTakerGuid)
         {
             _possibleAction = action;
-            _guid = guid;
+            NoteTakerGuid = noteTakerGuid;
         }
 
-        private PossibleActions _possibleAction;
-        private Guid _guid;
+        private readonly PossibleActions _possibleAction;
 
         [DataMember]
-        public Guid Guid { get { return _guid; } }
+        public Guid NoteTakerGuid { get; }
+
         [DataMember]
         public string Action
         {
             get
             {
-                if (_possibleAction == PossibleActions.Add)
-                    return "add";
-                if (_possibleAction == PossibleActions.Remove)
-                    return "remove";
+                if (_possibleAction == PossibleActions.Delete)
+                    return "delete";
                 if (_possibleAction == PossibleActions.AddOrUpdate)
                     return "addorupdate";
-                if (_possibleAction == PossibleActions.Sync)
-                    return "sync";
+                if (_possibleAction == PossibleActions.Get)
+                    return "get";
                 LogHelper.Instance.Log(LogLevel.WtfAreYouDoingError, this, "Unknown Possible Action used!");
                 return "";
             }

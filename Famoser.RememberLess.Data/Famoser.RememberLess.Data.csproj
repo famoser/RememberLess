@@ -36,9 +36,13 @@
   <ItemGroup>
     <Compile Include="Entities\Communication\Base\BaseResponse.cs" />
     <Compile Include="Entities\Communication\BooleanResponse.cs" />
+    <Compile Include="Entities\Communication\NoteCollectionRequest.cs" />
+    <Compile Include="Entities\Communication\NoteCollectionResponse.cs" />
     <Compile Include="Entities\Communication\NoteResponse.cs" />
     <Compile Include="Entities\Communication\StringResponse.cs" />
+    <Compile Include="Entities\NoteCollectionEntity.cs" />
     <Compile Include="Entities\NoteEntity.cs" />
+    <Compile Include="Entities\NoteTakerEntity.cs" />
     <Compile Include="Enum\PossibleActions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Communication\Base\BaseRequest.cs" />

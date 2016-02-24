@@ -18,12 +18,19 @@ namespace Famoser.RememberLess.Data.Services
         public Task<BooleanResponse> PostNote(NoteRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
-            return Post(new Uri(ApiUrl + "notes/act"), json);
+            return PostForBoolean(new Uri(ApiUrl + "notes/act"), json);
         }
 
-        public async Task<NoteResponse> GetNotes(Guid guid)
+        public Task<BooleanResponse> PostNoteCollection(NoteCollectionRequest request)
         {
-            var resp = await DownloadString(new Uri(ApiUrl + "notes/" + guid));
+            var json = JsonConvert.SerializeObject(request);
+            return PostForBoolean(new Uri(ApiUrl + "notecollections/act"), json);
+        }
+
+        public async Task<NoteResponse> GetNotes(NoteRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var resp = await PostForString(new Uri(ApiUrl + "notes/act"), json);
             if (resp.IsSuccessfull)
             {
                 try
@@ -32,7 +39,7 @@ namespace Famoser.RememberLess.Data.Services
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetDrinker failed with response: " + resp.Response, ex);
+                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetNotes failed with response: " + resp.Response, ex);
                     return new NoteResponse()
                     {
                         ErrorMessage = "Unserialisation failed for Content " + resp.Response
@@ -40,6 +47,31 @@ namespace Famoser.RememberLess.Data.Services
                 }
             }
             return new NoteResponse()
+            {
+                ErrorMessage = resp.ErrorMessage
+            };
+        }
+
+        public async Task<NoteCollectionResponse> GetNoteCollections(NoteCollectionRequest request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var resp = await PostForString(new Uri(ApiUrl + "notecollections/act"), json);
+            if (resp.IsSuccessfull)
+            {
+                try
+                {
+                    return JsonConvert.DeserializeObject<NoteCollectionResponse>(resp.Response);
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Instance.Log(LogLevel.ApiError, this, "GetNotes failed with response: " + resp.Response, ex);
+                    return new NoteCollectionResponse()
+                    {
+                        ErrorMessage = "Unserialisation failed for Content " + resp.Response
+                    };
+                }
+            }
+            return new NoteCollectionResponse()
             {
                 ErrorMessage = resp.ErrorMessage
             };
@@ -78,7 +110,7 @@ namespace Famoser.RememberLess.Data.Services
             }
         }
 
-        private async Task<BooleanResponse> Post(Uri url, string content)
+        private async Task<BooleanResponse> PostForBoolean(Uri url, string content)
         {
             BooleanResponse resp = null;
             try
@@ -120,6 +152,45 @@ namespace Famoser.RememberLess.Data.Services
                 resp = new BooleanResponse() { ErrorMessage = "Post failed for url " + url };
             }
             return resp;
+        }
+
+        private async Task<StringReponse> PostForString(Uri url, string content)
+        {
+            try
+            {
+                using (var client = new HttpClient(
+                    new HttpClientHandler
+                    {
+                        AutomaticDecompression = DecompressionMethods.GZip
+                                                 | DecompressionMethods.Deflate
+                    }))
+                {
+                    client.DefaultRequestHeaders.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
+
+                    var credentials = new FormUrlEncodedContent(new[]
+                    {
+                        new KeyValuePair<string, string>("json", content)
+                    });
+
+                    var res = await client.PostAsync(url, credentials);
+                    var resp = new StringReponse()
+                    {
+                        Response = await res.Content.ReadAsStringAsync()
+                    };
+                    if (res.IsSuccessStatusCode)
+                        return resp;
+                    resp.ErrorMessage = "Request not successfull: Status Code " + res.StatusCode + " returned. Message: " + resp.Response;
+                    return resp;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Instance.Log(LogLevel.Error, this, "DownloadStringAsync failed for url " + url, ex);
+                return new StringReponse()
+                {
+                    ErrorMessage = "Request failed for url " + url
+                };
+            }
         }
     }
 }

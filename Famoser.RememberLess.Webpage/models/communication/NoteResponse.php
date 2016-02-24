@@ -11,5 +11,5 @@ namespace famoser\rememberless\webpage\models\communication;
 
 class NoteResponse
 {
-    public $Notes = array();
+    public $Notes;
 }

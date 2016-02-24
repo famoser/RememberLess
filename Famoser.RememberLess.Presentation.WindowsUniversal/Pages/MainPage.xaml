@@ -6,31 +6,41 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mainPage="using:Famoser.RememberLess.Presentation.WindowsUniversal.UserControls.MainPage"
     xmlns:userControls="using:Famoser.RememberLess.Presentation.WindowsUniversal.UserControls"
+    xmlns:helpers="using:Famoser.RememberLess.Presentation.WindowsUniversal.Helpers"
     mc:Ignorable="d"
     DataContext="{Binding MainViewModel, Source={StaticResource Locator}}" Loaded="Page_Loaded">
+    
+    <Page.Resources>
+        <helpers:ResolutionHelper x:Key="ResolutionHelper" />
+    </Page.Resources>
 
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <ScrollViewer Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
+        <ScrollViewer VerticalScrollMode="Enabled" Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
             <StackPanel Margin="0,50,0,0">
-                <TextBlock Text="remember" Style="{ThemeResource HeaderTextBlock}" />
-                <mainPage:NoteList DataContext="{Binding NewNotes}" />
-                <TextBlock Text="remembered" Style="{ThemeResource HeaderTextBlock}"/>
-                <mainPage:NoteList DataContext="{Binding CompletedNotes}" />
+                <TextBlock Text="{Binding ActiveCollection.Name}" Style="{ThemeResource HeaderTextBlock}" />
+                <mainPage:NoteList DataContext="{Binding ActiveCollection.NewNotes}" />
+                <TextBlock Text="on hold" Style="{ThemeResource HeaderTextBlock}"/>
+                <mainPage:NoteList DataContext="{Binding ActiveCollection.CompletedNotes}" />
             </StackPanel>
         </ScrollViewer>
         <Grid Height="50" VerticalAlignment="Top">
-            <TextBox Style="{StaticResource AddNewNoteTextBox}"  Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" TabIndex="-1" KeyDown="TextBox_KeyDown" />
-            <Button x:Name="AddNewNoteButton" Style="{StaticResource AddNewNoteButton}" Command="{Binding AddNoteCommand}" >
+            <TextBox Style="{StaticResource AddNewNoteTextBox}" PlaceholderText="neue Notiz..." Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="-1" KeyDown="TextBox_KeyDown" />
+            <Button Style="{StaticResource AddNewNoteButton}" Command="{Binding AddNoteCommand}" >
                 <Button.Content>
                     <SymbolIcon Symbol="Add" />
                 </Button.Content>
             </Button>
         </Grid>
         <userControls:ProgressUserControl VerticalAlignment="Top" />
+        <Grid VerticalAlignment="Bottom" MaxHeight="{Binding HeightOfDevice, Source={StaticResource ResolutionHelper}}" Margin="0,50,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="1">
+            <ScrollViewer Background="{ThemeResource SystemControlBackgroundAccentBrush}" x:Name="NoteCollectionScrollViewer" Height="{Binding ElementName=NoteCollectionList, Path=ActualHeight}" VerticalAlignment="Bottom">
+                <mainPage:NoteCollectionList Background="{ThemeResource SystemControlBackgroundAccentBrush}" x:Name="NoteCollectionList" DataContext="{Binding NoteCollections}" />
+            </ScrollViewer>
+        </Grid>
 
     </Grid>
     <Page.BottomAppBar>
@@ -38,6 +48,7 @@
             <CommandBar.PrimaryCommands>
                 <!--<AppBarButton Icon="Link" Command="{Binding ConnectCommand}" Content="Connect" />-->
                 <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="Refresh" Label="Refresh" />
+                <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="List" Label="Lists" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

@@ -9,10 +9,13 @@
 namespace famoser\rememberless\webpage\core\phpcore;
 
 use famoser\rememberless\webpage\controllers\ApiController;
+use famoser\rememberless\webpage\controllers\NoteCollectionController;
+use famoser\rememberless\webpage\controllers\NoteController;
 use famoser\rememberless\webpage\controllers\NotesController;
 use famoser\rememberless\webpage\controllers\UserConnectionController;
 use function famoser\rememberless\webpage\core\fileshelper\include_all_files_in_dir;
 use famoser\rememberless\webpage\core\logging\logger;
+use famoser\rememberless\webpage\models\NoteCollection;
 
 function hi_framework()
 {
@@ -59,7 +62,9 @@ function get_controller($params)
     if (count($params) > 0)
     {
         if ($params[0] == "notes")
-            return new NotesController();
+            return new NoteController();
+        if ($params[0] == "notecollections")
+            return new NoteCollectionController();
         if ($params[0] == "userconnection")
             return new UserConnectionController();
         else if ($params[0] == "api")

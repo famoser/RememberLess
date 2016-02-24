@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using Windows.UI.Notifications;
+using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.View.Enums;
 using Famoser.RememberLess.View.ViewModel;
 using GalaSoft.MvvmLight.Ioc;
@@ -25,70 +26,72 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             if (obj == Messages.NotesChanged)
             {
                 var vm = SimpleIoc.Default.GetInstance<MainViewModel>();
-
-                var adap2 = new TileBindingContentAdaptive()
+                if (vm != null && vm.NoteCollections != null)
                 {
-                    Children =
-                    {
-                        new TileText()
-                        {
-                            Style = TileTextStyle.Title,
-                            Text = vm.NewNotes.Count + " pending"
-                        },
-                        // For spacing
-                        new TileText()
-                    }
-                };
-
-                foreach (var noteModel in vm.NewNotes)
-                {
-                    adap2.Children.Add(new TileText()
-                    {
-                        Style = TileTextStyle.BodySubtle,
-                        Text = noteModel.Content
-                    });
-                }
-
-                var tileLarge = new TileBinding()
-                {
-                    Branding = TileBranding.None,
-                    Content = adap2
-                };
-
-                var tileSmall = new TileBinding()
-                {
-                    Branding = TileBranding.None,
-                    Content = new TileBindingContentAdaptive()
+                    var newNotes =vm.NoteCollections.SelectMany(noteCollectionModel => noteCollectionModel.NewNotes).ToList();
+                    var adap2 = new TileBindingContentAdaptive()
                     {
                         Children =
                         {
                             new TileText()
                             {
-                                Style = TileTextStyle.Header,
-                                Text = vm.NewNotes.Count.ToString("00"),
-                                Align = TileTextAlign.Center
+                                Style = TileTextStyle.Title,
+                                Text = newNotes.Count + " pending"
+                            },
+                            // For spacing
+                            new TileText()
+                        }
+                    };
+
+                    foreach (var noteModel in newNotes)
+                    {
+                        adap2.Children.Add(new TileText()
+                        {
+                            Style = TileTextStyle.BodySubtle,
+                            Text = noteModel.Content
+                        });
+                    }
+
+                    var tileLarge = new TileBinding()
+                    {
+                        Branding = TileBranding.None,
+                        Content = adap2
+                    };
+
+                    var tileSmall = new TileBinding()
+                    {
+                        Branding = TileBranding.None,
+                        Content = new TileBindingContentAdaptive()
+                        {
+                            Children =
+                            {
+                                new TileText()
+                                {
+                                    Style = TileTextStyle.Header,
+                                    Text = newNotes.Count.ToString("00"),
+                                    Align = TileTextAlign.Center
+                                }
                             }
                         }
-                    }
-                };
+                    };
 
-                var tileVisual = new TileVisual()
-                {
-                    TileLarge = tileLarge,
-                    TileMedium = tileLarge,
-                    TileWide = tileLarge,
-                    TileSmall = tileSmall,
-                };
+                    var tileVisual = new TileVisual()
+                    {
+                        TileLarge = tileLarge,
+                        TileMedium = tileLarge,
+                        TileWide = tileLarge,
+                        TileSmall = tileSmall,
+                    };
 
-                var tileContent = new TileContent()
-                {
-                    Visual = tileVisual
-                };
+                    var tileContent = new TileContent()
+                    {
+                        Visual = tileVisual
+                    };
 
-                var notif = new TileNotification(tileContent.GetXml());
-                var updater = TileUpdateManager.CreateTileUpdaterForApplication();
-                updater.Update(notif);
-
+                    var notif = new TileNotification(tileContent.GetXml());
+                    var updater = TileUpdateManager.CreateTileUpdaterForApplication();
+                    updater.Update(notif);
+                }
             }
         }
     }
