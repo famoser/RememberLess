@@ -161,7 +161,7 @@
                 </AppBarButton>
                 <AppBarButton IsCompact="True" Icon="List" Label="Lists" >
                     <AppBarButton.Flyout>
-                        <ListPickerFlyout ItemsSource="{Binding NoteCollections}" SelectedItem="{Binding ActiveCollection, Mode=TwoWay}" ItemTemplate="{StaticResource NoteTemplate}" />
+                        <ListPickerFlyout ItemsSource="{Binding NoteCollections}" SelectedItem="{Binding ActiveCollection, Mode=TwoWay}" ItemTemplate="{StaticResource NoteTemplate}" Placement="Bottom" Title="Liste auswählen" />
                     </AppBarButton.Flyout>
                 </AppBarButton>
                 <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="Refresh" Label="Refresh" />
