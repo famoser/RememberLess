@@ -7,41 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mainPage="using:Famoser.RememberLess.Presentation.WindowsUniversal.Converters.MainPage"
     mc:Ignorable="d"
-     d:DataContext="{Binding MainViewModel.NoteCollections, Source={StaticResource Locator}}">
+    d:DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
 
-    <UserControl.Resources>
-        <DataTemplate x:Name="NoteTemplate">
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Style="{StaticResource NoteTexBlock}" Text="{Binding Name}" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
-
-                <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                <TextBlock Grid.Column="1" Style="{StaticResource CounterTextBlock}" Text="{Binding NewNotes.Count}" Foreground="{ThemeResource DisApprooveRed}" />
-                <TextBlock Grid.Column="2" Style="{StaticResource CounterTextBlock}" Text="{Binding CompletedNotes.Count}" Foreground="{ThemeResource SomeApprooveOrange}" />
-            </Grid>
-        </DataTemplate>
-
-
-        <Style x:Key="ListViewItemStyle1" TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Padding" Value="0" />
-            <Setter Property="Margin" Value="0,2" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <!--<ContentPresenter />-->
-                        <ListViewItemPresenter CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="Inline" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" SelectedBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-
-    <StackPanel Padding="0,2" Height="{Binding ElementName=ListView, Path=ActualHeight}" >
-        <ListView x:Name="ListView" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" ItemContainerStyle="{StaticResource ListViewItemStyle1}" Tapped="ListView_Tapped"  />
-    </StackPanel>
+    <ListView x:Name="ListView" AllowDrop="True" CanDragItems="True" CanReorderItems="True" Style="{StaticResource StretchListView}" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplate="{StaticResource NoteCollectionTemplate}" ItemsSource="{Binding NoteCollections}" SelectedItem="{Binding ActiveCollection, Mode=TwoWay}" ItemContainerStyle="{StaticResource StretchListViewItemStyle}" Tapped="ListView_Tapped"  />
 </UserControl>

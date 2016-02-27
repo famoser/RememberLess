@@ -356,8 +356,8 @@ namespace Famoser.RememberLess.Business.Repositories
                         }
                     }
                 }
-
-
+                
+                return await SaveNoteCollectionsToStorage();
             }
             catch (Exception ex)
             {
@@ -385,7 +385,7 @@ namespace Famoser.RememberLess.Business.Repositories
                 else if (!nm.IsCompleted && !nm.NoteCollection.NewNotes.Contains(nm))
                     InsertIntoList(nm.NoteCollection.NewNotes, nm);
 
-                return res.IsSuccessfull && await SaveNoteCollectionsToStorage();
+                return await SaveNoteCollectionsToStorage() && res.IsSuccessfull;
             }
             catch (Exception ex)
             {
@@ -445,7 +445,7 @@ namespace Famoser.RememberLess.Business.Repositories
                 if (nm.PendingAction != PendingAction.None)
                     nm.NoteCollection.DeletedNotes.Add(nm);
 
-                return res.IsSuccessfull && await SaveNoteCollectionsToStorage();
+                return await SaveNoteCollectionsToStorage() && res.IsSuccessfull;
             }
             catch (Exception ex)
             {
@@ -466,7 +466,7 @@ namespace Famoser.RememberLess.Business.Repositories
                 if (!_dataModel.Collections.Contains(nm))
                     _dataModel.Collections.Add(nm);
                 
-                return res.IsSuccessfull && await SaveNoteCollectionsToStorage();
+                return await SaveNoteCollectionsToStorage() && res.IsSuccessfull;
             }
             catch (Exception ex)
             {
@@ -490,7 +490,7 @@ namespace Famoser.RememberLess.Business.Repositories
                 if (nm.PendingAction != PendingAction.None)
                     _dataModel.DeletedCollections.Add(nm);
 
-                return res.IsSuccessfull && await SaveNoteCollectionsToStorage();
+                return await SaveNoteCollectionsToStorage() && res.IsSuccessfull;
             }
             catch (Exception ex)
             {

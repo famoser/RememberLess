@@ -95,6 +95,7 @@ namespace Famoser.RememberLess.View.ViewModel
             _refreshCommand.RaiseCanExecuteChanged();
 
             await _noteRepository.SyncNotes();
+            Messenger.Default.Send(Messages.NotesChanged);
 
             _isSyncing = false;
             _refreshCommand.RaiseCanExecuteChanged();
@@ -149,6 +150,7 @@ namespace Famoser.RememberLess.View.ViewModel
             };
             NewNote = "";
             await _noteRepository.Save(newNote);
+            Messenger.Default.Send(Messages.NotesChanged);
         }
 
         private readonly RelayCommand _addNoteCollectionCommand;
@@ -166,6 +168,7 @@ namespace Famoser.RememberLess.View.ViewModel
             };
             NewNoteCollection = "";
             await _noteRepository.Save(newNoteCollection);
+            ActiveCollection = newNoteCollection;
         }
 
         private readonly RelayCommand<NoteModel> _toggleCompleted;
@@ -175,6 +178,7 @@ namespace Famoser.RememberLess.View.ViewModel
         {
             note.IsCompleted = !note.IsCompleted;
             await _noteRepository.Save(note);
+            Messenger.Default.Send(Messages.NotesChanged);
         }
 
         private readonly RelayCommand _connectCommand;
@@ -204,6 +208,7 @@ namespace Famoser.RememberLess.View.ViewModel
                     ActiveCollection = NoteCollections[0];
             }
             await _noteRepository.Delete(model);
+            Messenger.Default.Send(Messages.NotesChanged);
         }
 
         private readonly RelayCommand<NoteCollectionModel> _saveNoteCollection;
@@ -211,7 +216,7 @@ namespace Famoser.RememberLess.View.ViewModel
 
         public bool CanSaveNoteCollection(NoteCollectionModel model)
         {
-            return !string.IsNullOrEmpty(model.Name);
+            return !string.IsNullOrEmpty(model?.Name);
         }
 
         private async void SaveNoteCollection(NoteCollectionModel model)
@@ -225,6 +230,7 @@ namespace Famoser.RememberLess.View.ViewModel
         private async void RemoveNote(NoteModel note)
         {
             await _noteRepository.Delete(note);
+            Messenger.Default.Send(Messages.NotesChanged);
         }
 
         private ObservableCollection<NoteCollectionModel> _noteCollections;

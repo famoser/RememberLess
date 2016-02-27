@@ -4,6 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Famoser.RememberLess.Presentation.WindowsUniversal"
     xmlns:viewModels="using:Famoser.RememberLess.Presentation.WindowsUniversal.ViewModels"
+    xmlns:mainPage="using:Famoser.RememberLess.Presentation.WindowsUniversal.Converters.MainPage"
+    xmlns:converters="using:Famoser.RememberLess.Presentation.WindowsUniversal.Converters"
+    xmlns:helpers="using:Famoser.RememberLess.Presentation.WindowsUniversal.Helpers"
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
@@ -42,14 +45,14 @@
                 <Setter Property="FontFamily" Value="Segoe UI" />
                 <Setter Property="FontWeight" Value="Light" />
                 <Setter Property="BorderThickness" Value="0,1,0,1" />
-                <Setter Property="Padding" Value="10" />
+                <Setter Property="Padding" Value="12" />
             </Style>
             
             <Style x:Key="AddNewNoteButton" TargetType="Button">
                 <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
                 <Setter Property="Foreground" Value="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
                 <Setter Property="HorizontalAlignment" Value="Right" />
-                <Setter Property="Padding" Value="12" />
+                <Setter Property="Padding" Value="14" />
             </Style>
 
 
@@ -75,6 +78,14 @@
                 <Setter Property="Foreground" Value="{ThemeResource TextForeground}" />
             </Style>
 
+            <Style x:Key="SubHeaderTextBlock" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontWeight" Value="Light" />
+                <Setter Property="Padding" Value="10,10,10,4" />
+                <Setter Property="Foreground" Value="{ThemeResource TextForeground}" />
+            </Style>
+
             <Style x:Key="CounterTextBlock" TargetType="TextBlock">
                 <Setter Property="Padding" Value="12" />
                 <Setter Property="FontSize" Value="20" />
@@ -96,6 +107,70 @@
                 <Setter Property="HorizontalAlignment" Value="Center" />
                 <Setter Property="Margin" Value="0,10,0,0" />
             </Style>
+
+            <Style x:Key="StretchListViewItemStyle" TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Margin" Value="0,1,0,0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListViewItem">
+                            <!--<ContentPresenter />-->
+                            <ListViewItemPresenter CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" ContentMargin="{TemplateBinding Padding}" CheckMode="Inline" ContentTransitions="{TemplateBinding ContentTransitions}" CheckBoxBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}" FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" PointerOverForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}" PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" PointerOverBackground="{ThemeResource SystemControlHighlightListLowBrush}" ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}" SelectionCheckMarkVisualEnabled="True" SelectedForeground="{ThemeResource SystemControlHighlightAltBaseHighBrush}" SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}" SelectedBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="StretchListView" TargetType="ListView">
+                
+            </Style>
+
+            <mainPage:SymbolConverter x:Key="SymbolConverter" />
+            <mainPage:ColorConverter x:Key="ColorConverter" />
+            <converters:IntToVisibilityConverter x:Key="IntToVisibilityConverter" />
+            <helpers:ResolutionHelper x:Key="ResolutionHelper" />
+
+
+            <DataTemplate x:Name="NoteTemplate">
+                <Grid Background="{ThemeResource SystemControlBackgroundAccentBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Style="{StaticResource NoteTexBlock}" Text="{Binding Content}" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+
+                    <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <Button Style="{StaticResource EditNoteButton}" Grid.Column="1" Foreground="{Binding Converter={StaticResource ColorConverter}}" Command="{Binding MainViewModel.ToggleCompletedCommand, Source={StaticResource Locator}}" CommandParameter="{Binding }" >
+                        <Button.Content>
+                            <SymbolIcon Symbol="{Binding Converter={StaticResource SymbolConverter}}" />
+                        </Button.Content>
+                    </Button>
+                    <Button Style="{StaticResource EditNoteButton}" Grid.Column="2" Foreground="{ThemeResource DisApprooveRed}" Command="{Binding MainViewModel.RemoveNoteCommand, Source={StaticResource Locator}}" CommandParameter="{Binding }" >
+                        <Button.Content>
+                            <SymbolIcon Symbol="Clear" />
+                        </Button.Content>
+                    </Button>
+                </Grid>
+            </DataTemplate>
+
+
+            <DataTemplate x:Name="NoteCollectionTemplate">
+                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Style="{StaticResource NoteTexBlock}" Text="{Binding Name}" Foreground="{ThemeResource SystemControlBackgroundAccentBrush}" />
+
+                    <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    <TextBlock Grid.Column="1" Style="{StaticResource CounterTextBlock}" Text="{Binding NewNotes.Count}" Foreground="{ThemeResource DisApprooveRed}" />
+                    <TextBlock Grid.Column="2" Style="{StaticResource CounterTextBlock}" Text="{Binding CompletedNotes.Count}" Foreground="{ThemeResource SomeApprooveOrange}" />
+                </Grid>
+            </DataTemplate>
+
 
         </ResourceDictionary>
     </Application.Resources>
