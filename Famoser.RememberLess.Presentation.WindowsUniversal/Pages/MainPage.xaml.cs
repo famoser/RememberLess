@@ -58,12 +58,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
                 }
             }
         }
-
-        private void Hamburger_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
-        }
-
+        
         private void EditCollectionButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
             EditCollectionGrid.Visibility = EditCollectionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
@@ -82,6 +77,11 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
             dialog.CancelCommandIndex = 0;
             dialog.DefaultCommandIndex = 0;
             await dialog.ShowAsync();
+        }
+
+        private void TextBlock_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
         }
     }
 }

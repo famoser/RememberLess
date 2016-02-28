@@ -76,7 +76,7 @@
                     <mainPage:NoteCollectionList DataContext="{Binding }" TabIndex="0"/>
                     <Grid Height="52" Margin="0,1,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
                         <TextBox x:Name="AddNewNoteCollectionTextBox" Style="{StaticResource AddNewNoteTextBox}" PlaceholderText="neue Seite..." Text="{Binding NewNoteCollection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="2" KeyDown="TextBox_KeyDown" />
-                        <Button Style="{StaticResource AddNewNoteButton}" BorderThickness="0" Command="{Binding AddNoteCollectionCommand}" TabIndex="1" >
+                        <Button Margin="0,0,1.5,0" Style="{StaticResource AddNewNoteButton}" BorderThickness="0" Command="{Binding AddNoteCollectionCommand}" TabIndex="1" >
                             <Button.Content>
                                 <SymbolIcon Symbol="Add" />
                             </Button.Content>
@@ -152,7 +152,7 @@
             <CommandBar.PrimaryCommands>
                 <AppBarButton Label="Lists">
                     <AppBarButton.Content>
-                        <TextBlock Text="&#xE700;" Width="27" FontSize="26" Margin="0,-2" FontFamily="Segoe MDL2 Assets" Tapped="Hamburger_Tapped" />
+                        <TextBlock Text="&#xE700;" Width="27" FontSize="26" Margin="0,-2" FontFamily="Segoe MDL2 Assets" PointerPressed="TextBlock_PointerPressed" />
                     </AppBarButton.Content>
                 </AppBarButton>
                 <!--<AppBarButton Icon="Link" Command="{Binding ConnectCommand}" Content="Connect" />-->

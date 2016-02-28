@@ -89,7 +89,7 @@
             <Style x:Key="CounterTextBlock" TargetType="TextBlock">
                 <Setter Property="Padding" Value="12" />
                 <Setter Property="FontSize" Value="20" />
-                <Setter Property="Width" Value="49" />
+                <Setter Property="Margin" Value="7,0" />
                 <Setter Property="FontFamily" Value="Segoe UI" />
                 <Setter Property="FontWeight" Value="SemiLight" />
             </Style>
