@@ -154,10 +154,10 @@
     <Page.BottomAppBar>
         <CommandBar >
             <CommandBar.PrimaryCommands>
-                <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="ShowResults" Label="ShowAll" Tapped="UIElement_OnTapped" />
-                <AppBarButton Label="Lists" Tapped="ListsAppbar_OnTapped">
+                <AppBarButton IsCompact="True" Icon="ShowResults" Label="ShowAll" Tapped="UIElement_OnTapped" />
+                <AppBarButton Label="Lists" Tapped="ListsAppbar_OnTapped" Margin="-6,0">
                     <AppBarButton.Content>
-                        <TextBlock Text="&#xE700;" Width="27" FontSize="26" Margin="0,-2" FontFamily="Segoe MDL2 Assets" />
+                        <TextBlock Text="&#xE700;" Width="27" FontSize="23" Margin="0,-2" FontFamily="Segoe MDL2 Assets" />
                     </AppBarButton.Content>
                 </AppBarButton>
                 <!--<AppBarButton Icon="Link" Command="{Binding ConnectCommand}" Content="Connect" />-->
