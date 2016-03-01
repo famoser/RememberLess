@@ -9,5 +9,5 @@
     mc:Ignorable="d"
     d:DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
 
-    <ListView x:Name="ListView" AllowDrop="True" CanDragItems="True" CanReorderItems="True" Style="{StaticResource StretchListView}" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplate="{StaticResource NoteCollectionTemplate}" ItemsSource="{Binding NoteCollections}" SelectedItem="{Binding ActiveCollection, Mode=TwoWay}" ItemContainerStyle="{StaticResource StretchListViewItemStyle}" Tapped="ListView_Tapped"  />
+    <ListView x:Name="ListView" AllowDrop="True" CanDragItems="True" CanReorderItems="True" Style="{StaticResource StretchListView}" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplate="{StaticResource NoteCollectionTemplate}" ItemsSource="{Binding NoteCollections}" SelectedItem="{Binding ActiveCollection, Mode=TwoWay}" ItemContainerStyle="{StaticResource StretchListViewItemStyle}"  />
 </UserControl>

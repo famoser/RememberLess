@@ -30,11 +30,11 @@ namespace Famoser.RememberLess.Business.Repositories
         private UserInformationModel _userInformations;
         private DataModel _dataModel;
 
-        private NoteCollectionModel GetExampleCollection()
+        private NoteCollectionModel GetExampleCollection(string collName = "to do")
         {
             return new NoteCollectionModel()
             {
-                Name = "To do",
+                Name = collName,
                 Guid = Guid.NewGuid(),
                 NewNotes = new ObservableCollection<NoteModel>()
                 {
@@ -222,8 +222,8 @@ namespace Famoser.RememberLess.Business.Repositories
             return new ObservableCollection<NoteCollectionModel>()
             {
                 GetExampleCollection(),
-                GetExampleCollection(),
-                GetExampleCollection()
+                GetExampleCollection("at home"),
+                GetExampleCollection("work")
             };
         }
 
@@ -299,14 +299,15 @@ namespace Famoser.RememberLess.Business.Repositories
                             foreach (var noteModel in pending)
                                 noteModel.PendingAction = PendingAction.None;
                     }
+
                     //removes
                     var removes = noteCollectionModel.DeletedNotes.Where(n => n.PendingAction == PendingAction.Remove).ToList();
                     if (removes.Any())
                     {
                         var deleteRequest = RequestConverter.Instance.ConvertToNoteRequest(_userInformations.Guid,
-                            noteCollectionModel.Guid, PossibleActions.AddOrUpdate, pending);
-                        var deleteRes = (await _dataService.PostNote(deleteRequest)).IsSuccessfull;
-                        if (deleteRes)
+                            noteCollectionModel.Guid, PossibleActions.Delete, pending);
+                        var delets = await _dataService.PostNote(deleteRequest);
+                        if (delets.IsSuccessfull)
                             foreach (var noteModel in pending)
                             {
                                 noteModel.PendingAction = PendingAction.None;

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Windows.Foundation.Metadata;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -23,6 +24,17 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
         public MainPage()
         {
             this.InitializeComponent();
+            SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) =>
+            {
+                if (!ev.Handled)
+                {
+                    if (EditCollectionGrid.Visibility == Visibility.Visible)
+                    {
+                        ev.Handled = true;
+                        EditCollectionGrid.Visibility = Visibility.Collapsed;
+                    }
+                }
+            };
         }
 
         private MainViewModel ViewModel => DataContext as MainViewModel;
@@ -37,7 +49,11 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
         private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
             if (propertyChangedEventArgs.PropertyName == "ActiveCollection")
+            {
                 MySplitView.IsPaneOpen = false;
+                if (NoteCollectionsOverview.Visibility == Visibility.Visible)
+                    UIElement_OnTapped(null, null);
+            }
         }
 
         private void TextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -79,9 +95,24 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
             await dialog.ShowAsync();
         }
 
-        private void TextBlock_PointerPressed(object sender, PointerRoutedEventArgs e)
+        private void ListsAppbar_OnTapped(object sender, TappedRoutedEventArgs e)
         {
             MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+
+
+        private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (NoteCollectionsOverview.Visibility == Visibility.Visible)
+            {
+                NoteCollectionsOverview.Visibility = Visibility.Collapsed;
+                ActiveNoteCollection.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                NoteCollectionsOverview.Visibility = Visibility.Visible;
+                ActiveNoteCollection.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

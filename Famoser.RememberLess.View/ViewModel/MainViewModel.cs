@@ -205,7 +205,7 @@ namespace Famoser.RememberLess.View.ViewModel
                 if (index == 0)
                     ActiveCollection = NoteCollections[1];
                 else
-                    ActiveCollection = NoteCollections[0];
+                    ActiveCollection = NoteCollections[--index];
             }
             await _noteRepository.Delete(model);
             Messenger.Default.Send(Messages.NotesChanged);

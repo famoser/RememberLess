@@ -7,6 +7,7 @@
     xmlns:mainPage="using:Famoser.RememberLess.Presentation.WindowsUniversal.Converters.MainPage"
     xmlns:converters="using:Famoser.RememberLess.Presentation.WindowsUniversal.Converters"
     xmlns:helpers="using:Famoser.RememberLess.Presentation.WindowsUniversal.Helpers"
+    xmlns:mainPage1="using:Famoser.RememberLess.Presentation.WindowsUniversal.UserControls.MainPage"
     RequestedTheme="Light">
     <Application.Resources>
         <ResourceDictionary>
@@ -36,6 +37,12 @@
             </ResourceDictionary.ThemeDictionaries>
             <SolidColorBrush x:Key="PivotHeaderForegroundSelectedBrush" Color="#FFFFFF" />
             <SolidColorBrush x:Key="PivotHeaderForegroundUnselectedBrush" Color="#CDFFFFFF" />
+
+            <Style TargetType="ListViewItem">
+                <Style.Setters>
+                    <Setter Property="Background" Value="Aqua"></Setter>
+                </Style.Setters>
+            </Style>
 
             <viewModels:ViewModelLocator x:Key="Locator" />
             
@@ -168,6 +175,25 @@
                     <Rectangle Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <TextBlock Grid.Column="1" Style="{StaticResource CounterTextBlock}" Text="{Binding NewNotes.Count}" Foreground="{ThemeResource DisApprooveRed}" />
                     <TextBlock Grid.Column="2" Style="{StaticResource CounterTextBlock}" Text="{Binding CompletedNotes.Count}" Foreground="{ThemeResource SomeApprooveOrange}" />
+                </Grid>
+            </DataTemplate>
+
+
+            <DataTemplate x:Name="NoteCollectionWithNewNotesTemplate">
+                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="{Binding Name}" Grid.Column="0" Style="{ThemeResource SubHeaderTextBlock}" Padding="10,15,10,10" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource CounterTextBlock}" Text="{Binding NewNotes.Count}" Foreground="{ThemeResource DisApprooveRed}" />
+                    <TextBlock Grid.Row="0" Grid.Column="2" Style="{StaticResource CounterTextBlock}" Text="{Binding CompletedNotes.Count}" Foreground="{ThemeResource SomeApprooveOrange}" />
+                    <mainPage1:NoteList Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" DataContext="{Binding NewNotes}" />
                 </Grid>
             </DataTemplate>
 

@@ -67,7 +67,6 @@
         </ControlTemplate>
     </Page.Resources>
 
-
     <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay" IsPaneOpen="False" 
                CompactPaneLength="0" OpenPaneLength="300" PaneBackground="{ThemeResource SystemControlBackgroundAccentBrush}">
         <SplitView.Pane>
@@ -91,42 +90,46 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <ScrollViewer VerticalScrollMode="Enabled" Grid.Column="0" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Hidden">
-                    <StackPanel Margin="0,53,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding ActiveCollection.Name}" Style="{ThemeResource HeaderTextBlock}" />
-                            <Button Grid.Column="1" Style="{StaticResource EditNoteCollectionButton}" Template="{StaticResource EditNoteButtonTemplate}" Tapped="EditCollectionButton_Tapped" >
-                                <Button.Content>
-                                    <SymbolIcon Symbol="Edit" />
-                                </Button.Content>
-                            </Button>
-                        </Grid>
-                        <Grid x:Name="EditCollectionGrid" Height="52" Margin="0,0,0,10" Visibility="Collapsed">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Button Grid.Column="0" Background="{ThemeResource DisApprooveRed}" Style="{StaticResource AddNewNoteButton}" Template="{StaticResource EditNoteButtonTemplate}" Tapped="Button_Tapped" >
-                                <Button.Content>
-                                    <SymbolIcon Symbol="Delete" />
-                                </Button.Content>
-                            </Button>
-                            <TextBox TabIndex="0" Grid.Column="1" Text="{Binding ActiveCollection.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AddNewNoteTextBox}" />
-                            <Button Grid.Column="2"  Background="{ThemeResource ApprooveGreen}" Style="{StaticResource AddNewNoteButton}" Template="{StaticResource EditNoteButtonTemplate}" Command="{Binding SaveNoteCollectionCommand}" CommandParameter="{Binding ActiveCollection}">
-                                <Button.Content>
-                                    <SymbolIcon Symbol="Save" />
-                                </Button.Content>
-                            </Button>
-                        </Grid>
-                        
-                        <mainPage:NoteList DataContext="{Binding ActiveCollection.NewNotes}" />
-                        <TextBlock Text="on hold" Style="{ThemeResource SubHeaderTextBlock}" Visibility="{Binding ActiveCollection.CompletedNotes.Count, Converter={StaticResource IntToVisibilityConverter}}"/>
-                        <mainPage:NoteList DataContext="{Binding ActiveCollection.CompletedNotes}" />
-                    </StackPanel>
+                    <Grid Margin="0,53,0,0">
+                        <mainPage:NoteCollectionsOverview x:Name="NoteCollectionsOverview" Visibility="Collapsed"/>
+                        <StackPanel x:Name="ActiveNoteCollection">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding ActiveCollection.Name}" Style="{ThemeResource HeaderTextBlock}" />
+                                <Button Grid.Column="1" Style="{StaticResource EditNoteCollectionButton}" Template="{StaticResource EditNoteButtonTemplate}" Tapped="EditCollectionButton_Tapped" >
+                                    <Button.Content>
+                                        <SymbolIcon Symbol="Edit" />
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                            <Grid x:Name="EditCollectionGrid" Height="52" Margin="0,0,0,10" Visibility="Collapsed">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Background="{ThemeResource DisApprooveRed}" Style="{StaticResource AddNewNoteButton}" Template="{StaticResource EditNoteButtonTemplate}" Tapped="Button_Tapped" >
+                                    <Button.Content>
+                                        <SymbolIcon Symbol="Delete" />
+                                    </Button.Content>
+                                </Button>
+                                <TextBox TabIndex="0" Grid.Column="1" Text="{Binding ActiveCollection.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AddNewNoteTextBox}" />
+                                <Button Grid.Column="2"  Background="{ThemeResource ApprooveGreen}" Style="{StaticResource AddNewNoteButton}" Template="{StaticResource EditNoteButtonTemplate}" Command="{Binding SaveNoteCollectionCommand}" CommandParameter="{Binding ActiveCollection}">
+                                    <Button.Content>
+                                        <SymbolIcon Symbol="Save" />
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+
+                            <mainPage:NoteList DataContext="{Binding ActiveCollection.NewNotes}" />
+                            <TextBlock Text="on hold" Style="{ThemeResource SubHeaderTextBlock}" Visibility="{Binding ActiveCollection.CompletedNotes.Count, Converter={StaticResource IntToVisibilityConverter}}"/>
+                            <mainPage:NoteList DataContext="{Binding ActiveCollection.CompletedNotes}" />
+                        </StackPanel>
+                    </Grid>
+                    
                 </ScrollViewer>
                 <Grid Height="52.5" VerticalAlignment="Top" >
                     <TextBox x:Name="AddNewNoteTextBox"  Style="{StaticResource AddNewNoteTextBox}" PlaceholderText="neue Notiz..." Text="{Binding NewNote, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="2" KeyDown="TextBox_KeyDown" />
@@ -147,12 +150,14 @@
         </SplitView.Content>
     </SplitView>
 
+
     <Page.BottomAppBar>
         <CommandBar >
             <CommandBar.PrimaryCommands>
-                <AppBarButton Label="Lists">
+                <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="ShowResults" Label="ShowAll" Tapped="UIElement_OnTapped" />
+                <AppBarButton Label="Lists" Tapped="ListsAppbar_OnTapped">
                     <AppBarButton.Content>
-                        <TextBlock Text="&#xE700;" Width="27" FontSize="26" Margin="0,-2" FontFamily="Segoe MDL2 Assets" PointerPressed="TextBlock_PointerPressed" />
+                        <TextBlock Text="&#xE700;" Width="27" FontSize="26" Margin="0,-2" FontFamily="Segoe MDL2 Assets" />
                     </AppBarButton.Content>
                 </AppBarButton>
                 <!--<AppBarButton Icon="Link" Command="{Binding ConnectCommand}" Content="Connect" />-->

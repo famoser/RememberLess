@@ -90,17 +90,20 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal
 
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) =>
             {
-                Frame frame = Window.Current.Content as Frame;
+                if (!ev.Handled)
+                {
+                    Frame frame = Window.Current.Content as Frame;
 
-                if (frame != null && frame.CanGoBack)
-                {
-                    var ns = SimpleIoc.Default.GetInstance<INavigationService>();
-                    ns.GoBack();
-                    ev.Handled = true;
-                }
-                else
-                {
-                    Current.Exit();
+                    if (frame != null && frame.CanGoBack)
+                    {
+                        var ns = SimpleIoc.Default.GetInstance<INavigationService>();
+                        ns.GoBack();
+                        ev.Handled = true;
+                    }
+                    else
+                    {
+                        Current.Exit();
+                    }
                 }
             };
         }
@@ -116,11 +119,11 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal
 
 
         /// <summary>
-    /// Invoked when Navigation to a certain page fails
-    /// </summary>
-    /// <param name="sender">The Frame which failed navigation</param>
-    /// <param name="e">Details about the navigation failure</param>
-    void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        /// Invoked when Navigation to a certain page fails
+        /// </summary>
+        /// <param name="sender">The Frame which failed navigation</param>
+        /// <param name="e">Details about the navigation failure</param>
+        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
