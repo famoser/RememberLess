@@ -33,6 +33,11 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
                         ev.Handled = true;
                         EditCollectionGrid.Visibility = Visibility.Collapsed;
                     }
+                    else if (NoteCollectionsOverview.Visibility == Visibility.Visible)
+                    {
+                        ev.Handled = true;
+                        UIElement_OnTapped();
+                    }
                 }
             };
         }
@@ -50,7 +55,6 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
         {
             if (propertyChangedEventArgs.PropertyName == "ActiveCollection")
             {
-                MySplitView.IsPaneOpen = false;
                 if (NoteCollectionsOverview.Visibility == Visibility.Visible)
                     UIElement_OnTapped(null, null);
             }
@@ -95,13 +99,13 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
             await dialog.ShowAsync();
         }
 
-        private void ListsAppbar_OnTapped(object sender, TappedRoutedEventArgs e)
-        {
-            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
-        }
+        //private void ListsAppbar_OnTapped(object sender, TappedRoutedEventArgs e)
+        //{
+        //    MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        //}
 
 
-        private void UIElement_OnTapped(object sender, TappedRoutedEventArgs e)
+        private void UIElement_OnTapped(object sender = null, TappedRoutedEventArgs e = null)
         {
             if (NoteCollectionsOverview.Visibility == Visibility.Visible)
             {
