@@ -118,7 +118,7 @@
             <Style x:Key="StretchListViewItemStyle" TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="Padding" Value="0" />
-                <Setter Property="Margin" Value="0,1,0,0" />
+                <Setter Property="Margin" Value="0,0,0,1" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="ListViewItem">
@@ -130,7 +130,24 @@
             </Style>
 
             <Style x:Key="StretchListView" TargetType="ListView">
+                <!-- <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}"></Setter>-->
+            </Style>
+
+            <Style x:Key="AccentBackgroundStretchListView" TargetType="ListView">
                 
+            </Style>
+
+            <Style x:Key="AlwaysScrollViewer" TargetType="ScrollViewer">
+                <Setter Property="VerticalScrollMode" Value="Enabled" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+            </Style>
+
+            <Style x:Key="AccentAlwaysScrollViewer" TargetType="ScrollViewer">
+                <Setter Property="VerticalScrollMode" Value="Enabled" />
+                <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+                <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundAccentBrush}" />
             </Style>
 
             <mainPage:SymbolConverter x:Key="SymbolConverter" />
@@ -180,7 +197,7 @@
 
 
             <DataTemplate x:Name="NoteCollectionWithNewNotesTemplate">
-                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />

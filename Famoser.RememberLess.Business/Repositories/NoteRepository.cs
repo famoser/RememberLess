@@ -77,6 +77,23 @@ namespace Famoser.RememberLess.Business.Repositories
                         IsCompleted = true,
                     }
                 },
+                DeletedNotes = new ObservableCollection<NoteModel>()
+                {
+                    new NoteModel()
+                    {
+                        Guid = Guid.NewGuid(),
+                        Content = "Note 6 (del)",
+                        CreateTime = DateTime.Now,
+                        IsCompleted = true,
+                    },
+                    new NoteModel()
+                    {
+                        Guid = Guid.NewGuid(),
+                        Content = "Note 7 (del)",
+                        CreateTime = DateTime.Now,
+                        IsCompleted = true,
+                    }
+                },
             };
         }
 
@@ -294,7 +311,7 @@ namespace Famoser.RememberLess.Business.Repositories
                     {
                         pending.AddRange(pending2);
                         var addUpdateRequest = RequestConverter.Instance.ConvertToNoteRequest(_userInformations.Guid, noteCollectionModel.Guid, PossibleActions.AddOrUpdate, pending);
-                        var addUpdateRes =await _dataService.PostNote(addUpdateRequest);
+                        var addUpdateRes = await _dataService.PostNote(addUpdateRequest);
                         if (addUpdateRes.IsSuccessfull)
                             foreach (var noteModel in pending)
                                 noteModel.PendingAction = PendingAction.None;
@@ -357,7 +374,7 @@ namespace Famoser.RememberLess.Business.Repositories
                         }
                     }
                 }
-                
+
                 return await SaveNoteCollectionsToStorage();
             }
             catch (Exception ex)
@@ -373,7 +390,7 @@ namespace Famoser.RememberLess.Business.Repositories
             {
                 var obj = RequestConverter.Instance.ConvertToNoteRequest(_userInformations.Guid, nm.NoteCollection.Guid, PossibleActions.AddOrUpdate,
                     new List<NoteModel>() { nm });
-                var res =await _dataService.PostNote(obj);
+                var res = await _dataService.PostNote(obj);
                 nm.PendingAction = !res.IsSuccessfull ? PendingAction.AddOrUpdate : PendingAction.None;
 
                 if (nm.NoteCollection.CompletedNotes.Contains(nm) && !nm.IsCompleted)
@@ -466,7 +483,7 @@ namespace Famoser.RememberLess.Business.Repositories
 
                 if (!_dataModel.Collections.Contains(nm))
                     _dataModel.Collections.Add(nm);
-                
+
                 return await SaveNoteCollectionsToStorage() && res.IsSuccessfull;
             }
             catch (Exception ex)

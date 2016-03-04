@@ -57,7 +57,9 @@ class NoteController implements iController
                                     $updateNotes[] = $existingNote;
                                 }
                             }
-                            return ReturnBoolean(InsertAll($newNotes) && UpdateAll($updateNotes));
+                            $res = InsertAll($newNotes);
+                            $res &= UpdateAll($updateNotes);
+                            return ReturnBoolean($res);
                         }
                         return ReturnBoolean(false);
                     } else if ($obj->Action == "get") {
