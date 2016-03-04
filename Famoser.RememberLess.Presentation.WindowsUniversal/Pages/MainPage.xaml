@@ -90,7 +90,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Margin="0,53,0,0">
-            <ScrollViewer x:Name="NoteCollectionsOverview" Grid.Column="0" Style="{StaticResource AccentAlwaysScrollViewer}">
+            <ScrollViewer x:Name="NoteCollectionsOverview" Grid.Column="0" Style="{StaticResource AccentAlwaysScrollViewer}" Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -107,7 +107,7 @@
                     </Grid>
                 </Grid>
             </ScrollViewer>
-            <ScrollViewer x:Name="ActiveNoteCollection" Grid.Column="0" Style="{StaticResource AlwaysScrollViewer}" Visibility="Collapsed">
+            <ScrollViewer x:Name="ActiveNoteCollection" Grid.Column="0" Style="{StaticResource AlwaysScrollViewer}">
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
