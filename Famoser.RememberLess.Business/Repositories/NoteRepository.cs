@@ -322,10 +322,10 @@ namespace Famoser.RememberLess.Business.Repositories
                     if (removes.Any())
                     {
                         var deleteRequest = RequestConverter.Instance.ConvertToNoteRequest(_userInformations.Guid,
-                            noteCollectionModel.Guid, PossibleActions.Delete, pending);
+                            noteCollectionModel.Guid, PossibleActions.Delete, removes);
                         var delets = await _dataService.PostNote(deleteRequest);
                         if (delets.IsSuccessfull)
-                            foreach (var noteModel in pending)
+                            foreach (var noteModel in removes)
                             {
                                 noteModel.PendingAction = PendingAction.None;
                                 noteCollectionModel.DeletedNotes.Remove(noteModel);
