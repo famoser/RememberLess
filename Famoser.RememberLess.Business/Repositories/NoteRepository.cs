@@ -175,6 +175,7 @@ namespace Famoser.RememberLess.Business.Repositories
                             await SaveUserInformationsToStorage();
                             await SaveNoteCollectionsToStorage();
                         }
+                        await SyncNotes();
                     }
                 }
             }
@@ -349,6 +350,7 @@ namespace Famoser.RememberLess.Business.Repositories
                             }
                             else
                             {
+                                ResponseConverter.Instance.WriteValues(noteEntity, existingModel);
                                 if (noteEntity.IsCompletedBool != existingModel.IsCompleted)
                                 {
                                     if (existingModel.IsCompleted && noteCollectionModel.CompletedNotes.Contains(existingModel))
@@ -358,7 +360,6 @@ namespace Famoser.RememberLess.Business.Repositories
 
                                     InsertIntoList(!existingModel.IsCompleted ? noteCollectionModel.NewNotes : noteCollectionModel.CompletedNotes, existingModel);
                                 }
-                                ResponseConverter.Instance.WriteValues(noteEntity, existingModel);
                             }
                         }
                         //remove old
