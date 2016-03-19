@@ -178,59 +178,61 @@ namespace Famoser.RememberLess.Business.Repositories
                         await SyncNotes();
                     }
                 }
+                else
+                {
+                    var coll = new NoteCollectionModel()
+                    {
+                        Name = "To do",
+                        Guid = Guid.NewGuid(),
+                        NewNotes = new ObservableCollection<NoteModel>()
+                        {
+                            new NoteModel()
+                            {
+                                Guid = Guid.NewGuid(),
+                                IsCompleted = false,
+                                Content = "Add new Note",
+                                CreateTime = DateTime.Now,
+                                PendingAction = PendingAction.AddOrUpdate
+                            },
+                            new NoteModel()
+                            {
+                                Guid = Guid.NewGuid(),
+                                IsCompleted = false,
+                                Content = "Install Application on my other Windows devices to sync notes",
+                                CreateTime = DateTime.Now,
+                                PendingAction = PendingAction.AddOrUpdate
+                            }
+                        },
+                        CompletedNotes = new ObservableCollection<NoteModel>()
+                        {
+                            new NoteModel()
+                            {
+                                Guid = Guid.NewGuid(),
+                                IsCompleted = true,
+                                Content = "Install to do application",
+                                CreateTime = DateTime.Now,
+                                PendingAction = PendingAction.AddOrUpdate
+                            }
+                        },
+                        PendingAction = PendingAction.AddOrUpdate
+                    };
+                    foreach (var note in coll.NewNotes)
+                    {
+                        note.NoteCollection = coll;
+                    }
+                    foreach (var note in coll.CompletedNotes)
+                    {
+                        note.NoteCollection = coll;
+                    }
+                    _dataModel.Collections.Add(coll);
+
+                    await SyncNotes();
+                    await SaveNoteCollectionsToStorage();
+                }
             }
             catch (Exception ex)
             {
                 LogHelper.Instance.LogException(ex, this);
-            }
-            if (!_dataModel.Collections.Any())
-            {
-                var coll = new NoteCollectionModel()
-                {
-                    Name = "To do",
-                    Guid = Guid.NewGuid(),
-                    NewNotes = new ObservableCollection<NoteModel>()
-                    {
-                        new NoteModel()
-                        {
-                            Guid = Guid.NewGuid(),
-                            IsCompleted = false,
-                            Content = "Add new Note",
-                            CreateTime = DateTime.Now,
-                            PendingAction = PendingAction.AddOrUpdate
-                        },
-                        new NoteModel()
-                        {
-                            Guid = Guid.NewGuid(),
-                            IsCompleted = false,
-                            Content = "Install Application on my other Windows devices to sync notes",
-                            CreateTime = DateTime.Now,
-                            PendingAction = PendingAction.AddOrUpdate
-                        }
-                    },
-                    CompletedNotes = new ObservableCollection<NoteModel>()
-                    {
-                        new NoteModel()
-                        {
-                            Guid = Guid.NewGuid(),
-                            IsCompleted = true,
-                            Content = "Install to do application",
-                            CreateTime = DateTime.Now,
-                            PendingAction = PendingAction.AddOrUpdate
-                        }
-                    },
-                    PendingAction = PendingAction.AddOrUpdate
-                };
-                foreach (var note in coll.NewNotes)
-                {
-                    note.NoteCollection = coll;
-                }
-                foreach (var note in coll.CompletedNotes)
-                {
-                    note.NoteCollection = coll;
-                }
-                _dataModel.Collections.Add(coll);
-                await SaveNoteCollectionsToStorage();
             }
             return _dataModel.Collections;
         }

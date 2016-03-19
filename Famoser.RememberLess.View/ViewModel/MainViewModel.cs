@@ -80,7 +80,7 @@ namespace Famoser.RememberLess.View.ViewModel
             _refreshCommand.RaiseCanExecuteChanged();
 
             NoteCollections = await _noteRepository.GetCollections();
-            ActiveCollection = NoteCollections[0];
+            ActiveCollection = NoteCollections.FirstOrDefault();
 
             _isInitializing = false;
             _refreshCommand.RaiseCanExecuteChanged();
