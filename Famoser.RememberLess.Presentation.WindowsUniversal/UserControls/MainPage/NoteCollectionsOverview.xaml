@@ -10,5 +10,4 @@
     d:DesignWidth="400"
     d:DataContext="{Binding MainViewModel, Source={StaticResource Locator}}">
 
-    <ListView x:Name="ListView" AllowDrop="True" CanDragItems="True" CanReorderItems="True" Style="{StaticResource AccentBackgroundStretchListView}" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplate="{StaticResource NoteCollectionWithNewNotesTemplate}" SelectedItem="{Binding ActiveCollection, Mode=TwoWay}" ItemsSource="{Binding NoteCollections}" ItemContainerStyle="{StaticResource StretchListViewItemStyle}"  />
-</UserControl>
+  </UserControl>

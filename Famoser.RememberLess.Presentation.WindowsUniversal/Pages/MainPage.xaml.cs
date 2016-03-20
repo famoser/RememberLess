@@ -118,5 +118,10 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
                 ActiveNoteCollection.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            UIElement_OnTapped();
+        }
     }
 }
