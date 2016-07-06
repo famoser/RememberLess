@@ -95,6 +95,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <ListView AllowDrop="True" CanDragItems="True" CanReorderItems="True" Style="{StaticResource AccentBackgroundStretchListView}" IsItemClickEnabled="True" ScrollViewer.VerticalScrollMode="Disabled" ItemTemplate="{StaticResource NoteCollectionWithNewNotesTemplate}" SelectedItem="{Binding ActiveCollection, Mode=TwoWay}" ItemsSource="{Binding NoteCollections}" ItemContainerStyle="{StaticResource StretchListViewItemStyle}" ItemClick="ListView_ItemClick" />
                     <Grid Height="52" Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -104,6 +105,19 @@
                                 <SymbolIcon Symbol="Add" />
                             </Button.Content>
                         </Button>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <TextBlock Margin="0,10,0,0" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                            <Run Text="created with &#x2661; by " />
+                            <Hyperlink NavigateUri="http://famoser.ch" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                                <Run Text="famoser"/>
+                            </Hyperlink>
+                            <LineBreak />
+                            <Run Text="source code on " />
+                            <Hyperlink NavigateUri="https://github.com/famoser/RememberLess" Foreground="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                                <Run Text="github"/>
+                            </Hyperlink>
+                        </TextBlock>
                     </Grid>
                 </Grid>
             </ScrollViewer>
