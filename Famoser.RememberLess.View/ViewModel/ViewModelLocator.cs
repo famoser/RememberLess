@@ -51,33 +51,15 @@ namespace Famoser.RememberLess.View.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<ConnectViewModel>(); 
+            SimpleIoc.Default.Register<NoteViewModel>();
+            SimpleIoc.Default.Register<ConnectViewModel>();
             SimpleIoc.Default.Register<ProgressViewModel>();
         }
 
-        public MainViewModel MainViewModel
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
-            }
-        }
-
-        public ConnectViewModel ConnectViewModel
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<ConnectViewModel>();
-            }
-        }
-
-        public ProgressViewModel ProgressViewModel
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<ProgressViewModel>();
-            }
-        }
+        public MainViewModel MainViewModel => ServiceLocator.Current.GetInstance<MainViewModel>();
+        public ConnectViewModel ConnectViewModel => ServiceLocator.Current.GetInstance<ConnectViewModel>();
+        public ProgressViewModel ProgressViewModel => ServiceLocator.Current.GetInstance<ProgressViewModel>();
+        public NoteViewModel NoteViewModel => ServiceLocator.Current.GetInstance<NoteViewModel>();
 
         public static void Cleanup()
         {

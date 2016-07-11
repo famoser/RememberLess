@@ -13,6 +13,7 @@ class Note extends BaseGuidModel
 {
     public $NoteCollectionId;
     public $Content;
+    public $Description;
     public $CreateTime;
     public $IsCompleted;
 }

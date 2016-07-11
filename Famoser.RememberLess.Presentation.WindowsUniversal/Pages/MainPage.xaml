@@ -67,24 +67,6 @@
         </ControlTemplate>
     </Page.Resources>
 
-    <!--<SplitView x:Name="MySplitView" DisplayMode="CompactOverlay" IsPaneOpen="False" 
-               CompactPaneLength="0" OpenPaneLength="300" PaneBackground="{ThemeResource SystemControlBackgroundAccentBrush}">
-        <SplitView.Pane>
-            <ScrollViewer VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Enabled">
-                <StackPanel>
-                    <mainPage:NoteCollectionList DataContext="{Binding }" TabIndex="0"/>
-                    <Grid Height="52" Margin="0,1,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                        <TextBox x:Name="AddNewNoteCollectionTextBox" Style="{StaticResource AddNewNoteTextBox}" PlaceholderText="neue Seite..." Text="{Binding NewNoteCollection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="2" KeyDown="TextBox_KeyDown" />
-                        <Button Margin="0,0,1.5,0" Style="{StaticResource AddNewNoteButton}" BorderThickness="0" Command="{Binding AddNoteCollectionCommand}" TabIndex="1" >
-                            <Button.Content>
-                                <SymbolIcon Symbol="Add" />
-                            </Button.Content>
-                        </Button>
-                    </Grid>
-                </StackPanel>
-            </ScrollViewer>
-        </SplitView.Pane>
-        <SplitView.Content>-->
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -169,38 +151,14 @@
             </Button>
         </Grid>
         <userControls:ProgressUserControl VerticalAlignment="Top" />
-        <!--<Grid VerticalAlignment="Bottom" MaxHeight="{Binding HeightOfDevice, Source={StaticResource ResolutionHelper}}" Margin="0,50,0,0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Opacity="1">
-            <ScrollViewer Background="{ThemeResource SystemControlBackgroundAccentBrush}" x:Name="NoteCollectionScrollViewer" Height="{Binding ElementName=NoteCollectionList, Path=ActualHeight}" VerticalAlignment="Bottom">
-                <mainPage:NoteCollectionList Background="{ThemeResource SystemControlBackgroundAccentBrush}" x:Name="NoteCollectionList" DataContext="{Binding NoteCollections}" />
-            </ScrollViewer>
-        </Grid>-->
-
     </Grid>
-    <!--</SplitView.Content>
-    </SplitView>-->
 
 
     <Page.BottomAppBar>
         <CommandBar >
             <CommandBar.PrimaryCommands>
-                <AppBarButton IsCompact="True" Icon="ShowResults" Label="ShowAll" Tapped="UIElement_OnTapped" />
-                <!--<AppBarButton Label="Lists" Tapped="ListsAppbar_OnTapped" Margin="-6,0">
-                    <AppBarButton.Content>
-                        <TextBlock Text="&#xE700;" Width="27" FontSize="23" Margin="0,-2" FontFamily="Segoe MDL2 Assets" />
-                    </AppBarButton.Content>
-                </AppBarButton>-->
-                <!--<AppBarButton Icon="Link" Command="{Binding ConnectCommand}" Content="Connect" />-->
-                <!--<AppBarButton IsCompact="True" Icon="Add" Label="Add List" >
-                    <AppBarButton.Flyout>
-                        <Flyout x:Name="AddNoteCollectionFlyout" Placement="Bottom">
-                            <StackPanel>
-                                <TextBox MinWidth="300" BorderThickness="1" Text="{Binding NewNoteCollection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource AddNewNoteTextBox}" />
-                                <Button Content="Speichern" Style="{ThemeResource TextButton}" Command="{Binding AddNoteCollectionCommand}" Tapped="UIElement_OnTapped" />
-                            </StackPanel>
-                        </Flyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>-->
-                <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="Refresh" Label="Refresh" />
+                <AppBarButton IsCompact="True" Icon="ShowResults" Label="show all" Tapped="UIElement_OnTapped" />
+                <AppBarButton IsCompact="True" Command="{Binding RefreshCommand}" Icon="Refresh" Label="refresh" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

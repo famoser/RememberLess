@@ -17,6 +17,7 @@ namespace Famoser.RememberLess.Business.Converters
             {
                 Guid = note.Guid,
                 Content = note.Content,
+                Description = note.Description,
                 CreateTime = note.CreateTime,
                 IsCompleted = note.IsCompletedBool
             };
@@ -26,6 +27,7 @@ namespace Famoser.RememberLess.Business.Converters
         {
             model.IsCompleted = note.IsCompletedBool;
             model.Content = note.Content;
+            model.Description = note.Description;
             model.CreateTime = note.CreateTime;
         }
 

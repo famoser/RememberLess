@@ -46,6 +46,7 @@
     <Compile Include="Services\IProgressService.cs" />
     <Compile Include="Services\ProgressService.cs" />
     <Compile Include="ViewModel\ConnectViewModel.cs" />
+    <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ProgressViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />

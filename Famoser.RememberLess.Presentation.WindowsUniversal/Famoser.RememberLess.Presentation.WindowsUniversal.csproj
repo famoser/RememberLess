@@ -118,6 +118,9 @@
     <Compile Include="Pages\ConnectPage.xaml.cs">
       <DependentUpon>ConnectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\NotePage.xaml.cs">
+      <DependentUpon>NotePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CustomNavigationService.cs" />
     <Compile Include="Services\Mocks\MockNavigationService.cs" />
@@ -129,9 +132,6 @@
     </Compile>
     <Compile Include="UserControls\MainPage\NoteCollectionList.xaml.cs">
       <DependentUpon>NoteCollectionList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\MainPage\NoteCollectionsOverview.xaml.cs">
-      <DependentUpon>NoteCollectionsOverview.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\MainPage\NoteList.xaml.cs">
       <DependentUpon>NoteList.xaml</DependentUpon>
@@ -174,15 +174,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\NotePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\ConnectPage\CreateQrCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MainPage\NoteCollectionList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\MainPage\NoteCollectionsOverview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

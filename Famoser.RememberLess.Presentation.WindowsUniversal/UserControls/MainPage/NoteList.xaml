@@ -11,5 +11,5 @@
     d:DesignWidth="400"
     d:DataContext="{Binding MainViewModel.ActiveCollection.CompletedNotes, Source={StaticResource Locator}}">
 
-    <ListView SelectionMode="None" ScrollViewer.VerticalScrollMode="Disabled" Style="{StaticResource StretchListView}" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" ItemContainerStyle="{StaticResource StretchListViewItemStyle}"  />
+    <ListView SelectionMode="None" IsItemClickEnabled="True" ItemClick="ListViewBase_OnItemClick" ScrollViewer.VerticalScrollMode="Disabled" Style="{StaticResource StretchListView}" ItemTemplate="{StaticResource NoteTemplate}" ItemsSource="{Binding }" ItemContainerStyle="{StaticResource StretchListViewItemStyle}"  />
 </UserControl>

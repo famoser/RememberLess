@@ -18,6 +18,13 @@ namespace Famoser.RememberLess.Business.Models
             set { Set(ref _content, value); }
         }
 
+        private string _description;
+        public string Description
+        {
+            get { return _description; }
+            set { Set(ref _description, value); }
+        }
+
         private bool _isCompleted;
         public bool IsCompleted
         {

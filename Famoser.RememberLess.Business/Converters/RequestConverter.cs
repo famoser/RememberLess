@@ -33,6 +33,7 @@ namespace Famoser.RememberLess.Business.Converters
             {
                  Guid = noteModel.Guid,
                  Content = noteModel.Content,
+                 Description =  noteModel.Description,
                  CreateTime = noteModel.CreateTime,
                  IsCompletedBool = noteModel.IsCompleted
             };

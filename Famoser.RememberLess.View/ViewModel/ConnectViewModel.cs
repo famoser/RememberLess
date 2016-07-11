@@ -34,17 +34,11 @@ namespace Famoser.RememberLess.View.ViewModel
             }
         }
 
-        public string QrCode
-        {
-            get { return "RememberLessUser: " + UserIdentification; }
-        }
+        public string QrCode => "RememberLessUser: " + UserIdentification;
 
-        private string _userIdentification;
+        private readonly string _userIdentification;
 
-        public string UserIdentification
-        {
-            get { return _userIdentification; }
-        }
+        public string UserIdentification => _userIdentification;
 
         private string _newQrCode;
 

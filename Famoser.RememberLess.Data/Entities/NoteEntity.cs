@@ -17,6 +17,9 @@ namespace Famoser.RememberLess.Data.Entities
         public string Content;
 
         [DataMember]
+        public string Description;
+
+        [DataMember]
         public DateTime CreateTime;
 
         [DataMember]

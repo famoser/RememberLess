@@ -10,6 +10,7 @@ namespace famoser\rememberless\webpage\controllers;
 
 
 use famoser\rememberless\webpage\core\interfaces\iController;
+use famoser\rememberless\webpage\core\logging\logger;
 use function famoser\rememberless\webpage\core\responsehelper\ReturnBoolean;
 use function famoser\rememberless\webpage\core\responsehelper\ReturnError;
 use function famoser\rememberless\webpage\core\responsehelper\ReturnJson;
@@ -47,11 +48,13 @@ class NoteController implements iController
                                     $newnote->NoteCollectionId = $listId;
                                     $newnote->Guid = $note->Guid;
                                     $newnote->Content = $note->Content;
+                                    $newnote->Description = $note->Description;
                                     $newnote->CreateTime = ConvertToDatabaseDateTime($note->CreateTime);
                                     $newnote->IsCompleted = $note->IsCompleted;
                                     $newNotes[] = $newnote;
                                 } else {
                                     $existingNote->Content = $note->Content;
+                                    $existingNote->Description = $note->Description;
                                     $existingNote->CreateTime = ConvertToDatabaseDateTime($note->CreateTime);
                                     $existingNote->IsCompleted = $note->IsCompleted;
                                     $updateNotes[] = $existingNote;
@@ -59,7 +62,7 @@ class NoteController implements iController
                             }
                             $res = InsertAll($newNotes);
                             $res &= UpdateAll($updateNotes);
-                            return ReturnBoolean($res);
+                            return ReturnBoolean($res == 1);
                         }
                         return ReturnBoolean(false);
                     } else if ($obj->Action == "get") {

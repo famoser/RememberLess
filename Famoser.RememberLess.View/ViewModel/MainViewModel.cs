@@ -31,9 +31,9 @@ namespace Famoser.RememberLess.View.ViewModel
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        private INoteRepository _noteRepository;
-        private IProgressService _progressService;
-        private INavigationService _navigationService;
+        private readonly INoteRepository _noteRepository;
+        private readonly IProgressService _progressService;
+        private readonly INavigationService _navigationService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -62,6 +62,7 @@ namespace Famoser.RememberLess.View.ViewModel
             _removeNoteCollection = new RelayCommand<NoteCollectionModel>(RemoveNoteCollection, CanRemoveNoteCollection);
             _saveNoteCollection = new RelayCommand<NoteCollectionModel>(SaveNoteCollection, CanSaveNoteCollection);
             _addNoteCollectionCommand = new RelayCommand(AddNoteCollection, () => CanAddNoteCollection);
+            _selectNoteCommand = new RelayCommand<NoteModel>(SelectNote);
 
             Messenger.Default.Register<NoteCollectionModel>(this, Messages.Select, EvaluateSelectMessage);
         }
@@ -172,7 +173,7 @@ namespace Famoser.RememberLess.View.ViewModel
         }
 
         private readonly RelayCommand<NoteModel> _toggleCompleted;
-        public ICommand ToggleCompletedCommand { get { return _toggleCompleted; } }
+        public ICommand ToggleCompletedCommand => _toggleCompleted;
 
         private async void ToggleCompleted(NoteModel note)
         {
@@ -245,6 +246,15 @@ namespace Famoser.RememberLess.View.ViewModel
         {
             get { return _activeCollection; }
             set { Set(ref _activeCollection, value); }
+        }
+
+        private readonly RelayCommand<NoteModel> _selectNoteCommand;
+        public ICommand SelectNoteCommand => _selectNoteCommand;
+
+        private void SelectNote(NoteModel note)
+        {
+            _navigationService.NavigateTo(PageKeys.NotePage.ToString());
+            Messenger.Default.Send(note, Messages.Select);
         }
     }
 }
