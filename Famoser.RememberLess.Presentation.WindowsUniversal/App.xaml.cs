@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Famoser.RememberLess.Presentation.WindowsUniversal.Services;
+using Famoser.Telemetry.UniversalWindows;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 
@@ -36,10 +37,10 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal
         /// </summary>
         public App()
         {
-            Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync();
-
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            FamoserTelemetry.Initialize("https://api.telemetry.famoser.ch/1.0/submit", "41e402bf-03d2-46bf-a52c-09d0f515f8dc");
         }
 
         /// <summary>

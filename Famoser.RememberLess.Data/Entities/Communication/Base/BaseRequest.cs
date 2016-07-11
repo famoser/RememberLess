@@ -30,7 +30,7 @@ namespace Famoser.RememberLess.Data.Entities.Communication.Base
                     return "addorupdate";
                 if (_possibleAction == PossibleActions.Get)
                     return "get";
-                LogHelper.Instance.Log(LogLevel.WtfAreYouDoingError, this, "Unknown Possible Action used!");
+                LogHelper.Instance.Log(LogLevel.WtfAreYouDoingError, "Unknown Possible Action used!", this);
                 return "";
             }
         }

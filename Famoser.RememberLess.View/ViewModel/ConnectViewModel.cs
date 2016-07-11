@@ -49,14 +49,8 @@ namespace Famoser.RememberLess.View.ViewModel
             {
                 if (Set(ref _newQrCode, value) && _newQrCode.Length > 6)
                 {
-                    CheckIfGuidExists();
                 }
             }
-        }
-
-        private async void CheckIfGuidExists()
-        {
-
         }
     }
 }

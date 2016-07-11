@@ -24,7 +24,7 @@
         <CommandBar >
             <CommandBar.PrimaryCommands>
                 <AppBarButton IsCompact="True" Command="{Binding SaveNoteCommand}" Icon="Save" Label="save" />
-                <AppBarButton IsCompact="True" Command="{Binding RemoveNoteCommand}" Icon="Remove" Label="remove" />
+                <AppBarButton IsCompact="True" Command="{Binding RemoveNoteCommand}" Icon="Clear" Label="remove" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

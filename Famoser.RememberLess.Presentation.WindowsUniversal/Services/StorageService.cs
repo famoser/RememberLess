@@ -24,7 +24,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.Log(LogLevel.Error, this, "ReadCache failed", ex);
+                LogHelper.Instance.LogException(ex);
             }
             return null;
         }
@@ -41,7 +41,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.Log(LogLevel.Error, this, "ReadSettings failed", ex);
+                LogHelper.Instance.LogException(ex);
             }
             return null;
         }
@@ -59,7 +59,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.Log(LogLevel.Error, this, "SaveToCache failed", ex);
+                LogHelper.Instance.LogException(ex);
             }
             return false;
         }
@@ -77,7 +77,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.Log(LogLevel.Error, this, "SaveToSettings failed", ex);
+                LogHelper.Instance.LogException(ex);
             }
             return false;
         }
