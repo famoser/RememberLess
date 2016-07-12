@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Famoser.RememberLess.View.Enums;
+﻿using Famoser.RememberLess.View.Enums;
 using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services

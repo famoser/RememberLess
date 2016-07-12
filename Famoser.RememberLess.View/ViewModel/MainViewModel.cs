@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Famoser.FrameworkEssentials.Logging;
-using Famoser.FrameworkEssentials.Singleton;
 using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.View.Enums;

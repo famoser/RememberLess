@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Famoser.FrameworkEssentials.Singleton;
 using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.Data.Entities;

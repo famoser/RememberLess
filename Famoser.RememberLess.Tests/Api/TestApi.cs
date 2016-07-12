@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Famoser.RememberLess.Business.Converters;
 using Famoser.RememberLess.Business.Models;
-using Famoser.RememberLess.Data.Entities.Communication;
-using Famoser.RememberLess.Data.Enum;
 using Famoser.RememberLess.Data.Services;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 

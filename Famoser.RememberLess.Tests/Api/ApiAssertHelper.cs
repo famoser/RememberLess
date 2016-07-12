@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Famoser.RememberLess.Data.Entities.Communication;
+﻿using Famoser.RememberLess.Data.Entities.Communication;
 using Famoser.RememberLess.Data.Entities.Communication.Base;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 

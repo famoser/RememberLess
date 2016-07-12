@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Linq;
 using Windows.UI.Notifications;
-using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.View.Enums;
 using Famoser.RememberLess.View.ViewModel;
 using GalaSoft.MvvmLight.Ioc;

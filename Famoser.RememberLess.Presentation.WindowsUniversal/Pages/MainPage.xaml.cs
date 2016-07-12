@@ -1,16 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
-using Windows.Foundation.Metadata;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Popups;
-using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Famoser.RememberLess.View.Enums;
 using Famoser.RememberLess.View.ViewModel;
-using GalaSoft.MvvmLight.Messaging;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 

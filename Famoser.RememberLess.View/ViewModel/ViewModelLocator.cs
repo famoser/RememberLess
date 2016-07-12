@@ -12,12 +12,10 @@
   See http://www.galasoft.ch/mvvm
 */
 
-using System.Runtime.InteropServices;
 using Famoser.RememberLess.Business.Repositories;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.Data.Services;
 using Famoser.RememberLess.View.Services;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
