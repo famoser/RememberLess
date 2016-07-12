@@ -34,7 +34,7 @@ namespace Famoser.RememberLess.View.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<IDataService, DataService>();
-            SimpleIoc.Default.Register<IProgressService, ProgressService>();
+            SimpleIoc.Default.Register<IIndeterminateProgressService, IndeterminateProgressService>();
             SimpleIoc.Default.Register<INoteRepository, NoteRepository>();
 
             ////if (ViewModelBase.IsInDesignModeStatic)

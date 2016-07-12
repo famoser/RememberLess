@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Windows.Input;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.View.Enums;
@@ -25,12 +26,12 @@ namespace Famoser.RememberLess.View.ViewModel
     public class NoteViewModel : ViewModelBase
     {
         private readonly INoteRepository _noteRepository;
-        private readonly INavigationService _navigationService;
+        private readonly IHistoryNavigationService _navigationService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public NoteViewModel(INoteRepository noteRepository, INavigationService navigationService)
+        public NoteViewModel(INoteRepository noteRepository, IHistoryNavigationService navigationService)
         {
             _noteRepository = noteRepository;
             _navigationService = navigationService;

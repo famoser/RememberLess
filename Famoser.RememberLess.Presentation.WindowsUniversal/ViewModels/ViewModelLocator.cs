@@ -1,11 +1,14 @@
-﻿using Famoser.RememberLess.Data.Services;
-using Famoser.RememberLess.Presentation.WindowsUniversal.Services;
+﻿using Famoser.FrameworkEssentials.Services.Interfaces;
+using Famoser.FrameworkEssentials.UniversalWindows.Platform;
+using Famoser.RememberLess.Presentation.WindowsUniversal.Pages;
 using Famoser.RememberLess.Presentation.WindowsUniversal.Services.Mocks;
+using Famoser.RememberLess.View.Enums;
 using Famoser.RememberLess.View.ViewModel;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
+using StorageService = Famoser.RememberLess.Presentation.WindowsUniversal.Services.StorageService;
 
 namespace Famoser.RememberLess.Presentation.WindowsUniversal.ViewModels
 {
@@ -26,16 +29,11 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.ViewModels
             SimpleIoc.Default.Register<IStorageService, StorageService>();
             SimpleIoc.Default.Register<IDialogService, DialogService>();
 
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                SimpleIoc.Default.Register<INavigationService, MockNavigationService>();
-            }
-            else
-            {
-
-                var navigationService = NavigationHelper.CreateNavigationService();
-                SimpleIoc.Default.Register(() => navigationService);
-            }
+            var navigationService = new HistoryNavigationServices();
+            navigationService.Configure(PageKeys.MainPage.ToString(), typeof(MainPage));
+            navigationService.Configure(PageKeys.ConnectPage.ToString(), typeof(ConnectPage));
+            navigationService.Configure(PageKeys.NotePage.ToString(), typeof(NotePage));
+            SimpleIoc.Default.Register(() => navigationService);
         }
     }
 }

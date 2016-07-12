@@ -4,6 +4,7 @@ using Famoser.RememberLess.View.Enums;
 using Famoser.RememberLess.View.ViewModel;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
+using NotificationsExtensions;
 using NotificationsExtensions.Tiles;
 
 namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
@@ -22,27 +23,27 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
                 var vm = SimpleIoc.Default.GetInstance<MainViewModel>();
                 if (vm != null && vm.NoteCollections != null)
                 {
-                    var newNotes =vm.NoteCollections.SelectMany(noteCollectionModel => noteCollectionModel.NewNotes).ToList();
+                    var newNotes = vm.NoteCollections.SelectMany(noteCollectionModel => noteCollectionModel.NewNotes).ToList();
                     var adap2 = new TileBindingContentAdaptive()
                     {
                         Children =
                         {
-                            new TileText()
+                            new AdaptiveText()
                             {
-                                Style = TileTextStyle.Title,
+                                HintStyle = AdaptiveTextStyle.Title,
                                 Text = newNotes.Count + " pending"
                             },
                             // For spacing
-                            new TileText()
+                            new AdaptiveText()
                         }
                     };
 
                     foreach (var noteModel in newNotes)
                     {
-                        adap2.Children.Add(new TileText()
+                        adap2.Children.Add(new AdaptiveText()
                         {
-                            Style = TileTextStyle.BodySubtle,
-                            Text = noteModel.Content
+                            Text = noteModel.Content,
+                            HintStyle = AdaptiveTextStyle.BodySubtle
                         });
                     }
 
@@ -59,11 +60,11 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
                         {
                             Children =
                             {
-                                new TileText()
+                                new AdaptiveText()
                                 {
-                                    Style = TileTextStyle.Header,
+                                    HintStyle = AdaptiveTextStyle.Header,
                                     Text = newNotes.Count.ToString("00"),
-                                    Align = TileTextAlign.Center
+                                    HintAlign = AdaptiveTextAlign.Center
                                 }
                             }
                         }

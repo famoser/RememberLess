@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.View.Enums;
@@ -10,7 +11,6 @@ using Famoser.RememberLess.View.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using GalaSoft.MvvmLight.Views;
 
 namespace Famoser.RememberLess.View.ViewModel
 {
@@ -29,13 +29,13 @@ namespace Famoser.RememberLess.View.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private readonly INoteRepository _noteRepository;
-        private readonly IProgressService _progressService;
-        private readonly INavigationService _navigationService;
+        private readonly IIndeterminateProgressService _progressService;
+        private readonly IHistoryNavigationService _navigationService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(INoteRepository noteRepository, IProgressService progressService, INavigationService navigationService)
+        public MainViewModel(INoteRepository noteRepository, IIndeterminateProgressService progressService, IHistoryNavigationService navigationService)
         {
             _noteRepository = noteRepository;
             _progressService = progressService;

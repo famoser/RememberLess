@@ -120,9 +120,7 @@
       <DependentUpon>NotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CustomNavigationService.cs" />
-    <Compile Include="Services\Mocks\MockNavigationService.cs" />
-    <Compile Include="Services\NavigationHelper.cs" />
+    <Compile Include="Services\Mocks\MockHistoryNavigationService.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="Services\TilesService.cs" />
     <Compile Include="UserControls\ConnectPage\CreateQrCode.xaml.cs">

@@ -43,8 +43,8 @@
     <Compile Include="Enums\PageKeys.cs" />
     <Compile Include="Enums\ProgressKeys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IProgressService.cs" />
-    <Compile Include="Services\ProgressService.cs" />
+    <Compile Include="Services\IIndeterminateProgressService.cs" />
+    <Compile Include="Services\IndeterminateProgressService.cs" />
     <Compile Include="ViewModel\ConnectViewModel.cs" />
     <Compile Include="ViewModel\NoteViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

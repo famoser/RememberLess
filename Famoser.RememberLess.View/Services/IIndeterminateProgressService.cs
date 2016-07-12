@@ -2,7 +2,7 @@
 
 namespace Famoser.RememberLess.View.Services
 {
-    public interface IProgressService
+    public interface IIndeterminateProgressService
     {
         void ShowProgress(ProgressKeys key);
         void HideProgress(ProgressKeys key);
