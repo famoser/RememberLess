@@ -31,7 +31,6 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.ViewModels
 
             var navigationService = new HistoryNavigationService();
             navigationService.Configure(PageKeys.MainPage.ToString(), typeof(MainPage));
-            navigationService.Configure(PageKeys.ConnectPage.ToString(), typeof(ConnectPage));
             navigationService.Configure(PageKeys.NotePage.ToString(), typeof(NotePage));
             SimpleIoc.Default.Register<IHistoryNavigationService>(() => navigationService);
         }

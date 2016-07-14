@@ -21,7 +21,7 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>ACB45E34678E904BAE51B90DE29105465D1A1393</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>627F9745A432D765879CAB01D46249102E45FF4F</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -115,26 +115,17 @@
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ConnectPage.xaml.cs">
-      <DependentUpon>ConnectPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\NotePage.xaml.cs">
       <DependentUpon>NotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="Services\TilesService.cs" />
-    <Compile Include="UserControls\ConnectPage\CreateQrCode.xaml.cs">
-      <DependentUpon>CreateQrCode.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\MainPage\NoteCollectionList.xaml.cs">
       <DependentUpon>NoteCollectionList.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\MainPage\NoteList.xaml.cs">
       <DependentUpon>NoteList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\ConnectPage\TakeImage.xaml.cs">
-      <DependentUpon>TakeImage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\ProgressUserControl.xaml.cs">
       <DependentUpon>ProgressUserControl.xaml</DependentUpon>
@@ -147,7 +138,6 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\logo_color_sqare.png" />
     <Content Include="Assets\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\NewStoreLogo.scale-125.png" />
@@ -195,6 +185,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-150.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -206,15 +197,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\ConnectPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\NotePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\ConnectPage\CreateQrCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,10 +206,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\MainPage\NoteList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\ConnectPage\TakeImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

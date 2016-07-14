@@ -1,1 +1,1 @@
-MainPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\x86\Release\Upload\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.26.0_x86.appx
+MainPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\x86\Release\Upload\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_x86.appx

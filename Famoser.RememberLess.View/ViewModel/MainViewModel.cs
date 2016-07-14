@@ -45,7 +45,6 @@ namespace Famoser.RememberLess.View.ViewModel
             _addNoteCommand = new RelayCommand(AddNote, () => CanAddNote);
             _removeNote = new RelayCommand<NoteModel>(RemoveNote);
             _toggleCompleted = new RelayCommand<NoteModel>(ToggleCompleted);
-            _connectCommand = new RelayCommand(Connect);
 
             if (IsInDesignMode)
             {
@@ -177,14 +176,6 @@ namespace Famoser.RememberLess.View.ViewModel
             note.IsCompleted = !note.IsCompleted;
             await _noteRepository.Save(note);
             Messenger.Default.Send(Messages.NotesChanged);
-        }
-
-        private readonly RelayCommand _connectCommand;
-        public ICommand ConnectCommand => _connectCommand;
-
-        private void Connect()
-        {
-            _navigationService.NavigateTo(PageKeys.ConnectPage.ToString());
         }
 
         private readonly RelayCommand<NoteCollectionModel> _removeNoteCollection;

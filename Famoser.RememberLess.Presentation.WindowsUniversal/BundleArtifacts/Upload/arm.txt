@@ -1,4 +1,4 @@
-MainPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Upload\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.26.0_ARM.appx
+MainPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Upload\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_ARM.appx
 ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\_scale-100.appx
 ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\_scale-125.appx
 ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\_scale-150.appx
