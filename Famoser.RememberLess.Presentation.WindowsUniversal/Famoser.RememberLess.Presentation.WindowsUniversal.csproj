@@ -8,7 +8,7 @@
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Famoser.RememberLess.Presentation.WindowsUniversal</RootNamespace>
-    <AssemblyName>Famoser.RememberLess.Presentation.WindowsUniversal</AssemblyName>
+    <AssemblyName>Famoser.Famoser.RememberLess.Presentation.WindowsUniversal</AssemblyName>
     <DefaultLanguage>de-CH</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
@@ -19,7 +19,7 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>Famoser.RememberLess.Presentation.WindowsUniversal_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundle>Auto</AppxBundle>
+    <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>ACB45E34678E904BAE51B90DE29105465D1A1393</PackageCertificateThumbprint>
   </PropertyGroup>
@@ -56,6 +56,8 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -120,7 +122,6 @@
       <DependentUpon>NotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Mocks\MockHistoryNavigationService.cs" />
     <Compile Include="Services\StorageService.cs" />
     <Compile Include="Services\TilesService.cs" />
     <Compile Include="UserControls\ConnectPage\CreateQrCode.xaml.cs">
@@ -147,18 +148,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Package.StoreAssociation.xml" />
-    <Content Include="Assets\logo_color_sqare.svg" />
+    <Content Include="Assets\logo_color_sqare.png" />
     <Content Include="Assets\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\NewStoreLogo.scale-125.png" />
     <Content Include="Assets\NewStoreLogo.scale-150.png" />
     <Content Include="Assets\NewStoreLogo.scale-200.png" />
     <Content Include="Assets\NewStoreLogo.scale-400.png" />
-    <Content Include="Assets\logo.svg" />
     <Content Include="Assets\SplashScreen.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-125.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\logo.svg" />
     <Content Include="Assets\Square150x150Logo.scale-100.png" />
     <Content Include="Assets\Square150x150Logo.scale-125.png" />
     <Content Include="Assets\Square150x150Logo.scale-150.png" />
@@ -253,9 +254,7 @@
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\ad\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
