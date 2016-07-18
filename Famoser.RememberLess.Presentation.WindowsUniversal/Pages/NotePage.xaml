@@ -23,8 +23,17 @@
     <Page.BottomAppBar>
         <CommandBar >
             <CommandBar.PrimaryCommands>
+                <AppBarButton IsCompact="True" Icon="Clear" Label="remove" >
+                    <AppBarButton.Flyout>
+                        <Flyout Placement="Bottom">
+                            <StackPanel>
+                                <TextBlock Text="Are you sure?" Style="{StaticResource BodyTextBlockStyle}" />
+                                <Button Content="remove" HorizontalAlignment="Center" Margin="0,10,0,0" Command="{Binding RemoveNoteCommand}" />
+                            </StackPanel>
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
                 <AppBarButton IsCompact="True" Command="{Binding SaveNoteCommand}" Icon="Save" Label="save" />
-                <AppBarButton IsCompact="True" Command="{Binding RemoveNoteCommand}" Icon="Clear" Label="remove" />
             </CommandBar.PrimaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

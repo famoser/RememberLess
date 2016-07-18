@@ -80,21 +80,6 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
             EditCollectionGrid.Visibility = EditCollectionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private async void Button_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            MessageDialog dialog = new MessageDialog("Liste wirklich löschen? Dieser Schritt kann nicht rückgängig gemacht werden", "Liste löschen");
-            dialog.Commands.Add(new UICommand("abbrechen"));
-            dialog.Commands.Add(new UICommand("löschen", command =>
-            {
-                if (ViewModel.RemoveNoteCollectionCommand.CanExecute(ViewModel.ActiveCollection))
-                    ViewModel.RemoveNoteCollectionCommand.Execute(ViewModel.ActiveCollection);
-                EditCollectionGrid.Visibility = Visibility.Collapsed;
-            }));
-            dialog.CancelCommandIndex = 0;
-            dialog.DefaultCommandIndex = 0;
-            await dialog.ShowAsync();
-        }
-
         //private void ListsAppbar_OnTapped(object sender, TappedRoutedEventArgs e)
         //{
         //    MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
