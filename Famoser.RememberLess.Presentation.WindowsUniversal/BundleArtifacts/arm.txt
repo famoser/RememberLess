@@ -1,6 +1,6 @@
-MainPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_ARM.appx
-SymbolPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\AppPackages\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_Test\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_ARM.appxsym
-ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_scale-100.appx
-ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_scale-125.appx
-ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_scale-150.appx
-ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.30.0_scale-400.appx
+MainPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_ARM.appx
+SymbolPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\AppPackages\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_Test\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_ARM.appxsym
+ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_scale-100.appx
+ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_scale-125.appx
+ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_scale-150.appx
+ResourcePack=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\ARM\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_scale-400.appx

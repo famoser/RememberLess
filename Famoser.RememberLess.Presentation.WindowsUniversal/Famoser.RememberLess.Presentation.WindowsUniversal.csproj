@@ -21,7 +21,7 @@
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
-    <PackageCertificateThumbprint>627F9745A432D765879CAB01D46249102E45FF4F</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>6F1921E2CF4253FA21AFBC39CD3505124F7EC613</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -97,7 +97,6 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="Famoser.RememberLess.Presentation.WindowsUniversal_StoreKey.pfx" />
-    <None Include="Famoser.RememberLess.Presentation.WindowsUniversal_TemporaryKey.pfx" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
