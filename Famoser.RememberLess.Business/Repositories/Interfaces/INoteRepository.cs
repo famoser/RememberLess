@@ -6,8 +6,7 @@ namespace Famoser.RememberLess.Business.Repositories.Interfaces
 {
     public interface INoteRepository
     {
-        Task<ObservableCollection<NoteCollectionModel>> GetCollections();
-        ObservableCollection<NoteCollectionModel> GetExampleCollections();
+        ObservableCollection<NoteCollectionModel> GetCollections();
         Task<bool> SyncNotes();
 
         Task<bool> Save(NoteModel nm);

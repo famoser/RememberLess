@@ -16,6 +16,7 @@ using Famoser.RememberLess.Business.Repositories;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.Data.Services;
 using Famoser.RememberLess.View.Services;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 
@@ -35,27 +36,18 @@ namespace Famoser.RememberLess.View.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<IDataService, DataService>();
             SimpleIoc.Default.Register<IIndeterminateProgressService, IndeterminateProgressService>();
-            SimpleIoc.Default.Register<INoteRepository, NoteRepository>();
 
-            ////if (ViewModelBase.IsInDesignModeStatic)
-            ////{
-            ////    // Create design time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DesignDataService>();
-            ////}
-            ////else
-            ////{
-            ////    // Create run time view services and models
-            ////    SimpleIoc.Default.Register<IDataService, DataService>();
-            ////}
+            if (ViewModelBase.IsInDesignModeStatic)
+                SimpleIoc.Default.Register<INoteRepository, MockNoteRepository>();
+            else
+                SimpleIoc.Default.Register<INoteRepository, NoteRepository>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<NoteViewModel>();
-            SimpleIoc.Default.Register<ConnectViewModel>();
             SimpleIoc.Default.Register<ProgressViewModel>();
         }
 
         public MainViewModel MainViewModel => ServiceLocator.Current.GetInstance<MainViewModel>();
-        public ConnectViewModel ConnectViewModel => ServiceLocator.Current.GetInstance<ConnectViewModel>();
         public ProgressViewModel ProgressViewModel => ServiceLocator.Current.GetInstance<ProgressViewModel>();
         public NoteViewModel NoteViewModel => ServiceLocator.Current.GetInstance<NoteViewModel>();
 

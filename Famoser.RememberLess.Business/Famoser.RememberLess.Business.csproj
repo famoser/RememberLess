@@ -80,6 +80,7 @@
     <Compile Include="Models\UserSettingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\INoteRepository.cs" />
+    <Compile Include="Repositories\MockNoteRepository.cs" />
     <Compile Include="Repositories\NoteRepository.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,8 +7,6 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using Microsoft.Practices.ServiceLocation;
-using IStorageService = Famoser.RememberLess.Data.Services.IStorageService;
-using StorageService = Famoser.RememberLess.Presentation.WindowsUniversal.Services.StorageService;
 
 namespace Famoser.RememberLess.Presentation.WindowsUniversal.ViewModels
 {
@@ -24,9 +22,9 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.ViewModels
         public ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
+            
             // Create design time view services and models
-            SimpleIoc.Default.Register<IStorageService, StorageService>();
+            SimpleIoc.Default.Register<IStorageService>(() => new StorageService());
             SimpleIoc.Default.Register<IDialogService, DialogService>();
 
             var navigationService = new HistoryNavigationService();

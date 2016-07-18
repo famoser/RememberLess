@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Famoser.FrameworkEssentials.Logging;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using Famoser.RememberLess.Business.Converters;
 using Famoser.RememberLess.Business.Enums;
 using Famoser.RememberLess.Business.Models;
@@ -29,74 +30,8 @@ namespace Famoser.RememberLess.Business.Repositories
         private UserInformationModel _userInformations;
         private DataModel _dataModel;
 
-        private NoteCollectionModel GetExampleCollection(string collName = "to do")
-        {
-            return new NoteCollectionModel()
-            {
-                Name = collName,
-                Guid = Guid.NewGuid(),
-                NewNotes = new ObservableCollection<NoteModel>()
-                {
-                new NoteModel()
-                {
-                    Guid = Guid.NewGuid(),
-                    Content = "Note 1",
-                    CreateTime = DateTime.Now,
-                    IsCompleted = false,
-                },
-                new NoteModel()
-                {
-                    Guid = Guid.NewGuid(),
-                    Content = "Note 2",
-                    CreateTime = DateTime.Now,
-                    IsCompleted = false,
-                },
-                new NoteModel()
-                {
-                    Guid = Guid.NewGuid(),
-                    Content = "Note 3",
-                    CreateTime = DateTime.Now,
-                    IsCompleted = false,
-                }
-            },
-                CompletedNotes = new ObservableCollection<NoteModel>()
-                {
-                    new NoteModel()
-                    {
-                        Guid = Guid.NewGuid(),
-                        Content = "Note 4",
-                        CreateTime = DateTime.Now,
-                        IsCompleted = true,
-                    },
-                    new NoteModel()
-                    {
-                        Guid = Guid.NewGuid(),
-                        Content = "Note 5",
-                        CreateTime = DateTime.Now,
-                        IsCompleted = true,
-                    }
-                },
-                DeletedNotes = new ObservableCollection<NoteModel>()
-                {
-                    new NoteModel()
-                    {
-                        Guid = Guid.NewGuid(),
-                        Content = "Note 6 (del)",
-                        CreateTime = DateTime.Now,
-                        IsCompleted = true,
-                    },
-                    new NoteModel()
-                    {
-                        Guid = Guid.NewGuid(),
-                        Content = "Note 7 (del)",
-                        CreateTime = DateTime.Now,
-                        IsCompleted = true,
-                    }
-                },
-            };
-        }
 
-        public async Task<ObservableCollection<NoteCollectionModel>> GetCollections()
+        public ObservableCollection<NoteCollectionModel> GetCollections()
         {
             try
             {
@@ -142,7 +77,7 @@ namespace Famoser.RememberLess.Business.Repositories
                         if (_userInformations.SaveDataVersion == 0)
                         {
                             var oldCachedNotes =
-                                await _storageService.GetOldCachedData(_userInformations.SaveDataVersion);
+                                await _storageService.GetCachedTextFileAsync("data.json");
                             if (!string.IsNullOrEmpty(oldCachedNotes))
                             {
                                 var notes =
@@ -234,16 +169,6 @@ namespace Famoser.RememberLess.Business.Repositories
                 LogHelper.Instance.LogException(ex, this);
             }
             return _dataModel.Collections;
-        }
-
-        public ObservableCollection<NoteCollectionModel> GetExampleCollections()
-        {
-            return new ObservableCollection<NoteCollectionModel>()
-            {
-                GetExampleCollection(),
-                GetExampleCollection("at home"),
-                GetExampleCollection("work")
-            };
         }
 
         public async Task<bool> SyncNotes()
@@ -524,7 +449,7 @@ namespace Famoser.RememberLess.Business.Repositories
             try
             {
                 var userInformations = JsonConvert.SerializeObject(_userInformations);
-                return await _storageService.SetUserInformations(userInformations);
+                return await _storageService.SetRoamingTextFileAsync("user.json", userInformations);
             }
             catch (Exception ex)
             {
@@ -537,7 +462,7 @@ namespace Famoser.RememberLess.Business.Repositories
         {
             try
             {
-                var userInformations = await _storageService.GetUserInformations();
+                var userInformations = await _storageService.GetRoamingTextFileAsync("user.json");
                 if (userInformations != null)
                 {
                     _userInformations = JsonConvert.DeserializeObject<UserInformationModel>(userInformations);
@@ -545,8 +470,7 @@ namespace Famoser.RememberLess.Business.Repositories
                 }
                 else
                 {
-                    _userInformations = new UserInformationModel(Guid.NewGuid());
-                    _userInformations.SaveDataVersion = ActiveDataVersion;
+                    _userInformations = new UserInformationModel(Guid.NewGuid()) { SaveDataVersion = ActiveDataVersion };
                     return await SaveUserInformationsToStorage();
                 }
             }
@@ -562,7 +486,7 @@ namespace Famoser.RememberLess.Business.Repositories
             try
             {
                 var notesJson = JsonConvert.SerializeObject(_dataModel);
-                return await _storageService.SetCachedData(notesJson);
+                return await _storageService.SetCachedTextFileAsync("data2.json", notesJson);
             }
             catch (Exception ex)
             {
@@ -575,7 +499,7 @@ namespace Famoser.RememberLess.Business.Repositories
         {
             try
             {
-                var cachedNotesJson = await _storageService.GetCachedData();
+                var cachedNotesJson = await _storageService.GetCachedTextFileAsync("data2.json");
                 if (cachedNotesJson != null)
                 {
                     _dataModel = JsonConvert.DeserializeObject<DataModel>(cachedNotesJson);

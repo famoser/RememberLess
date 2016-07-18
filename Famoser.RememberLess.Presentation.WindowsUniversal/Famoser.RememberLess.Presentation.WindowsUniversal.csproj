@@ -109,7 +109,6 @@
     <Compile Include="Converters\MainPage\CountToVisibilityConverter.cs" />
     <Compile Include="Converters\MainPage\ListToCountConverter.cs" />
     <Compile Include="Converters\MainPage\SymbolConverter.cs" />
-    <Compile Include="Enums\LocalMessages.cs" />
     <Compile Include="Helpers\ResolutionHelper.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -118,7 +117,6 @@
       <DependentUpon>NotePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\StorageService.cs" />
     <Compile Include="Services\TilesService.cs" />
     <Compile Include="UserControls\MainPage\NoteCollectionList.xaml.cs">
       <DependentUpon>NoteCollectionList.xaml</DependentUpon>
