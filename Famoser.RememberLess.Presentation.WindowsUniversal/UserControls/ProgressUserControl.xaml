@@ -15,6 +15,6 @@
     </UserControl.Resources>
 
     <Grid>
-        <ProgressBar IsIndeterminate="true" Visibility="{Binding IsAnyProgressActive, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        <ProgressBar IsIndeterminate="true" Visibility="{Binding AnyProgressActive, Converter={StaticResource BooleanToVisibilityConverter}}" />
     </Grid>
 </UserControl>

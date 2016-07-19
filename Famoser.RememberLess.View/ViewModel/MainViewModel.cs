@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Windows.Input;
 using Famoser.FrameworkEssentials.Services.Interfaces;
 using Famoser.FrameworkEssentials.View.Commands;
@@ -45,6 +46,7 @@ namespace Famoser.RememberLess.View.ViewModel
             _toggleCompleted = new LoadingRelayCommand<NoteModel>(ToggleCompleted);
 
             NoteCollections = noteRepository.GetCollections();
+            NoteCollections.CollectionChanged += NoteCollectionsOnCollectionChanged;
             if (IsInDesignMode)
             {
                 ActiveCollection = NoteCollections[0];
@@ -56,6 +58,15 @@ namespace Famoser.RememberLess.View.ViewModel
             _selectNoteCommand = new RelayCommand<NoteModel>(SelectNote);
 
             Messenger.Default.Register<NoteCollectionModel>(this, Messages.Select, EvaluateSelectMessage);
+        }
+        
+        private void NoteCollectionsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            if (NoteCollections.Count > 0)
+            {
+                ActiveCollection = NoteCollections[0];
+                NoteCollections.CollectionChanged -= NoteCollectionsOnCollectionChanged;
+            }
         }
 
         private void EvaluateSelectMessage(NoteCollectionModel obj)

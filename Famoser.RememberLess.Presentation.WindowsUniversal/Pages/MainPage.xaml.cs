@@ -6,7 +6,9 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using Famoser.RememberLess.View.ViewModel;
+using GalaSoft.MvvmLight.Ioc;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -42,8 +44,6 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
 
         private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (ViewModel.RefreshCommand.CanExecute(null))
-                ViewModel.RefreshCommand.Execute(null);
             ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
         }
 
@@ -52,11 +52,11 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
             if (propertyChangedEventArgs.PropertyName == "ActiveCollection")
             {
                 if (NoteCollectionsOverview.Visibility == Visibility.Visible)
-                    UIElement_OnTapped(null, null);
+                    UIElement_OnTapped();
             }
         }
 
-        private void TextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {
@@ -79,11 +79,6 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
         {
             EditCollectionGrid.Visibility = EditCollectionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
-
-        //private void ListsAppbar_OnTapped(object sender, TappedRoutedEventArgs e)
-        //{
-        //    MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
-        //}
 
 
         private void UIElement_OnTapped(object sender = null, TappedRoutedEventArgs e = null)
