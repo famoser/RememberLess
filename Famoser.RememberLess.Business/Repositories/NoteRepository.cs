@@ -56,8 +56,7 @@ namespace Famoser.RememberLess.Business.Repositories
                 {
                     if (await RetrieveUserInformationsFromStorage())
                     {
-                        if (!await RetrieveNoteCollectionsFromStorage())
-                            await SyncNotes();
+                        await RetrieveNoteCollectionsFromStorage();
                     }
                     else
                     {
@@ -98,10 +97,11 @@ namespace Famoser.RememberLess.Business.Repositories
                             PendingAction = PendingAction.AddOrUpdate
                         };
                         NoteCollectionManager.AddNoteCollection(coll);
-                        await SyncNotes();
                     }
                 });
             }
+
+            await SyncNotes();
         }
 
         public Task<bool> SyncNotes()
@@ -111,7 +111,7 @@ namespace Famoser.RememberLess.Business.Repositories
                 await Initialize();
 
                 //add/update/delete collections
-                var collPending =  NoteCollectionManager.GetCollection().Where(c => c.PendingAction == PendingAction.AddOrUpdate).ToList();
+                var collPending = NoteCollectionManager.GetCollection().Where(c => c.PendingAction == PendingAction.AddOrUpdate).ToList();
                 if (collPending.Any())
                 {
                     var addUpdateRequest =
@@ -412,23 +412,26 @@ namespace Famoser.RememberLess.Business.Repositories
             return _storageService.SetCachedTextFileAsync("data2.json", notesJson);
         }
 
-        private async Task<bool> RetrieveNoteCollectionsFromStorage()
+        private Task<bool> RetrieveNoteCollectionsFromStorage()
         {
-            var cachedNotesJson = await _storageService.GetCachedTextFileAsync("data2.json");
-            if (cachedNotesJson != null)
+            return ExecuteSafe(async () =>
             {
-                var dm = JsonConvert.DeserializeObject<NoteCollectionsStorageModel>(cachedNotesJson);
-                foreach (var collection in dm.Collections)
+                var cachedNotesJson = await _storageService.GetCachedTextFileAsync("data2.json");
+                if (cachedNotesJson != null)
                 {
-                    NoteCollectionManager.AddNoteCollection(collection);
+                    var dm = JsonConvert.DeserializeObject<NoteCollectionsStorageModel>(cachedNotesJson);
+                    foreach (var collection in dm.Collections)
+                    {
+                        NoteCollectionManager.AddNoteCollection(collection);
+                    }
+                    foreach (var noteCollectionModel in dm.DeletedCollections)
+                    {
+                        NoteCollectionManager.AddDeletedNoteCollection(noteCollectionModel);
+                    }
+                    return true;
                 }
-                foreach (var noteCollectionModel in dm.DeletedCollections)
-                {
-                    NoteCollectionManager.AddDeletedNoteCollection(noteCollectionModel);
-                }
-                return true;
-            }
-            return false;
+                return false;
+            });
         }
     }
 
