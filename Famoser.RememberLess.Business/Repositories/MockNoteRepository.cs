@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
 namespace Famoser.RememberLess.Business.Repositories
 {
     public class MockNoteRepository : INoteRepository

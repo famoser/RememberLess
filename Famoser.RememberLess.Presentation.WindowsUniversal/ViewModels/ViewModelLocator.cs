@@ -1,4 +1,5 @@
-﻿using Famoser.FrameworkEssentials.Services.Interfaces;
+﻿using Famoser.FrameworkEssentials.Services;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using Famoser.FrameworkEssentials.UniversalWindows.Platform;
 using Famoser.RememberLess.Presentation.WindowsUniversal.Pages;
 using Famoser.RememberLess.View.Enums;
@@ -26,6 +27,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.ViewModels
             // Create design time view services and models
             SimpleIoc.Default.Register<IStorageService>(() => new StorageService());
             SimpleIoc.Default.Register<IDialogService, DialogService>();
+            SimpleIoc.Default.Register<IProgressService, ProgressService>();
 
             var navigationService = new HistoryNavigationService();
             navigationService.Configure(PageKeys.MainPage.ToString(), typeof(MainPage));

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Windows.Input;
 using Famoser.FrameworkEssentials.Services.Interfaces;
+using Famoser.FrameworkEssentials.View.Commands;
 using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.View.Enums;
@@ -26,22 +27,26 @@ namespace Famoser.RememberLess.View.ViewModel
     {
         private readonly INoteRepository _noteRepository;
         private readonly IHistoryNavigationService _navigationService;
+        private readonly IProgressService _progressService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public NoteViewModel(INoteRepository noteRepository, IHistoryNavigationService navigationService)
+        public NoteViewModel(INoteRepository noteRepository, IHistoryNavigationService navigationService, IProgressService progressService)
         {
             _noteRepository = noteRepository;
             _navigationService = navigationService;
+            _progressService = progressService;
+            
+            _saveNoteCommand = new LoadingRelayCommand(SaveNote, () => CanSaveNote);
+            _removeNoteCommand = new LoadingRelayCommand(RemoveNote);
 
-            _goBackCommand = new RelayCommand(GoBack);
-            _saveNoteCommand = new RelayCommand(SaveNote, () => CanSaveNote);
-            _removeNoteCommand = new RelayCommand(RemoveNote);
+            _removeNoteCommand.AddDependentCommand(_saveNoteCommand);
+            _saveNoteCommand.AddDependentCommand(_removeNoteCommand);
 
             if (IsInDesignMode)
             {
-                ActiveNote = noteRepository.GetExampleCollections()[0].CompletedNotes[0];
+                ActiveNote = noteRepository.GetCollections()[0].CompletedNotes[0];
             }
 
             Messenger.Default.Register<NoteModel>(this, Messages.Select, EvaluateSelectMessage);
@@ -78,52 +83,32 @@ namespace Famoser.RememberLess.View.ViewModel
 
         private NoteModel _originActiveNote;
 
-        private readonly RelayCommand _goBackCommand;
-        public ICommand GoBackCommand => _goBackCommand;
-
-        private void GoBack()
-        {
-            _navigationService.GoBack();
-        }
-
-        private readonly RelayCommand _saveNoteCommand;
+        private readonly LoadingRelayCommand _saveNoteCommand;
         public ICommand SaveNoteCommand => _saveNoteCommand;
-        private bool CanSaveNote => !_isSaving && (_originActiveNote.Description != ActiveNote.Description || _originActiveNote.Content != ActiveNote.Content || _originActiveNote.IsCompleted != ActiveNote.IsCompleted);
-        private bool _isSaving;
+        private bool CanSaveNote => (_originActiveNote.Description != ActiveNote.Description || _originActiveNote.Content != ActiveNote.Content || _originActiveNote.IsCompleted != ActiveNote.IsCompleted);
 
         private async void SaveNote()
         {
-            _isSaving = true;
-            _saveNoteCommand.RaiseCanExecuteChanged();
-            _removeNoteCommand.RaiseCanExecuteChanged();
-
-            _originActiveNote.Description = ActiveNote.Description;
-            _originActiveNote.Content = ActiveNote.Content;
-            _originActiveNote.IsCompleted = ActiveNote.IsCompleted;
-            await _noteRepository.Save(_originActiveNote);
-
-            _isSaving = false;
-            _saveNoteCommand.RaiseCanExecuteChanged();
-            _removeNoteCommand.RaiseCanExecuteChanged();
+            using (_saveNoteCommand.GetProgressDisposable(_progressService, ProgressKeys.SavingNote))
+            {
+                _originActiveNote.Description = ActiveNote.Description;
+                _originActiveNote.Content = ActiveNote.Content;
+                _originActiveNote.IsCompleted = ActiveNote.IsCompleted;
+                await _noteRepository.Save(_originActiveNote);
+            }
         }
 
 
-        private readonly RelayCommand _removeNoteCommand;
+        private readonly LoadingRelayCommand _removeNoteCommand;
         public ICommand RemoveNoteCommand => _removeNoteCommand;
-        private bool CanDeleteNote => !_isSaving;
 
         private async void RemoveNote()
         {
-            _isSaving = true;
-            _saveNoteCommand.RaiseCanExecuteChanged();
-            _removeNoteCommand.RaiseCanExecuteChanged();
-
-            await _noteRepository.Delete(_originActiveNote);
-            GoBack();
-
-            _isSaving = false;
-            _saveNoteCommand.RaiseCanExecuteChanged();
-            _removeNoteCommand.RaiseCanExecuteChanged();
+            using (_removeNoteCommand.GetProgressDisposable(_progressService, ProgressKeys.SavingNote))
+            {
+                await _noteRepository.Delete(_originActiveNote);
+                _navigationService.GoBack();
+            }
         }
 
     }

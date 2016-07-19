@@ -12,6 +12,8 @@
   See http://www.galasoft.ch/mvvm
 */
 
+using Famoser.FrameworkEssentials.Services;
+using Famoser.FrameworkEssentials.Services.Interfaces;
 using Famoser.RememberLess.Business.Repositories;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.Data.Services;
@@ -34,7 +36,6 @@ namespace Famoser.RememberLess.View.ViewModel
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<IDataService, DataService>();
-            SimpleIoc.Default.Register<IIndeterminateProgressService, IndeterminateProgressService>();
 
             if (ViewModelBase.IsInDesignModeStatic)
                 SimpleIoc.Default.Register<INoteRepository, MockNoteRepository>();
@@ -43,11 +44,10 @@ namespace Famoser.RememberLess.View.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<NoteViewModel>();
-            SimpleIoc.Default.Register<ProgressViewModel>();
         }
 
         public MainViewModel MainViewModel => ServiceLocator.Current.GetInstance<MainViewModel>();
-        public ProgressViewModel ProgressViewModel => ServiceLocator.Current.GetInstance<ProgressViewModel>();
+        public ProgressService ProgressViewModel => ServiceLocator.Current.GetInstance<IProgressService>() as ProgressService;
         public NoteViewModel NoteViewModel => ServiceLocator.Current.GetInstance<NoteViewModel>();
 
         public static void Cleanup()

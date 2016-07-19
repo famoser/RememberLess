@@ -40,9 +40,9 @@ namespace Famoser.RememberLess.View.ViewModel
             _navigationService = navigationService;
 
             _refreshCommand = new LoadingRelayCommand(Refresh);
-            _addNoteCommand = new RelayCommand(AddNote, () => CanAddNote);
-            _removeNote = new RelayCommand<NoteModel>(RemoveNote);
-            _toggleCompleted = new RelayCommand<NoteModel>(ToggleCompleted);
+            _addNoteCommand = new LoadingRelayCommand(AddNote, () => CanAddNote);
+            _removeNote = new LoadingRelayCommand<NoteModel>(RemoveNote);
+            _toggleCompleted = new LoadingRelayCommand<NoteModel>(ToggleCompleted);
 
             NoteCollections = noteRepository.GetCollections();
             if (IsInDesignMode)
@@ -50,9 +50,9 @@ namespace Famoser.RememberLess.View.ViewModel
                 ActiveCollection = NoteCollections[0];
             }
 
-            _removeNoteCollection = new RelayCommand<NoteCollectionModel>(RemoveNoteCollection, CanRemoveNoteCollection);
-            _saveNoteCollection = new RelayCommand<NoteCollectionModel>(SaveNoteCollection, CanSaveNoteCollection);
-            _addNoteCollectionCommand = new RelayCommand(AddNoteCollection, () => CanAddNoteCollection);
+            _removeNoteCollection = new LoadingRelayCommand<NoteCollectionModel>(RemoveNoteCollection, CanRemoveNoteCollection);
+            _saveNoteCollection = new LoadingRelayCommand<NoteCollectionModel>(SaveNoteCollection, CanSaveNoteCollection);
+            _addNoteCollectionCommand = new LoadingRelayCommand(AddNoteCollection, () => CanAddNoteCollection);
             _selectNoteCommand = new RelayCommand<NoteModel>(SelectNote);
 
             Messenger.Default.Register<NoteCollectionModel>(this, Messages.Select, EvaluateSelectMessage);
@@ -97,56 +97,65 @@ namespace Famoser.RememberLess.View.ViewModel
             }
         }
 
-        private readonly RelayCommand _addNoteCommand;
+        private readonly LoadingRelayCommand _addNoteCommand;
         public ICommand AddNoteCommand => _addNoteCommand;
 
         public bool CanAddNote => !string.IsNullOrEmpty(_newNote);
 
         private async void AddNote()
         {
-            var newNote = new NoteModel()
+            using (_addNoteCommand.GetProgressDisposable(_progressService, ProgressKeys.SavingNote))
             {
-                Content = NewNote,
-                Guid = Guid.NewGuid(),
-                CreateTime = DateTime.Now,
-                NoteCollection = ActiveCollection
-            };
-            await _noteRepository.Save(newNote);
-            NewNote = "";
+                var newNote = new NoteModel()
+                {
+                    Content = NewNote,
+                    Guid = Guid.NewGuid(),
+                    CreateTime = DateTime.Now,
+                    NoteCollection = ActiveCollection
+                };
+                await _noteRepository.Save(newNote);
+                NewNote = "";
 
-            Messenger.Default.Send(Messages.NotesChanged);
+                Messenger.Default.Send(Messages.NotesChanged);
+            }
         }
 
-        private readonly RelayCommand _addNoteCollectionCommand;
+        private readonly LoadingRelayCommand _addNoteCollectionCommand;
         public ICommand AddNoteCollectionCommand => _addNoteCollectionCommand;
 
         public bool CanAddNoteCollection => !string.IsNullOrEmpty(NewNoteCollection);
 
         private async void AddNoteCollection()
         {
-            var newNoteCollection = new NoteCollectionModel()
+            using (_addNoteCollectionCommand.GetProgressDisposable(_progressService, ProgressKeys.SavingNote))
             {
-                Guid = Guid.NewGuid(),
-                Name = NewNoteCollection,
-                CreateTime = DateTime.Now
-            };
-            await _noteRepository.Save(newNoteCollection);
-            NewNoteCollection = "";
+                var newNoteCollection = new NoteCollectionModel()
+                {
+                    Guid = Guid.NewGuid(),
+                    Name = NewNoteCollection,
+                    CreateTime = DateTime.Now
+                };
+                await _noteRepository.Save(newNoteCollection);
+                NewNoteCollection = "";
 
-            ActiveCollection = newNoteCollection;
+                ActiveCollection = newNoteCollection;
+            }
         }
 
-        private readonly RelayCommand<NoteModel> _toggleCompleted;
+        private readonly LoadingRelayCommand<NoteModel> _toggleCompleted;
         public ICommand ToggleCompletedCommand => _toggleCompleted;
 
         private async void ToggleCompleted(NoteModel note)
         {
-            note.IsCompleted = !note.IsCompleted;
-            await _noteRepository.Save(note);
-            Messenger.Default.Send(Messages.NotesChanged);
+            using (_toggleCompleted.GetProgressDisposable(_progressService, ProgressKeys.SavingNote))
+            {
+                note.IsCompleted = !note.IsCompleted;
+                await _noteRepository.Save(note);
+                Messenger.Default.Send(Messages.NotesChanged);
+            }
         }
 
-        private readonly RelayCommand<NoteCollectionModel> _removeNoteCollection;
+        private readonly LoadingRelayCommand<NoteCollectionModel> _removeNoteCollection;
         public ICommand RemoveNoteCollectionCommand => _removeNoteCollection;
 
         public bool CanRemoveNoteCollection(NoteCollectionModel model)
@@ -156,19 +165,22 @@ namespace Famoser.RememberLess.View.ViewModel
 
         private async void RemoveNoteCollection(NoteCollectionModel model)
         {
-            if (model == ActiveCollection)
+            using (_removeNoteCollection.GetProgressDisposable(_progressService, ProgressKeys.SavingNote))
             {
-                var index = NoteCollections.IndexOf(ActiveCollection);
-                if (index == 0)
-                    ActiveCollection = NoteCollections[1];
-                else
-                    ActiveCollection = NoteCollections[--index];
+                if (model == ActiveCollection)
+                {
+                    var index = NoteCollections.IndexOf(ActiveCollection);
+                    if (index == 0)
+                        ActiveCollection = NoteCollections[1];
+                    else
+                        ActiveCollection = NoteCollections[--index];
+                }
+                await _noteRepository.Delete(model);
+                Messenger.Default.Send(Messages.NotesChanged);
             }
-            await _noteRepository.Delete(model);
-            Messenger.Default.Send(Messages.NotesChanged);
         }
 
-        private readonly RelayCommand<NoteCollectionModel> _saveNoteCollection;
+        private readonly LoadingRelayCommand<NoteCollectionModel> _saveNoteCollection;
         public ICommand SaveNoteCollectionCommand => _saveNoteCollection;
 
         public bool CanSaveNoteCollection(NoteCollectionModel model)
@@ -178,16 +190,22 @@ namespace Famoser.RememberLess.View.ViewModel
 
         private async void SaveNoteCollection(NoteCollectionModel model)
         {
-            await _noteRepository.Save(model);
+            using (_saveNoteCollection.GetProgressDisposable(_progressService, ProgressKeys.SavingNote))
+            {
+                await _noteRepository.Save(model);
+            }
         }
 
-        private readonly RelayCommand<NoteModel> _removeNote;
+        private readonly LoadingRelayCommand<NoteModel> _removeNote;
         public ICommand RemoveNoteCommand => _removeNote;
 
         private async void RemoveNote(NoteModel note)
         {
-            await _noteRepository.Delete(note);
-            Messenger.Default.Send(Messages.NotesChanged);
+            using (_removeNote.GetProgressDisposable(_progressService, ProgressKeys.SavingNote))
+            {
+                await _noteRepository.Delete(note);
+                Messenger.Default.Send(Messages.NotesChanged);
+            }
         }
 
         private ObservableCollection<NoteCollectionModel> _noteCollections;

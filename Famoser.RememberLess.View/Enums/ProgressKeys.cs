@@ -2,8 +2,7 @@
 {
     public enum ProgressKeys
     {
-        InDebugMode,
-        InitializingApplication,
-        SyncingNotes
+        SyncingNotes,
+        SavingNote
     }
 }
