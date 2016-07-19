@@ -2,9 +2,9 @@
 
 namespace Famoser.RememberLess.Business.Models
 {
-    public class DataModel
+    public class NoteCollectionsStorageModel
     {
-        public DataModel()
+        public NoteCollectionsStorageModel()
         {
             Collections = new ObservableCollection<NoteCollectionModel>();
             DeletedCollections = new ObservableCollection<NoteCollectionModel>();

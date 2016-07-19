@@ -73,7 +73,8 @@
     <Compile Include="Converters\RequestConverter.cs" />
     <Compile Include="Converters\ResponseConverter.cs" />
     <Compile Include="Enums\PendingAction.cs" />
-    <Compile Include="Models\DataModel.cs" />
+    <Compile Include="Managers\NoteCollectionManager.cs" />
+    <Compile Include="Models\NoteCollectionsStorageModel.cs" />
     <Compile Include="Models\NoteCollectionModel.cs" />
     <Compile Include="Models\NoteModel.cs" />
     <Compile Include="Models\SyncModel.cs" />
@@ -102,6 +103,14 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\portable-net45+netcore45+wpa81\Nito.AsyncEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Concurrent, Version=3.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.3.0.1\lib\portable-net45+netcore45+wpa81\Nito.AsyncEx.Concurrent.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>

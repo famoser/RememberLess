@@ -1,13 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Famoser.FrameworkEssentials.Services.Interfaces;
+using Famoser.FrameworkEssentials.View.Commands;
 using Famoser.RememberLess.Business.Models;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.View.Enums;
-using Famoser.RememberLess.View.Services;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
@@ -29,32 +27,29 @@ namespace Famoser.RememberLess.View.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private readonly INoteRepository _noteRepository;
-        private readonly IIndeterminateProgressService _progressService;
+        private readonly IProgressService _progressService;
         private readonly IHistoryNavigationService _navigationService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(INoteRepository noteRepository, IIndeterminateProgressService progressService, IHistoryNavigationService navigationService)
+        public MainViewModel(INoteRepository noteRepository, IProgressService progressService, IHistoryNavigationService navigationService)
         {
             _noteRepository = noteRepository;
             _progressService = progressService;
             _navigationService = navigationService;
 
-            _refreshCommand = new RelayCommand(Refresh, () => CanRefresh);
+            _refreshCommand = new LoadingRelayCommand(Refresh);
             _addNoteCommand = new RelayCommand(AddNote, () => CanAddNote);
             _removeNote = new RelayCommand<NoteModel>(RemoveNote);
             _toggleCompleted = new RelayCommand<NoteModel>(ToggleCompleted);
 
+            NoteCollections = noteRepository.GetCollections();
             if (IsInDesignMode)
             {
-                NoteCollections = noteRepository.GetExampleCollections();
                 ActiveCollection = NoteCollections[0];
             }
-            else
-            {
-                Initialize();
-            }
+
             _removeNoteCollection = new RelayCommand<NoteCollectionModel>(RemoveNoteCollection, CanRemoveNoteCollection);
             _saveNoteCollection = new RelayCommand<NoteCollectionModel>(SaveNoteCollection, CanSaveNoteCollection);
             _addNoteCollectionCommand = new RelayCommand(AddNoteCollection, () => CanAddNoteCollection);
@@ -68,45 +63,16 @@ namespace Famoser.RememberLess.View.ViewModel
             ActiveCollection = obj;
         }
 
-        //enable for debug purposes
-        private bool _isInitializing;
-        private async void Initialize()
-        {
-            _progressService.ShowProgress(ProgressKeys.InitializingApplication);
-            _isInitializing = true;
-            _refreshCommand.RaiseCanExecuteChanged();
-
-            NoteCollections = await _noteRepository.GetCollections();
-            ActiveCollection = NoteCollections.FirstOrDefault();
-
-            _isInitializing = false;
-            _refreshCommand.RaiseCanExecuteChanged();
-            _progressService.HideProgress(ProgressKeys.InitializingApplication);
-        }
-
-        private bool _isSyncing;
-        private async Task SyncNotes()
-        {
-            _progressService.ShowProgress(ProgressKeys.SyncingNotes);
-            _isSyncing = true;
-            _refreshCommand.RaiseCanExecuteChanged();
-
-            await _noteRepository.SyncNotes();
-            Messenger.Default.Send(Messages.NotesChanged);
-
-            _isSyncing = false;
-            _refreshCommand.RaiseCanExecuteChanged();
-            _progressService.HideProgress(ProgressKeys.SyncingNotes);
-        }
-
-        private readonly RelayCommand _refreshCommand;
+        private readonly LoadingRelayCommand _refreshCommand;
         public ICommand RefreshCommand => _refreshCommand;
-
-        public bool CanRefresh => !_isInitializing && !_isSyncing;
 
         private async void Refresh()
         {
-            await SyncNotes();
+            using (_refreshCommand.GetProgressDisposable(_progressService, ProgressKeys.SyncingNotes))
+            {
+                await _noteRepository.SyncNotes();
+                Messenger.Default.Send(Messages.NotesChanged);
+            }
         }
 
         private string _newNote;
@@ -145,8 +111,9 @@ namespace Famoser.RememberLess.View.ViewModel
                 CreateTime = DateTime.Now,
                 NoteCollection = ActiveCollection
             };
-            NewNote = "";
             await _noteRepository.Save(newNote);
+            NewNote = "";
+
             Messenger.Default.Send(Messages.NotesChanged);
         }
 
@@ -163,8 +130,9 @@ namespace Famoser.RememberLess.View.ViewModel
                 Name = NewNoteCollection,
                 CreateTime = DateTime.Now
             };
-            NewNoteCollection = "";
             await _noteRepository.Save(newNoteCollection);
+            NewNoteCollection = "";
+
             ActiveCollection = newNoteCollection;
         }
 
