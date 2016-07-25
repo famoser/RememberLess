@@ -1,7 +1,7 @@
 ﻿{
   "dependencies": {
     "Famoser.FrameworkEssentials": "2.7.3",
-    "Famoser.FrameworkEssentials.UniversalWindows": "1.2.0",
+    "Famoser.FrameworkEssentials.UniversalWindows": "1.2.1",
     "Famoser.Telemetry.UniversalWindows": "1.0.0",
     "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "MvvmLight": "5.3.0",

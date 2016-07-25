@@ -89,7 +89,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Famoser.FrameworkEssentials.View, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Famoser.FrameworkEssentials.View.1.2.1\lib\portable-net45+win8+wpa81+wp8\Famoser.FrameworkEssentials.View.dll</HintPath>
+      <HintPath>..\packages\Famoser.FrameworkEssentials.View.1.2.2\lib\portable-net45+win8+wpa81+wp8\Famoser.FrameworkEssentials.View.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">

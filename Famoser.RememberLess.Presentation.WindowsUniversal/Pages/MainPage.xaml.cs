@@ -75,7 +75,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
             }
         }
         
-        private void EditCollectionButton_Tapped(object sender, TappedRoutedEventArgs e)
+        private void EditCollectionButton_Tapped(object sender = null, TappedRoutedEventArgs e = null)
         {
             EditCollectionGrid.Visibility = EditCollectionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -98,6 +98,12 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             UIElement_OnTapped();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            EditCollectionButton_Tapped();
+            RemoveFlyout.Hide();
         }
     }
 }
