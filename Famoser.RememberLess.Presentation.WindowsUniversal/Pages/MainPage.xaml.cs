@@ -22,22 +22,32 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
         public MainPage()
         {
             this.InitializeComponent();
-            SystemNavigationManager.GetForCurrentView().BackRequested += (s, ev) =>
+
+            //for main page
+            SystemNavigationManager.GetForCurrentView().BackRequested += GoBackEventHandler;
+
+            //for note page
+            SystemNavigationManager.GetForCurrentView().BackRequested += async (s, ev) =>
             {
-                if (!ev.Handled)
-                {
-                    if (EditCollectionGrid.Visibility == Visibility.Visible)
-                    {
-                        ev.Handled = true;
-                        EditCollectionGrid.Visibility = Visibility.Collapsed;
-                    }
-                    else if (NoteCollectionsOverview.Visibility == Visibility.Visible)
-                    {
-                        ev.Handled = true;
-                        UIElement_OnTapped();
-                    }
-                }
+                await NotePage.GoBackEventHandler(s, ev);
             };
+        }
+
+        private void GoBackEventHandler(object sender, BackRequestedEventArgs ev)
+        {
+            if (!ev.Handled)
+            {
+                if (EditCollectionGrid.Visibility == Visibility.Visible)
+                {
+                    ev.Handled = true;
+                    EditCollectionGrid.Visibility = Visibility.Collapsed;
+                }
+                else if (NoteCollectionsOverview.Visibility == Visibility.Visible)
+                {
+                    ev.Handled = true;
+                    UIElement_OnTapped();
+                }
+            }
         }
 
         private MainViewModel ViewModel => DataContext as MainViewModel;
