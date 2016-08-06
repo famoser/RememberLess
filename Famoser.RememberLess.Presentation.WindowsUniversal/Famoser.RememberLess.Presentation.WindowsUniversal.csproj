@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Famoser.RememberLess.Presentation.WindowsUniversal</RootNamespace>
     <AssemblyName>Famoser.Famoser.RememberLess.Presentation.WindowsUniversal</AssemblyName>
-    <DefaultLanguage>de-CH</DefaultLanguage>
+    <DefaultLanguage>en</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>

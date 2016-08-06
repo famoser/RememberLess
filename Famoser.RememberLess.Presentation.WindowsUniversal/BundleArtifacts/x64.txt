@@ -1,2 +1,2 @@
-MainPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\x64\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_x64.appx
-SymbolPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\AppPackages\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_Test\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_x64.appxsym
+MainPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\bin\x64\Release\Famoser.RememberLess.Presentation.WindowsUniversal_1.6.37.0_x64.appx
+SymbolPackage=D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\AppPackages\Famoser.RememberLess.Presentation.WindowsUniversal_1.6.37.0_Test\Famoser.RememberLess.Presentation.WindowsUniversal_1.6.37.0_x64.appxsym

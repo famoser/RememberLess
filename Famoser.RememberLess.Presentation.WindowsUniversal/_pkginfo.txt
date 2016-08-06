@@ -1,1 +1,1 @@
-D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\AppPackages\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0\Famoser.RememberLess.Presentation.WindowsUniversal_1.5.36.0_x86_x64_arm.appxbundle
+D:\Repos\RememberLess\Famoser.RememberLess.Presentation.WindowsUniversal\AppPackages\Famoser.RememberLess.Presentation.WindowsUniversal_1.6.37.0\Famoser.RememberLess.Presentation.WindowsUniversal_1.6.37.0_x86_x64_arm.appxbundle
