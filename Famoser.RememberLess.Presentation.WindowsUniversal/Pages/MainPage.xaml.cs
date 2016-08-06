@@ -52,7 +52,7 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Pages
 
         private MainViewModel ViewModel => DataContext as MainViewModel;
 
-        private void Page_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.PropertyChanged += ViewModelOnPropertyChanged;
         }

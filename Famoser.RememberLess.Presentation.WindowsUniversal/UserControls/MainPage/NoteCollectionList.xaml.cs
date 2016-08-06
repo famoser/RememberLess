@@ -13,11 +13,5 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.UserControls.MainPa
         {
             this.InitializeComponent();
         }
-
-        private void ListView_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            var model = sender as NoteCollectionList;
-            Messenger.Default.Send(model, Messages.Select);
-        }
     }
 }

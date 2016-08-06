@@ -9,6 +9,7 @@ using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.View.Enums;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace Famoser.RememberLess.View.ViewModel
@@ -56,8 +57,6 @@ namespace Famoser.RememberLess.View.ViewModel
             _saveNoteCollection = new LoadingRelayCommand<NoteCollectionModel>(SaveNoteCollection, CanSaveNoteCollection);
             _addNoteCollectionCommand = new LoadingRelayCommand(AddNoteCollection, () => CanAddNoteCollection);
             _selectNoteCommand = new RelayCommand<NoteModel>(SelectNote);
-
-            Messenger.Default.Register<NoteCollectionModel>(this, Messages.Select, EvaluateSelectMessage);
         }
         
         private void NoteCollectionsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
@@ -67,11 +66,6 @@ namespace Famoser.RememberLess.View.ViewModel
                 ActiveCollection = NoteCollections[0];
                 NoteCollections.CollectionChanged -= NoteCollectionsOnCollectionChanged;
             }
-        }
-
-        private void EvaluateSelectMessage(NoteCollectionModel obj)
-        {
-            ActiveCollection = obj;
         }
 
         private readonly LoadingRelayCommand _refreshCommand;
@@ -239,7 +233,10 @@ namespace Famoser.RememberLess.View.ViewModel
         private void SelectNote(NoteModel note)
         {
             _navigationService.NavigateTo(PageKeys.NotePage.ToString());
-            Messenger.Default.Send(note, Messages.Select);
+            SimpleIoc.Default.GetInstance<NoteViewModel>().SelectNote(note);
+
+            _activeCollection = note.NoteCollection;
+            RaisePropertyChanged(() => ActiveCollection);
         }
     }
 }

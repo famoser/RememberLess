@@ -48,11 +48,9 @@ namespace Famoser.RememberLess.View.ViewModel
             {
                 ActiveNote = noteRepository.GetCollections()[0].CompletedNotes[0];
             }
-
-            Messenger.Default.Register<NoteModel>(this, Messages.Select, EvaluateSelectMessage);
         }
 
-        private void EvaluateSelectMessage(NoteModel obj)
+        public void SelectNote(NoteModel obj)
         {
             _originActiveNote = obj;
 

@@ -3,7 +3,6 @@
     public enum Messages
     {
         NotesChanged,
-        QrCodeScanned,
-        Select
+        QrCodeScanned
     }
 }
