@@ -392,6 +392,10 @@ namespace Famoser.RememberLess.Business.Repositories
                 if (userInformations != null)
                 {
                     _userInformations = JsonConvert.DeserializeObject<UserInformationModel>(userInformations);
+                    /*
+                    _userInformations.Guid = Guid.Parse("54071bb7-47ef-4ca9-aa2b-f65fb1ea405b");
+                    await SaveUserInformationsToStorage();
+                    */
                     if (_userInformations != null)
                         return true;
                 }

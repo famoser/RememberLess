@@ -17,6 +17,7 @@ using Famoser.FrameworkEssentials.Services.Interfaces;
 using Famoser.RememberLess.Business.Repositories;
 using Famoser.RememberLess.Business.Repositories.Interfaces;
 using Famoser.RememberLess.Data.Services;
+using Famoser.RememberLess.Data.Services.Mocks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
