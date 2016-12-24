@@ -38,11 +38,11 @@ namespace Famoser.RememberLess.Presentation.WindowsUniversal.Services
                         }
                     };
 
-                    foreach (var noteModel in newNotes)
+                    for (int i = 0; i < newNotes.Count && i < 10; i++)
                     {
                         adap2.Children.Add(new AdaptiveText()
                         {
-                            Text = noteModel.Content,
+                            Text = newNotes[i].Content,
                             HintStyle = AdaptiveTextStyle.BodySubtle
                         });
                     }
